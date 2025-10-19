@@ -43,10 +43,10 @@ public class ConvertCF02 {
 
     if (CHOICE == 1) { 
         RESULT = (TEMPERATURE * 9/5) + 32;
-        System.out.println((double)TEMPERATURE + " degrees Celcius is " + (double)RESULT + " degrees Fahrenheit.");
+        System.out.println((double)TEMPERATURE + " degrees Celsius is " + (double)RESULT + " degrees Fahrenheit.");
     } else if (CHOICE == 2) {
         RESULT = (TEMPERATURE - 32) * 5/9;
-        System.out.println((double)TEMPERATURE + " degrees Fahrenheit is " + (double)RESULT + " degrees Celcius.");
+        System.out.println((double)TEMPERATURE + " degrees Fahrenheit is " + (double)RESULT + " degrees Celsius.");
     }
 
     // ===========================================        

@@ -2,9 +2,9 @@ package WIP;
 
 public class test {
     public static void main(String[] args) {
-
-        char TEST = 'A';
-
-        System.out.println(TEST);
+        String TEST = "this is a test";
+        String COMPARETEST = "";
+        System.out.println( TEST.indexOf(COMPARETEST));
+        System.out.println(TEST.substring(5, 7));
     }
 }

@@ -1,5 +1,3 @@
-
-
 /**
  * GradeCat lab
  * Add a grading system where theres specific letters for 90>, 80>, 70>, 65>, 64<.

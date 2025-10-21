@@ -1,6 +1,3 @@
-package WIP;
-
-
 /**
  * StringLab02 Lab
  * 1. Obtain a phrase from the user.
@@ -45,7 +42,7 @@ public class StringLab02 {
         break;
 
         case 2:
-            System.out.println("\nEnter a number between 0 and 13:");
+            System.out.println("\nEnter a number between 0 and " + (PHRASE.length()-1)  + ":");
             int NUMBER2 = scanner.nextInt();
 
             System.out.println("\nThe character at index " + NUMBER2 + " is '" + PHRASE.charAt(NUMBER2) + "'");
@@ -103,34 +100,49 @@ public class StringLab02 {
 
             switch(CHOICE6) {
                 case 1:
-                    System.out.println("Which index (between 0 and " + (PHRASE.length()-1) +") would you like to start with?");
+                    System.out.println("\nWhich index (between 0 and " + (PHRASE.length()-1) +") would you like to start with?");
                     int PHRASESUBSTRING6 = scanner.nextInt();
 
                     if (PHRASESUBSTRING6 < 0) {
                         System.out.println("Invalid");
                     }
 
-                    System.out.println("The new phrase is: \"" + PHRASE.substring(PHRASESUBSTRING6) + "\"");
+                    System.out.println("\nThe new phrase is: \"" + PHRASE.substring(PHRASESUBSTRING6) + "\"");
                 break;
 
                 case 2:
+                    System.out.println("\nWhich index (between 0 and " + (PHRASE.length()-1) + ") would you like to start with?");
+                    int PHRASESUBSTRING6START = scanner.nextInt();
+
+                    if (PHRASESUBSTRING6START < 0) {
+                        System.out.println("\nInvalid");
+                    }
+
+                    System.out.println("\nWhich index (between " + PHRASESUBSTRING6START + " and " + (PHRASE.length()-1) + ") would you like to end with?");
+                    int PHRASESUBSTRING6END = scanner.nextInt();
+
+                    if (PHRASESUBSTRING6END > PHRASE.length()) {
+                        System.out.println("\nThe total length of the Phrase exceeded the ending number for the substring");
+                    }
+
+                    System.out.println("\nThe new phrase is: \"" + PHRASE.substring(PHRASESUBSTRING6START, PHRASESUBSTRING6END) + "\"");
                 break;
 
-                default: System.out.println("Invalid");
+                default: System.out.println("\nInvalid");
                 break;
-
             }
-
         break;
 
         case 7:
+            System.out.println("\nAll lowercase looks like this: \"" + PHRASE.toLowerCase() + "\"");
         break;
 
         case 8:
+            System.out.println("\nAll uppercase looks like this: \"" + PHRASE.toUpperCase() + "\"");
         break;
 
         default:
-            System.out.println("Not a valid number!");
+            System.out.println("\nNot a valid number!");
         break;
     }
 
@@ -146,11 +158,18 @@ public class StringLab02 {
 
 /*
 1. What was the hardest part of this lab?
+    The Hardest part of this lab was trying to remember each statements, although i easily solved most of the issue.
+    The CompareTo and IndexOf was the most complicating and confusing one, upon researching from other sources, i found
+    out that both of those statements have the result of numbers which is 0 for equal, positive for true and negative
+    for false.
 
-
-
+    i then used those numbers to range which is true, false, and equal.
 
 2. What will you always remember (never forget) from this exercise?
+    I will never forget how switch() can make your code look very nice to read in terms of creating a big block of code.
+    If statements are good for short block of codes which i put into some of inside of the case:
+
+    I will never forget the \" and \n which are pretty cool when manipulating the visuals of the output
 
 
 

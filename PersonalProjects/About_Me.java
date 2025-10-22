@@ -16,7 +16,7 @@ public class About_Me {
         System.out.println("5. Language        11. Hobbies      ");
         System.out.println("6. Experience      12. Connections  ");
         System.out.println("                                    ");
-        System.out.println("+==-==-==-==-==-==-==-==-==-==-==-==+");
+        System.out.println("+==-==-==-==-==-==-==-==-==-==-==+");
     }
 
     public static void about_me() {
@@ -28,7 +28,7 @@ public class About_Me {
         switch (AboutMe) {
             case 1:
                 System.out.println("\n====================================Summary====================================");
-                System.out.println("👨🏽 Christ Aerjil C. Dampog | 19 | Pure Filipino | US Citizen");
+                System.out.println("👨 Christ Aerjil C. Dampog | 19 | Pure Filipino | US Citizen");
                 System.out.println("📍 Waterloo, NY 13165 | 🎓 Computer Information Systems");
                 System.out.println("\n    I am a creative and solutions-driven FLCC Student with skills in digital design,");
                 System.out.println("web development, video/photo editing and hardware/software troubleshooting. ");
@@ -109,7 +109,7 @@ public class About_Me {
             case 6:
                 System.out.println("\n=====================================Experience=====================================");
                 System.out.println("🏪 Bella Jewellers LLC | 📍 Waterloo, NY 13165");
-                System.out.println("🧑🏽‍💼 Retail Store Associate | 📅 June 2025 - Currently working");
+                System.out.println("🧑 Retail Store Associate | 📅 June 2025 - Currently working");
                 System.out.println("\n◆ Set up devices (Printers, PC, & Security Cameras) and provide troubleshooting.");
                 System.out.println("◆ Maintaining cleanliness environment and product.");
                 System.out.println("◆ Making a website using Wix and creating promotional videos.");
@@ -137,6 +137,16 @@ public class About_Me {
                 System.out.println("🏫 Finger Lakes Community College | 🎓 May 2027");
                 System.out.println("💻 Major in Computer Information Systems");
                 System.out.println("📅 Fall 2025 - Currently Enrolled");
+                System.out.println(" ");
+                System.out.println("🏫 Waterloo High School | 🎓 June 2025");
+                System.out.println("💻 High School Diploma");
+                System.out.println("📝 3.56 GPA ");
+                System.out.println("📅 Oct 2024 - June 2025");
+                System.out.println(" ");
+                System.out.println("🏫 Iligan Medical Center College -Basic Education Department | 🎓 Oct 2024 (Transferred)");
+                System.out.println("💻 Major in Technological Vocation Livelihood - Information Communication Technology");
+                System.out.println("📝 Average Grade of 87");
+                System.out.println("📅 June 2022 - Oct 2024");
                 System.out.println("===========================================");
                 break;
 

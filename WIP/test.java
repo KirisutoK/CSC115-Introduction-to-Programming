@@ -1,10 +1,13 @@
 package WIP;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class test {
+    static Scanner scanner = new Scanner(System.in);
+    static Random random = new Random();
     public static void main(String[] args) {
-        String TEST = "this is a test";
-        String COMPARETEST = "";
-        System.out.println( TEST.indexOf(COMPARETEST));
-        System.out.println(TEST.substring(5, 7));
+        int RandomEndNumber = random.nextInt(3)+1;
+        System.out.println(RandomEndNumber);
     }
 }

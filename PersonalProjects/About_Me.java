@@ -178,7 +178,7 @@ public class About_Me {
             break;
 
             case 11:
-                System.out.println("=====================Hobbies=====================");
+                System.out.println("\n=====================Hobbies=====================");
                 System.out.println("◆ Sketching/Drawing          ◆ Reading Comics   ");
                 System.out.println("◆ Coding/Developing          ◆ Watching Movies  ");
                 System.out.println("◆ Video/Photo Editing        ◆ Anime            ");
@@ -190,27 +190,78 @@ public class About_Me {
             break;
 
             case 12:
-                System.out.println("");
-                System.out.println("1. Family              5. Classmates         ");
-                System.out.println("2. Best Friends        6. Co-Workers       ");
-                System.out.println("3. Friends             7.       ");
-                System.out.println("4. Teacher/Professor           ");
-                System.out.println("");
+                System.out.println("==============Connections==============");
+                System.out.println("1. Family              5. Classmates   ");
+                System.out.println("2. Best Friends        6. Co-Workers   ");
+                System.out.println("3. Friends             7. Neighbor     ");
+                System.out.println("4. Teacher/Professor   8. Crush        ");
+                System.out.println("=======================================");
 
-                System.out.println("Choose which connection?")
-                System.out.println(" ");
-                System.out.println("-->Bestfriends: ");
-                System.out.println("◆ Samsodhen Olay       ◆ Binudin Zaifullah");
-                System.out.println("◆ Pahad Baoc Radia     ◆ Gian Carlo Abreu");
-                System.out.println("◆ Joelle Jia");
-                System.out.println("-->Friends ");
-                System.out.println("◆ ");
-                System.out.println(" ");
-                System.out.println(" ");
-                System.out.println(" ");
-                System.out.println(" ");
-                System.out.println(" ");
-                System.out.println(" ");
+                System.out.println("Choose which connection? (Pick a number from 1-8)");
+                int CASE12CHOICE = scanner.nextInt();
+
+                switch(CASE12CHOICE) {
+                    case 1:
+                        System.out.println("====================Family====================");
+                        System.out.println("◆ (Grandmother) Zelda Calapre Dampog ");
+                        System.out.println("◆ (Grandfather) Jevier Calapre Dampog ");
+                        System.out.println("◆ (Mother) Arrah Villa Calapre Walsh");      
+                        System.out.println("◆ (Mom's Boyfriend) Michelle");
+                        System.out.println("◆ (Little Sister) Zhiannelle Dampog Gravino");
+                        System.out.println("◆ (Little Brother) Sean Carlisle Dampog Gravino");
+                        System.out.println("◆ (Little Sister) Sophia Walsh");
+                        System.out.println("◆ (Uncle) Aaron Jevier Calapre Dampog");
+                        System.out.println("◆ (Uncle) Jezyh Calapre Dampog");
+                        System.out.println("◆ (Aunt) Phoebe Maghanoy");
+                        System.out.println("==============================================");
+                        break;
+                    case 2:
+                        System.out.println("\n================Best-Friends================");
+                        System.out.println("◆ Samsodhen Olay       ◆ Binudin Zaifullah   ");
+                        System.out.println("◆ Pahad Baoc Radia     ◆ Gian Carlo Abreu    ");
+                        System.out.println("◆ Joelle Jia           ◆ Roneen Miano        ");
+                        System.out.println("==============================================");
+                        break;
+                    
+                    case 3:
+                        System.out.println("===================Friends===================");
+                        System.out.println("◆ Lehi Weed       ◆ ");
+                        System.out.println("◆ Keith Cliff     ◆   ");
+                        System.out.println("◆                                ");
+                        System.out.println("=============================================");
+                        break;
+
+                    case 4:
+                        System.out.println(" ");
+                        System.out.println("◆ Professor Paige Labarr (CSC-115)");
+                        System.out.println("◆ Professor Will Mclaughlin (CSC-103)");
+                        System.out.println("◆ Professor Wendy Gray (CSC-142)");
+                        System.out.println(" ");
+                        System.out.println(" ");
+                        System.out.println(" ");
+                        System.out.println(" ");
+                        break;
+
+                    case 5:
+                        System.out.println("WIP");
+                        break;
+
+                    case 6:
+                        System.out.println("WIP");
+                        break;
+
+                    case 7:
+                        System.out.println("WIP");
+                        break;
+
+                    case 8:
+                        System.out.println("==========Crush==========");
+                        System.out.println("1. Gwyneth Caballes Acad ");
+                        System.out.println("2. Lady Jersey Alberina  ");
+                        System.out.println("3. Savannah Fish         ");
+                        System.out.println("=========================");
+                        break;
+                }
             break;
 
         }

@@ -15,12 +15,15 @@ public class SciCalc {
     static Scanner scanner = new Scanner(System.in);
     static Random random = new Random();
 
+    // Global Variables \\
+    static int FunctionChoice;
+
     public static void main(String[] args) {
 
         System.out.println("=======================");
-        System.out.println("        SCICALC        ");             
+        System.out.println("        SCICALC        ");
         System.out.println("=======================");
-        System.out.println(" ");     
+        System.out.println(" ");
 
         // ========== INSERT YOUR CODE HERE ==========
 
@@ -32,39 +35,40 @@ public class SciCalc {
 
         displayMenu();
 
-        System.out.println("Please select a function:");
-        int FunctionChoice = scanner.nextInt();
-
-        switch(FunctionChoice) {
+        switch (FunctionChoice) {
             case 1:
-            break;
+                int Result1 = SciCalc.add(FirstNumber, SecondNumber);
+                System.out.println("\nThe result of " + FirstNumber + " + " + SecondNumber + " is " + Result1);
+                break;
 
             case 2:
-            break;
+                int Result2 = SciCalc.sub(FirstNumber, SecondNumber);
+                System.out.println("The result of " + FirstNumber + " - " + SecondNumber + " is " + Result2);
+                break;
 
             case 3:
-            break;
+                break;
 
             case 4:
-            break;
+                break;
 
             case 5:
-            break;
+                break;
 
             case 6:
-            break;
+                break;
 
             case 7:
-            break;
+                break;
 
             case 8:
-            break;
+                break;
 
             case 9:
-            break;
+                break;
 
             case 10:
-            break;
+                break;
         }
 
         System.out.println("\nThank you for using =====SCICALC=====");
@@ -87,14 +91,50 @@ public class SciCalc {
                     7. Find next Hailstone numbers for each of the two numbers
                     8. Find the hypotenuse using two numbers as legs of a right triangle
                     9. Find the largest of the two numbers
-                    10. Find the smallest of the two numbers
-                            """);
+                    10. Find the smallest of the two numbers """);
+
+        System.out.println("Please select a function:");
+        FunctionChoice = scanner.nextInt();
     }
 
-    // Methods for the Switches(FunctionChoice)
-    public static int choice1(int num1, int num2) {
-        int Choice1Results = num1 + num2;
-        return Choice1Results;
+    // =================== Methods for the Switches(FunctionChoice) ===================//
+
+    public static int add(int num1, int num2) {
+        int Results = num1 + num2;
+        return Results;
+    }
+    public static int sub(int num1, int num2) {
+        int Results = num1 - num2;
+        return Results;
+    }
+    public static int mult(int num1, int num2) {
+        int Results = num1 * num2;
+        return Results;
+    }
+    public static int div(int num1, int num2) {
+        int Results = num1 / num2;
+        return Results;
+    }
+    public static int mod(int num1, int num2) {
+        int Results = num1 % num2;
+        return Results;
+    }
+    public static double pow(int num1, int num2) {
+        double Results = Math.pow(num1, num2);
+        return Results;
+    }
+    public static double hyp(int num1, int num2) {
+        double Results = Math.hypot(num1, num2);;
+        return Results;
+    }
+    public static double hailed(int num) {
+        if (num % 2 == 0) {
+            int res
+            
+           return num / 2;
+        } else {
+            return num * 3 + 1;
+        }
     }
 }
 
@@ -102,7 +142,9 @@ public class SciCalc {
 
 /*
  * 1. What was the hardest part of this lab?
- * 
+ *  The data types for math functions. sometimes theres a function that needs the method to be an int and then the variable to be a double,
+ *  hailed was very confusing, i had a hard time figuring out how to define odds and even. i also had a hard time figuring out how to do the
+ *  return thingy.
  * 
  * 
  * 

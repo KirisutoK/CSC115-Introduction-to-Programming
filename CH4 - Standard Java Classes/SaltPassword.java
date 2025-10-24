@@ -41,7 +41,8 @@ public class SaltPassword {
 
         // ASCII from A to z (65-122)
         // (Options + 1) + StartingNumber
-        // The +1 is needed
+        // The +1 is needed because in order to start at 1 rather than 0
+        // 57 = 0-56 || 57 + 1 = 1-57
 
         System.out.println("Salt: " + SALT);
         System.out.println("Salted password: " + PASSWORD + SALT);

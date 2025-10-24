@@ -46,7 +46,7 @@ public class Password {
         if (choice == 1) { // display password specifications to the user
             showPasswordSpecifications();
         } else if (choice == 2) { // generate a random password for the user
-            System.out.println("\nEnter Seed:");
+            System.out.println("\nEnter seed:");
             Seed = scanner.nextInt();
 
             String RandomGeneratedPassword = Password.generateRandomPassword(Seed);

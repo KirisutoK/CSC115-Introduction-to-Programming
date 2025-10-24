@@ -3,9 +3,13 @@ import java.util.Scanner;
 
 public class test {
     public static void main(String []args) {
-        System.out.println("""
-                
-                """);
+
+        int FirstNumber = 7;
+        int SecondNumber = 52;
+
+        if (FirstNumber / 2 == 0) {
+            
+        }
     }
 
 }

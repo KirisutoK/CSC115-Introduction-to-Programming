@@ -43,31 +43,52 @@ public class SciCalc {
 
             case 2:
                 int Result2 = SciCalc.sub(FirstNumber, SecondNumber);
-                System.out.println("The result of " + FirstNumber + " - " + SecondNumber + " is " + Result2);
+                System.out.println("\nThe result of " + FirstNumber + " - " + SecondNumber + " is " + Result2);
                 break;
 
             case 3:
+                int Result3 = SciCalc.mult(FirstNumber, SecondNumber);
+                System.out.println("\nThe result of " + FirstNumber + " * " + SecondNumber + " is " + Result3);
                 break;
 
             case 4:
+                double Result4 = SciCalc.div(FirstNumber, SecondNumber);
+                System.out.println("\nThe result of " + FirstNumber + " / " + SecondNumber + " is " + Result4);
                 break;
 
             case 5:
+                int Result5 = SciCalc.mod(FirstNumber, SecondNumber);
+                System.out.println("\nThe result of " + FirstNumber + " % " + SecondNumber + " is " + Result5);
                 break;
 
             case 6:
+                double Result6 = SciCalc.pow(FirstNumber, SecondNumber);
+                System.out.println("\nThe result of " + FirstNumber + " ^ " + SecondNumber + " is " + Result6);
                 break;
 
             case 7:
+                int Result7A = SciCalc.hailed(FirstNumber);
+                int Result7B = SciCalc.hailed(SecondNumber);
+                System.out.println("\nThe result of " + FirstNumber + " hailed is " + Result7A + " and the result of " + SecondNumber + " hailed is " + Result7B);
                 break;
 
             case 8:
+                double Result8 = SciCalc.hyp(FirstNumber, SecondNumber);
+                System.out.println("\nThe hypotenuse of a right triangle with legs " + FirstNumber + " and " + SecondNumber + " is " + Result8);
                 break;
 
             case 9:
+                int Result9 = SciCalc.max(FirstNumber, SecondNumber);
+                System.out.println("\nThe largest number of " + FirstNumber +" and " + SecondNumber + " is " + Result9);
                 break;
 
             case 10:
+                int Result10 = SciCalc.min(FirstNumber, SecondNumber);
+                System.out.println("\nThe smallest number of " + FirstNumber +" and " + SecondNumber + " is " + Result10);
+                break;
+
+            default:
+                System.out.println("\nYou did not enter a valid choice.");
                 break;
         }
 
@@ -123,17 +144,35 @@ public class SciCalc {
         double Results = Math.pow(num1, num2);
         return Results;
     }
+    public static int hailed(int num) {
+        if (num % 2 == 0) {
+            int Results = num / 2;
+           return Results;
+        } else {
+            int Results = num * 3 + 1;
+            return Results;
+        }
+    }
     public static double hyp(int num1, int num2) {
-        double Results = Math.hypot(num1, num2);;
+        double Results = Math.hypot(num1, num2);
         return Results;
     }
-    public static double hailed(int num) {
-        if (num % 2 == 0) {
-            int res
-            
-           return num / 2;
+    public static int max(int num1, int num2) {
+        if (num1 > num2) {
+            int Results = num1;
+            return Results;
         } else {
-            return num * 3 + 1;
+            int Results = num2;
+            return Results;
+        }
+    }
+    public static int min(int num1, int num2) {
+        if (num1 > num2) {
+            int Results = num2;
+            return Results;
+        } else {
+            int Results = num1;
+            return Results;
         }
     }
 }
@@ -144,12 +183,18 @@ public class SciCalc {
  * 1. What was the hardest part of this lab?
  *  The data types for math functions. sometimes theres a function that needs the method to be an int and then the variable to be a double,
  *  hailed was very confusing, i had a hard time figuring out how to define odds and even. i also had a hard time figuring out how to do the
- *  return thingy.
+ *  return thingy for the fist 5 minutes.
+ * 
+ * 
  * 
  * 
  * 
  * 2. What will you always remember (never forget) from this exercise?
- * 
+ *  I am starting to get used between local variables and global variables. 
+ *  local variables are variables inside a method and only used in that specific method
+ *  while global variables are variables that are used from methods to methods.
+ *  
+ *  
  * 
  * 
  * 

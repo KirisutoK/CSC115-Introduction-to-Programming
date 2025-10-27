@@ -134,7 +134,7 @@ public class RPGame {
         System.out.println(" Level: " + PlayerLevel);
         System.out.println(" Username: " + PlayerUsername);
         System.out.println(" Age: " + PlayerAge);
-        PlayerWeapon();
+        System.out.println(" Weapon: " + PrintPlayerWeapon());
         PlayerTrait();
         System.out.println("|=======================================|");
     }
@@ -151,34 +151,42 @@ public class RPGame {
         switch (WeaponNumber) {
             case 1:
                 System.out.println("\nYou have chosen Wooden Sword");
+                WeaponDamage = 30;
                 PlayerWeapon = 1;
                 break;
             case 2:
                 System.out.println("\nYou have chosen Wooden Bow");
+                WeaponDamage = 30;
                 PlayerWeapon = 2;
                 break;
             case 3:
                 System.out.println("\nYou have chosen Wooden Staff");
+                WeaponDamage = 30;
                 PlayerWeapon = 3;
                 break;
             case 4:
                 System.out.println("\nYou have chosen Wooden Axe");
+                WeaponDamage = 30;
                 PlayerWeapon = 4;
                 break;
             case 5:
                 System.out.println("\nYou have chosen Wooden Spear");
+                WeaponDamage = 30;
                 PlayerWeapon = 5;
                 break;
             case 6:
                 System.out.println("\nYou have chosen Wooden Knife");
+                WeaponDamage = 30;
                 PlayerWeapon = 6;
                 break;
             case 7:
                 System.out.println("\nYou have chosen Wooden Hammer");
+                WeaponDamage = 30;
                 PlayerWeapon = 7;
                 break;
             case 8:
                 System.out.println("\nYou have chosen Admin Weapon");
+                WeaponDamage = 999999999;
                 PlayerWeapon = 8;
                 break;
             default:
@@ -186,40 +194,26 @@ public class RPGame {
                 break;
         }
     }
-    public static void PlayerWeapon() {
+    public static String PrintPlayerWeapon() { //Prints the weapon name (Does not affect anything)
         switch (PlayerWeapon) {
             case 1:
-                System.out.println(" Weapon: Wooden Sword");
-                WeaponDamage = 30;
-                break;
+                return " Weapon: Wooden Sword";
             case 2:
-                System.out.println(" Weapon: Wooden Bow");
-                WeaponDamage = 30;
-                break;
+                return " Weapon: Wooden Bow";
             case 3:
-                System.out.println(" Weapon: Wooden Staff");
-                WeaponDamage = 30;
-                break;
+                return " Weapon: Wooden Staff";
             case 4:
-                System.out.println(" Weapon: Wooden Axe");
-                WeaponDamage = 30;
-                break;
+                return " Weapon: Wooden Axe";
             case 5:
-                System.out.println(" Weapon: Wooden Spear");
-                WeaponDamage = 30;
-                break;
+                return " Weapon: Wooden Spear";
             case 6:
-                System.out.println(" Weapon: Wooden Knife");
-                WeaponDamage = 30;
-                break;
+                return " Weapon: Wooden Knife";
             case 7:
-                System.out.println(" Weapon: Wooden Hammer");
-                WeaponDamage = 30;
-                break;
+                return " Weapon: Wooden Hammer";
             case 8:
-                System.out.println(" Weapon: Admin Weapon");
-                WeaponDamage = 999999999;
-                break;
+                return " Weapon: Admin Weapon";
+            default:
+                return " Weapon: None";
         }
     }
     public static void PlayerTrait() {
@@ -241,6 +235,22 @@ public class RPGame {
                 break;
         }
     }
+    public static String PrintPlayerTrait() {
+        switch (PlayerTrait) {
+            case 1:
+                return " Trait: Confident and Brave."; // 2x Damage Boost
+            case 2:
+                return " Trait: Energetic and Enthusiastic"; // 2x Health
+            case 3:
+                return " Trait: Curious and Aware"; // 2x Exp
+            case 4:
+                return " Trait: Lucky"; // 2x Crit Chance
+            case 5:
+                return " Trait: None"; // No Buff
+            default:
+                return " Trait: None";
+        }
+    }
     public static void PlayerLevel() {
          while (PlayerEXP >= 100 * PlayerLevel) {
             PlayerLevel++;
@@ -256,7 +266,7 @@ public class RPGame {
 
     //============Miscellaneous==============\\
 
-    public static void EncounterMessage() {
+    public static void EncounterMessage() { // when the player encounters a mob
         System.out.println("\nA wild mob has appeared!");
     }
 

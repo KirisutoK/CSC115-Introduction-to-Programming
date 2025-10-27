@@ -10,26 +10,17 @@ public class RPGame {
     static int NormalLoadingMessageMode = 2500;
     static int SlowLoadingMessageMode = 4000;
 
-    static boolean AbletoPlay = true;
+    static boolean AbletoPlay = true; // if the user is ready to play the game
 
     // Global Variables // User Stats //
     static String PlayerUsername;
+    static int PlayerEXP = 0; // 1*100 = 100 // 2*100 = 200 // 3*100 = 300
     static int PlayerLevel = 1;
     static int PlayerHealth = 100;
     static int PlayerAge = 0;
-    static int DescriptionNumber = random.nextInt(5)+1;
-
-    // Global Variable // Mobs //
-    static int goblin; //--Chapter 1 Mobs
-    static int bee;
-    static int slime;
-    static int wolves;
-    static int boar; // The mobs will be an int value in order to specify the random chances.
-
-    static int elves;
-    static int vampires;
-    static int orc;
-
+    static int PlayerTrait = random.nextInt(5)+1;
+    static int PlayerWeapon = 0; // 1 = Sword, 2 = Bow, 3 = Staff, 4 = Axe, 5 = Spear, 6 = Knife 7 = Hammer
+    static int WeaponDamage = 0; // 30 Default
 
     public static void main(String[] args) {
         Introductions(FastLoadingMessageMode);
@@ -37,6 +28,8 @@ public class RPGame {
         if (AbletoPlay == true) {
             Chapter1(FastLoadingMessageMode);
         }
+
+        PlayerStats();
     }
 
     //-----------------------------------------------------------------------------\\
@@ -129,17 +122,108 @@ public class RPGame {
         LoadingMessageEffect(num);
         System.out.println("\nAs you read the contents of your profile, you suddenly heard rustling from the bushes.");
 
+        System.out.println("\nA wild mob has appearead!");
 
+        ChooseWeapon();
     }   
 
-    //============Entities==============\\
+    //============Player==============\\
     public static void PlayerStats() {
         System.out.println("\n|==============Player-Status============|");
         System.out.println(" Health: " + PlayerHealth);
         System.out.println(" Level: " + PlayerLevel);
         System.out.println(" Username: " + PlayerUsername);
         System.out.println(" Age: " + PlayerAge);
-        switch (DescriptionNumber) {
+        PlayerWeapon();
+        PlayerTrait();
+        System.out.println("|=======================================|");
+    }
+    public static void ChooseWeapon() {
+    System.out.println("\n|==============Please-Choose-a-Weapon-=============|");
+        System.out.println(" 1. Wooden Sword            5. Wooden Axe           ");
+        System.out.println(" 2. Wooden Bow              6. Wooden Spear         ");
+        System.out.println(" 3. Wooden Staff            7. Wooden Knife         ");
+        System.out.println(" 4. Wooden Hammer                                   ");
+        System.out.println("|==================================================|\n");
+
+        int WeaponNumber = scanner.nextInt();
+
+        switch (WeaponNumber) {
+            case 1:
+                System.out.println("\nYou have chosen Wooden Sword");
+                PlayerWeapon = 1;
+                break;
+            case 2:
+                System.out.println("\nYou have chosen Wooden Bow");
+                PlayerWeapon = 2;
+                break;
+            case 3:
+                System.out.println("\nYou have chosen Wooden Staff");
+                PlayerWeapon = 3;
+                break;
+            case 4:
+                System.out.println("\nYou have chosen Wooden Axe");
+                PlayerWeapon = 4;
+                break;
+            case 5:
+                System.out.println("\nYou have chosen Wooden Spear");
+                PlayerWeapon = 5;
+                break;
+            case 6:
+                System.out.println("\nYou have chosen Wooden Knife");
+                PlayerWeapon = 6;
+                break;
+            case 7:
+                System.out.println("\nYou have chosen Wooden Hammer");
+                PlayerWeapon = 7;
+                break;
+            case 8:
+                System.out.println("\nYou have chosen Admin Weapon");
+                PlayerWeapon = 8;
+                break;
+            default:
+                System.out.println("\nInvalid choice. Please choose a valid weapon.");
+                break;
+        }
+    }
+    public static void PlayerWeapon() {
+        switch (PlayerWeapon) {
+            case 1:
+                System.out.println(" Weapon: Wooden Sword");
+                WeaponDamage = 30;
+                break;
+            case 2:
+                System.out.println(" Weapon: Wooden Bow");
+                WeaponDamage = 30;
+                break;
+            case 3:
+                System.out.println(" Weapon: Wooden Staff");
+                WeaponDamage = 30;
+                break;
+            case 4:
+                System.out.println(" Weapon: Wooden Axe");
+                WeaponDamage = 30;
+                break;
+            case 5:
+                System.out.println(" Weapon: Wooden Spear");
+                WeaponDamage = 30;
+                break;
+            case 6:
+                System.out.println(" Weapon: Wooden Knife");
+                WeaponDamage = 30;
+                break;
+            case 7:
+                System.out.println(" Weapon: Wooden Hammer");
+                WeaponDamage = 30;
+                break;
+            case 8:
+                System.out.println(" Weapon: Admin Weapon");
+                WeaponDamage = 999999999;
+                break;
+        }
+    }
+    public static void PlayerTrait() {
+        switch (PlayerTrait) {
             case 1:
                 System.out.println(" Trait: Confident and Brave."); // 2x Damage Boost
                 break;
@@ -156,14 +240,25 @@ public class RPGame {
                 System.out.println(" Trait: None"); // No Buff
                 break;
         }
-        System.out.println("|=======================================|");
     }
-    
-
+    public static void PlayerLevel() {
+         while (PlayerEXP >= 100 * PlayerLevel) {
+            PlayerLevel++;
+            PlayerEXP -= 100*PlayerLevel;
+            System.out.println(" You leveled up! Your new level is " + PlayerLevel);
+        }
+    }
+    //============Mobs==============\\
     public static void Mobs() {
+
+
     }
 
     //============Miscellaneous==============\\
+
+    public static void EncounterMessage() {
+        System.out.println("\nA wild mob has appeared!");
+    }
 
     public static void LoadingMessageEffect(int num) {
         try {

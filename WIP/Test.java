@@ -1,45 +1,92 @@
 import java.util.Random;
 
-
 public class Test {
 
     static Random random = new Random();
 
-    static int PlayerHealth = 100;
+    // Global Variables uSERS \\
+    static String PlayerUsername;
+    static int PlayerEXP = 0; // 1*100 = 100 // 2*100 = 200 // 3*100 = 300
     static int PlayerLevel = 1;
-    static String PlayerUsername = "Dummy";
+    static int PlayerHealth = 100;
     static int PlayerAge = 18;
-    static int DescriptionNumber = random.nextInt(5)+1;
+    static int PlayerTrait = random.nextInt(5) + 1;
+    static int PlayerWeapon = 8; // 1 = Sword, 2 = Bow, 3 = Staff, 4 = Axe, 5 = Spear, 6 = Knife 7 = Hammer
+    static int WeaponDamage = 30; // 30 Default
 
     public static void main(String[] args) {
-        UserStat();
+        PlayerLevel();
+        System.out.println("Player Level is " + PlayerLevel);
 
-        UserStat();
+        PlayerEXP += 1050;
+        PlayerLevel();
 
-        UserStat();
+        System.out.println("Player Level is " + PlayerLevel);
     }
 
-    public static void UserStat() {
-        System.out.println("\n|==============Player-Status============|");
-        System.out.println("Health: " + PlayerHealth);
-        System.out.println("Level: " + PlayerLevel);
-        System.out.println("Username: " + PlayerUsername);
-        System.out.println("Age: " + PlayerAge);
-        System.out.println("Description:");
-        if (DescriptionNumber == 1) {
-            System.out.println("A tall guy with messy brown hair and a calm smile. He loves nature and often carries a small notebook wherever he goes.");
-        } else if (DescriptionNumber == 2) {
-            System.out.println("A cheerful girl with short black hair and bright eyes. She's always full of energy and loves talking to new people.");
-        } else if (DescriptionNumber == 3) {
-            System.out.println("A quiet person who wears glasses and prefers staying indoors. He enjoys reading books and fixing gadgets.");
-        } else if (DescriptionNumber == 4) {
-            System.out.println("A kind and gentle person who loves helping others. She often wears simple clothes and a small silver necklace.");
-        } else if (DescriptionNumber == 5) {
-            System.out.println("A confident and athletic guy who enjoys challenges. He has short blonde hair and usually wears a hoodie and sneakers.");
-        } else {
-            System.out.println("You have no description.");
+    // =================Methods=================\\
+    public static void PlayerTrait() {
+        switch (PlayerTrait) {
+            case 1:
+                System.out.println(" Trait: Confident and Brave."); // 2x Damage Boost
+                break;
+            case 2:
+                System.out.println(" Trait: Energetic and Enthusiastic"); // 2x Health
+                break;
+            case 3:
+                System.out.println(" Trait: Curious and Aware"); // 2x Exp
+                break;
+            case 4:
+                System.out.println(" Trait: Lucky"); // 2x Crit Chance
+                break;
+            case 5:
+                System.out.println(" Trait: None"); // No Buff
+                break;
         }
-        System.out.println("|=======================================|");
     }
 
+    public static void PlayerWeapon() {
+        switch (PlayerWeapon) {
+            case 1:
+                System.out.println(" Weapon: Wooden Sword");
+                WeaponDamage = 30;
+                break;
+            case 2:
+                System.out.println(" Weapon: Wooden Bow");
+                WeaponDamage = 30;
+                break;
+            case 3:
+                System.out.println(" Weapon: Wooden Staff");
+                WeaponDamage = 30;
+                break;
+            case 4:
+                System.out.println(" Weapon: Wooden Axe");
+                WeaponDamage = 30;
+                break;
+            case 5:
+                System.out.println(" Weapon: Wooden Spear");
+                WeaponDamage = 30;
+                break;
+            case 6:
+                System.out.println(" Weapon: Wooden Knife");
+                WeaponDamage = 30;
+                break;
+            case 7:
+                System.out.println(" Weapon: Wooden Hammer");
+                WeaponDamage = 30;
+                break;
+            case 8:
+                System.out.println(" Weapon: Admin Weapon");
+                WeaponDamage = 999999999;
+                break;
+        }
+    }
+
+    public static void PlayerLevel() {
+        while (PlayerEXP >= 100 * PlayerLevel) {
+            PlayerLevel++;
+            PlayerEXP -= 100*PlayerLevel;
+            System.out.println(" You leveled up! Your new level is " + PlayerLevel);
+        }
+    }
 }

@@ -12,15 +12,20 @@ public class Test {
     static int PlayerLevel = 1;
     static int PlayerHealth = 100;
     static int PlayerAge = 18;
-    static int PlayerTrait = random.nextInt(5) + 1;
+    static int PlayerTrait = 1;
     static int PlayerWeapon = 8; // 1 = Sword, 2 = Bow, 3 = Staff, 4 = Axe, 5 = Spear, 6 = Knife 7 = Hammer
-    static int WeaponDamage = 30; // 30 Default
+    static double WeaponDamage = 30; // 30 Default
 
     public static void main(String[] args) {
+        loadingScreen();
+
         PlayerLevel();
         ChooseWeapon();
+        PlayerTrait();
 
         System.out.println("Weapon is " + PrintPlayerWeapon() + " Damage is " + WeaponDamage);
+
+        Dialogue("TEST TEST TEST TEST TEST TEST TEST TEST");
 
 
         System.out.println("Player Level is " + PlayerLevel);
@@ -30,18 +35,18 @@ public class Test {
     // =================Methods=================\\
     public static void PlayerTrait() {
         switch (PlayerTrait) {
-            case 1:
-                System.out.println(" Trait: Confident and Brave."); // 2x Damage Boost
-                WeaponDamage = WeaponDamage * 2;
+            case 1: // Confident and Brave => 2x Damage Boost
+                WeaponDamage = WeaponDamage * 1.5;
                 break;
-            case 2:
-                System.out.println(" Trait: Energetic and Enthusiastic"); // 2x Health
+            case 2: // Energetic and Enthusiastic => 2x Health
+                WeaponDamage = PlayerHealth * 1.5;
                 break;
             case 3:
                 System.out.println(" Trait: Curious and Aware"); // 2x Exp
                 break;
-            case 4:
-                System.out.println(" Trait: Lucky"); // 2x Crit Chance
+            case 4: // Lucky and Fortunate => 2x Crit Chance
+                if (random.nextInt(2)+1 == 2) // so that it repeats instead of permament
+                WeaponDamage *= 2;
                 break;
             case 5:
                 System.out.println(" Trait: None"); // No Buff
@@ -133,5 +138,31 @@ public class Test {
             PlayerEXP -= 100*PlayerLevel;
             System.out.println(" You leveled up! Your new level is " + PlayerLevel);
         }
+    }
+    public static void loadingScreen() { 
+        try {
+            System.out.print("\n\n");
+            
+            // Title
+            String Title = "INITIALIZING GAME. . . . .";
+            for (char c : Title.toCharArray()) {
+                System.out.print(c);
+                Thread.sleep(500);
+            }
+            
+        } catch (InterruptedException e) {
+            System.out.println("An error occurred during loading.");
+        }
+    }
+    public static String Dialogue(String Dialogue) {
+        try { 
+            for (char Characters : Dialogue.toCharArray()) {
+                System.out.print(Characters);
+                Thread.sleep(100);
+            }
+        } catch (InterruptedException e) {
+            System.out.println("An error occurred during loading.");
+        }
+        return Dialogue;
     }
 }

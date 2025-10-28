@@ -8,6 +8,7 @@ public class RPGame {
     // Global Variables // Miscallenous //
     static int DialogueSpeed = 0; // speed of the loading message
     static boolean AbletoPlay = false; // if the user is ready to play the game
+    static boolean AbletoPlayStory = true; // if the user is able to play the story (age restriction)
 
     // Global Variables // User Stats //
     static String PlayerUsername;
@@ -18,16 +19,16 @@ public class RPGame {
     static int PlayerTrait = random.nextInt(5)+1;
     static int PlayerWeapon = 0; // 1 = Sword, 2 = Bow, 3 = Staff, 4 = Axe, 5 = Spear, 6 = Knife 7 = Hammer
     static double WeaponDamage = 0; // 30 Default
-
     public static void main(String[] args) {
-        LoadingScreen();
+        StartGame();
 
         if (AbletoPlay == true) {
+            LoadingScreen();
             Introductions();
+        }
+        if (AbletoPlayStory == true) {
             Chapter1();
         }
-
-        PlayerStats();
     }
 
     //-----------------------------------------------------------------------------\\
@@ -35,7 +36,7 @@ public class RPGame {
     //-----------------------------------------------------------------------------\\
 
     //============Story==============\\
-    public static void LoadingScreen() { /////////////THIS IS WHERE WE LEFT AT (TRYING TO REMOVE A PREVIOUS PRINTED LINE WHEN ITS INVALID)
+    public static void StartGame() {
         System.out.println("Would you like to start the game? (Y/N)");
         char StartGame = scanner.next().charAt(0);
 
@@ -43,10 +44,11 @@ public class RPGame {
             AbletoPlay = true;
         } else {
             AbletoPlay = false;
-            LoadingScreen();
+            StartGame();
             return;
         }
-
+    }
+    public static void LoadingScreen() {
         System.out.println("\nChoose how fast would you like to proceed in the story:");
         System.out.println(" 1. Fast");
         System.out.println(" 2. Normal");
@@ -101,15 +103,15 @@ public class RPGame {
             
         Dialogue("\n\nAnd your age… how long has your soul walked among the living?\n");
         PlayerAge = scanner.nextInt();
-        if (PlayerAge >= 70) {
+        if (PlayerAge > 70) {
             System.out.println("\nYou are too old");
-            AbletoPlay = false;
-            End();
+            AbletoPlayStory = false;
+            End(0);
             return;
         } else if (PlayerAge <= 5) {
             System.out.println("\nYou are too young");
-            AbletoPlay = false;
-            End();
+            AbletoPlayStory = false;
+            End(0);
             return;
         }
 
@@ -123,6 +125,12 @@ public class RPGame {
         Dialogue("\n\n");
         
         Dialogue("\n");
+
+        LoadingMessageEffect();
+
+        LoadingMessageEffect();
+
+        LoadingMessageEffect();
         
     }
     public static void Chapter1() {
@@ -179,7 +187,7 @@ public class RPGame {
         Dialogue("\n 2. Wooden Bow              6. Wooden Spear         ");
         Dialogue("\n 3. Wooden Staff            7. Wooden Knife         ");
         Dialogue("\n 4. Wooden Hammer                                   ");
-        Dialogue("\n|==================================================|\n");
+        Dialogue("\n|==================================================|\n\n");
 
         int WeaponNumber = scanner.nextInt();
         
@@ -315,7 +323,6 @@ public class RPGame {
     public static void EncounterMessage() { // when the player encounters a mob
         Dialogue("\nA wild mob has appeared!");
     }
-
     public static String Dialogue(String Dialogue) {
         try { 
             for (char Characters : Dialogue.toCharArray()) {
@@ -327,7 +334,6 @@ public class RPGame {
         }
         return Dialogue;
     }
-
     public static void LoadingMessageEffect() {
         try {
             for(int i = 1; i <= 3; i++) {
@@ -338,7 +344,7 @@ public class RPGame {
             Dialogue("DELAY ERROR!");
         }
     }
-    public static void End() {
+    public static void End(int num) {
         int RandomEndNumber = random.nextInt(3) + 1;
 
         switch (RandomEndNumber) {
@@ -351,6 +357,22 @@ public class RPGame {
             case 3:
                 Dialogue("\nYour will was strong, but the world proved stronger.");
                 break;
+        }
+
+        Dialogue("\n\nWould you like to try again? (Y/N)\n");
+        char RetryChoice = scanner.next().charAt(0);
+
+        if (RetryChoice == 'Y' || RetryChoice == 'y') {
+            switch (num) {
+                case 0:
+                    Introductions(); // start from the beginning
+                    break;
+                case 1: 
+                    Chapter1(); // start from the introductions
+                    break;
+            }
+        } else {
+            Dialogue("\n\nThank you for playing. Farewell, traveler.");
         }
     }
 }

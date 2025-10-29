@@ -5,6 +5,9 @@ public class RPGame {
     static Scanner scanner = new Scanner(System.in);
     static Random random = new Random();
 
+    // Classes \\ Java OOP
+    // static Player player = new Player();
+
     // Global Variables // Miscallenous //
     static int DialogueSpeed = 0; // speed of the loading message
     static boolean AbletoPlay = false; // if the user is ready to play the game
@@ -28,7 +31,10 @@ public class RPGame {
         }
         if (AbletoPlayStory == true) {
             Chapter1();
+
+            WorkInProgressMessage();
         }
+
     }
 
     //-----------------------------------------------------------------------------\\
@@ -52,7 +58,7 @@ public class RPGame {
         System.out.println("\nChoose how fast would you like to proceed in the story:");
         System.out.println(" 1. Fast");
         System.out.println(" 2. Normal");
-        System.out.println(" 3. Slow");
+        System.out.println(" 3. Slow\n");
         
         Boolean ValidChoice = false;
         while (ValidChoice == false) {
@@ -76,7 +82,7 @@ public class RPGame {
                     break;
             
                 default:
-                    System.out.println("Invalid choice, please choose again.");
+                    Dialogue("Invalid choice, please choose again.");
                     break;
             }
         }
@@ -104,12 +110,12 @@ public class RPGame {
         Dialogue("\n\nAnd your age… how long has your soul walked among the living?\n");
         PlayerAge = scanner.nextInt();
         if (PlayerAge > 70) {
-            System.out.println("\nYou are too old");
+            Dialogue("\nYou are too old");
             AbletoPlayStory = false;
             End(0);
             return;
         } else if (PlayerAge <= 5) {
-            System.out.println("\nYou are too young");
+            Dialogue("\nYou are too young");
             AbletoPlayStory = false;
             End(0);
             return;
@@ -169,7 +175,59 @@ public class RPGame {
 
         ChooseWeapon();
     }   
+    public static void End(int num) {
+        int RandomEndNumber = random.nextInt(3) + 1;
 
+        switch (RandomEndNumber) { // Randomizes Death Messages
+            case 1:
+                Dialogue("\n\nYour journey ends here... but your story will be remembered.");
+                break;
+            case 2:
+                Dialogue("\n\nYou have failed... but perhaps fate will give you another chance.");
+                break;
+            case 3:
+                Dialogue("\n\nYour will was strong, but the world proved stronger.");
+                break;
+        }
+
+        Dialogue("\n\nWould you like to try again? (Y/N)\n");
+        char RetryChoice = scanner.next().charAt(0);
+
+        int RestartChoice = 0;
+        Dialogue("\n|==========Would-you-like-to===========|");
+        Dialogue("\n       1. Restart the game");
+        Dialogue("\n 2. Respawn in the current chapter");
+        Dialogue("\n|======================================|\n\n");
+        RestartChoice = scanner.nextInt();
+        
+
+        if (RetryChoice == 'Y' || RetryChoice == 'y') {
+            switch (num) {
+                case 0:
+                    if (RestartChoice == 1) {
+                        ResetPlayerStats();
+                        StartGame();
+                    } else if (RestartChoice == 2) {
+                        Introductions();
+                    } else {
+                        Dialogue("\n\nInvalid choice. Exiting game.");
+                    }
+                    break;
+                case 1: 
+                    if (RestartChoice == 1) {
+                        ResetPlayerStats();
+                        StartGame();
+                    } else if (RestartChoice == 2) {
+                        Chapter1();
+                    } else {
+                        Dialogue("\n\nInvalid choice. Exiting game.");
+                    }
+                    break;
+            }
+        } else {
+            Dialogue("\n\nThank you for playing. Farewell, traveler.");
+        }
+    }
     //============Player==============\\
     public static void PlayerStats() {
         Dialogue("\n\n|==============Player-Status============|");
@@ -180,6 +238,18 @@ public class RPGame {
         Dialogue("\n Weapon: " + PrintPlayerWeapon());
         Dialogue(PrintPlayerTrait());
         Dialogue("\n|=======================================|");
+    }
+    public static void ResetPlayerStats() {
+        PlayerEXP = 0;
+        PlayerLevel = 1;
+        PlayerHealth = 100;
+        PlayerTrait = random.nextInt(5)+1;
+        PlayerWeapon = 0; 
+        WeaponDamage = 0; 
+
+        DialogueSpeed = 0; 
+        AbletoPlay = false; 
+        AbletoPlayStory = true; 
     }
     public static void ChooseWeapon() {
     Dialogue("\n\n|==============Please-Choose-a-Weapon-=============|");
@@ -323,7 +393,7 @@ public class RPGame {
     public static void EncounterMessage() { // when the player encounters a mob
         Dialogue("\nA wild mob has appeared!");
     }
-    public static String Dialogue(String Dialogue) {
+    public static String Dialogue(String Dialogue) { // Prints each word by word with a delay making it look like a typing effect
         try { 
             for (char Characters : Dialogue.toCharArray()) {
                 System.out.print(Characters);
@@ -334,45 +404,36 @@ public class RPGame {
         }
         return Dialogue;
     }
-    public static void LoadingMessageEffect() {
+    public static void LoadingMessageEffect() { // Prints 3 dots with a delay
         try {
             for(int i = 1; i <= 3; i++) {
                 System.out.print(".");
-                Thread.sleep(2500); // 2500 is the default which is 2.5 seconds
+                Thread.sleep(1000); // 2500 is the default which is 2.5 seconds
             }
         } catch (InterruptedException e) {
             Dialogue("DELAY ERROR!");
         }
     }
-    public static void End(int num) {
-        int RandomEndNumber = random.nextInt(3) + 1;
+    public static void WorkInProgressMessage() { // Message displayed at the end of the game
+        System.out.println("\n");
+        LoadingMessageEffect();
+        System.out.println("\n");
+        LoadingMessageEffect();
+        DialogueSpeed = 2;
+        Dialogue("Dear " + PlayerUsername + ",");
+        Dialogue("""
+            \n\nThank you.. truly.. for taking the time to experience my game.
+            Every moment you spent here means more than you know.
 
-        switch (RandomEndNumber) {
-            case 1:
-                Dialogue("\nYour journey ends here... but your story will be remembered.");
-                break;
-            case 2:
-                Dialogue("\nYou have failed... but perhaps fate will give you another chance.");
-                break;
-            case 3:
-                Dialogue("\nYour will was strong, but the world proved stronger.");
-                break;
-        }
+            This project is a journey I've poured my heart into, and knowing that you've reached this point makes it all worth it.
+            Your curiosity, your patience, and your time are deeply appreciated.
 
-        Dialogue("\n\nWould you like to try again? (Y/N)\n");
-        char RetryChoice = scanner.next().charAt(0);
+            I hope this world gave you even a small spark of joy or inspiration today.
+            Please check back from time to time — I'm still building, improving, and bringing this dream closer to completion.
 
-        if (RetryChoice == 'Y' || RetryChoice == 'y') {
-            switch (num) {
-                case 0:
-                    Introductions(); // start from the beginning
-                    break;
-                case 1: 
-                    Chapter1(); // start from the introductions
-                    break;
-            }
-        } else {
-            Dialogue("\n\nThank you for playing. Farewell, traveler.");
-        }
+            Until then, take care of yourself, keep chasing what you love, and never stop exploring.
+
+            Thank you, and see you again soon. 🌟
+                """);
     }
 }

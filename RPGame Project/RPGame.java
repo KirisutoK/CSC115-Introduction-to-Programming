@@ -5,6 +5,7 @@ public class RPGame {
     static Scanner scanner = new Scanner(System.in);
     static Random random = new Random();
 
+
     // Classes \\ Java OOP
     // static Player player = new Player();
 
@@ -34,6 +35,10 @@ public class RPGame {
 
             WorkInProgressMessage();
         }
+        
+        //Player p1 = new Player(10);
+
+        //p1.setHealth(100);
 
     }
 

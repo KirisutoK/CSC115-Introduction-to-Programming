@@ -1,5 +1,5 @@
 // Creation Date: July 23, 2026. at 8:28 PM
-// Last Modified: July 23, 2026. at  8:44 PM
+// Last Modified: July 24, 2026. at  7:39 PM
 
 import java.io.*;
 import java.util.HashMap;
@@ -9,15 +9,23 @@ public class Main implements Serializable {
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
+        HashMap<String, Double> Grades01 = new HashMap<>();
+        Grades01.put("Alice",95.5);
+        Grades01.put("Bob", 82.0);
+        Grades01.put("Charlie", 78.5);
 
+        saveGrades("C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Problems\\Problem02 Medium (Real-World)\\Grades.txt", Grades01);
 
+        System.out.println(loadGrades("C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Problems\\Problem02 Medium (Real-World)\\Grades.txt"));
     }
 
     // =========================== METHODS =========================== \\
     public static void saveGrades(String filepath, HashMap<String, Double> grades) {
-        try (ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(filepath))) {
-            oos.writeObject(grades);
-            // THIS SHOULD AUTOMATICALLY CLOSE BECAUSE OF A TRY CATCH
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath))) {
+            for (String s:grades.keySet()) {
+                bw.write(s+","+grades.get(s));
+                bw.newLine();
+            }
         } catch (IOException e) {
             System.out.println("ERROR: "+e.getMessage());
         }
@@ -40,5 +48,4 @@ public class Main implements Serializable {
     }
 }
 
-//! SO I MISREAD THE PROMPT AND IT WAS SUPPOSED TO INPUT A INFORMATION INTO A TEXT FILE SO IT IS NOT SERIALIZATION
 //! SERIALIZATION IS FOR OBJECTS

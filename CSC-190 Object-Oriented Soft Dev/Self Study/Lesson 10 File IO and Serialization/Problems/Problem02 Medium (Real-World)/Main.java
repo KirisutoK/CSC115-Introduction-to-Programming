@@ -1,10 +1,10 @@
 // Creation Date: July 23, 2026. at 8:28 PM
-// Last Modified: July 24, 2026. at  7:39 PM
+// Last Modified: July 24, 2026. at  7:46 PM
 
 import java.io.*;
 import java.util.HashMap;
 
-public class Main implements Serializable {
+public class Main {
     // =========================== CLASS VARIABLES =========================== \\
 
     // =========================== MAIN =========================== \\

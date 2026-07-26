@@ -1,9 +1,9 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:22 PM
-// Last Modified: July 25, 2026. at 10:22 PM
+// Last Modified: July 26, 2026. at  8:56 AM
 
-public class Questionn {
+public class Question {
     //=======VARIABLES=======//
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES

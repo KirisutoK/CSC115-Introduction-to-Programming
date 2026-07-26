@@ -161,15 +161,15 @@ What is the difference between `FileWriter` and `PrintWriter`?
 
 | Question | Correct Answer | Explanation |
 |----------|----------------|-------------|
-| 1        |                |             |
-| 2        |                |             |
-| 3        |                |             |
-| 4        |                |             |
-| 5        |                |             |
-| 6        |                |             |
-| 7        |                |             |
-| 8        |                |             |
-| 9        |                |             |
-| 10       |                |             |
-| 11       |                |             |
-| 12       |                |             |
+| 1        | B              |             |
+| 2        | C              |             |
+| 3        | B              |             |
+| 4        | C              |   Auto-closes the file          |
+| 5        | C              |             |
+| 6        | B              |             |
+| 7        | C              |             |
+| 8        | B              |             |
+| 9        | D              |             |
+| 10       | C              |             |
+| 11       | C              |             |
+| 12       | B              |             |

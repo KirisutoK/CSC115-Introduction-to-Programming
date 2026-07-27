@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:22 PM
-// Last Modified: July 26, 2026. at 11:30 PM
+// Last Modified: July 27, 2026. at  5:37 PM
 
 import java.util.Random;
 
@@ -12,8 +12,9 @@ public class Question {
     // [MAIN VARIABLES]
     private String Prompt;
     private double PromptAnswer;
-    private char CorrectAnswer;
-    private char UserAnswer; // THIS IS AUTOMATICALLY CONVERTED INTO UPPERCASE FOR DEFAULT
+    private char CorrectAnswer; // DEFAULT IS UPPERCASE
+    private char UserAnswer; // THIS IS AUTOMATICALLY CONVERTED INTO UPPERCASE FOR DEFAULT\
+    private boolean AnsweredCorrectly;
 
     // [OPERATIONAL VARIABLES]
 
@@ -53,13 +54,21 @@ public class Question {
         while (!ValidAnswer) {
             switch (UserAnswer) {
                 case 'A':
-                    return PromptAnswer == RandomizeOptions[0];
+                    ValidAnswer = true;
+                    AnsweredCorrectly = PromptAnswer == RandomizeOptions[0];
+                    break;
                 case 'B':
-                    return PromptAnswer == RandomizeOptions[0];
+                    ValidAnswer = true;
+                    AnsweredCorrectly = PromptAnswer == RandomizeOptions[0];
+                    break;
                 case 'C':
-                    return PromptAnswer == RandomizeOptions[0];
+                    ValidAnswer = true;
+                    AnsweredCorrectly = PromptAnswer == RandomizeOptions[0];
+                    break;
                 case 'D':
-                    return PromptAnswer == RandomizeOptions[0];
+                    ValidAnswer = true;
+                    AnsweredCorrectly = PromptAnswer == RandomizeOptions[0];
+                    break;
                 default:
                     System.out.println("Please choose A, B, C, D");
                     break;
@@ -75,7 +84,22 @@ public class Question {
             o = random.nextDouble(PromptAnswer+10)+PromptAnswer-10; // The chances of the generative wrong answers will be in a range of 10 towards the correct answer
         }
         // [ASSIGNING THE CORRECT PROMPT ANSWER]
-        GeneratedOptions[random.nextInt(4)] = PromptAnswer;
+        int CorrectAnswerPosition = random.nextInt(4);
+        switch (CorrectAnswerPosition) {
+            case 0:
+                CorrectAnswer = 'A';
+                break;
+            case 1:
+                CorrectAnswer = 'B';
+                break;
+            case 2:
+                CorrectAnswer = 'C';
+                break;
+            case 3:
+                CorrectAnswer = 'D';
+                break;
+        }
+        GeneratedOptions[CorrectAnswerPosition] = PromptAnswer;
 
         return GeneratedOptions;
     }

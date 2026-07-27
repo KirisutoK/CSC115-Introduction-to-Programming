@@ -1,12 +1,15 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: July 25, 2026. at 10:21 PM
+// Last Modified: July 26, 2026. at 10:28 PM
+
+import Classes.BasicMathQuiz;
 
 public class Main {
     // =========================== CLASS VARIABLES =========================== \\
+    static BasicMathQuiz BMQ01 = new BasicMathQuiz("Christ", 10);
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
-
+        
     }
 
     // =========================== METHODS =========================== \\

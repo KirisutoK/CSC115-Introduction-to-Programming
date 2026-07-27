@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: July 26, 2026. at  8:58 AM
+// Last Modified: July 26, 2026. at 10:26 PM
 
 public class BasicMathQuiz {
     //=======VARIABLES=======//
@@ -30,10 +30,12 @@ public class BasicMathQuiz {
             System.out.println("Range: "+Questions);
         }
         StartTime = System.currentTimeMillis();
-        System.out.println("Start Time: "+);
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
+    public void startQuiz() {
+
+    }
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
 
@@ -42,3 +44,5 @@ public class BasicMathQuiz {
 
     // ================================================== OTHER CLASSES ================================================== \\
 }
+
+//! YOU WORKED ON TIME UTILS TO FIGURE OUT HOW TO FORMAT TIME MILLIS

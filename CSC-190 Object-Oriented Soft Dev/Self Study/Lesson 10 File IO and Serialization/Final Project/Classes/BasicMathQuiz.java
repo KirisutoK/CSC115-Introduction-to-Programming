@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: July 27, 2026. at 10:42 PM
+// Last Modified: July 28, 2026. at  5:58 PM
 
 import Exceptions.InvalidQuestionChoiceException;
 import java.util.Random;
@@ -10,12 +10,11 @@ public class BasicMathQuiz {
     //=======VARIABLES=======//
     Question[] Questions;
     int Score;
-    long StartTime;
-    int EndTime;
     String Username;
     // ADD TIMER LATER
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
+    //! I AM PLANNING TO REMOVE THE PRINTING STUFF HERE AND MOVE IT INTO MAIN, THAT WAY WE CAN ONLY FOCUS THE CONSTRUCTOR AS BACKEND AND MAKE THE SCANNER METHODS EASIER TO READ!
     public BasicMathQuiz(String Username, int Questions) { // Name of the person who took the quiz, How many Questions
         System.out.println("╔══════════════════════════════════╗");
         System.out.println("║      QUIZ HAS BEEN CREATED!      ║");
@@ -49,6 +48,15 @@ public class BasicMathQuiz {
     public Question[] getQuestions() {
         return Questions;
     }
+    public void saveQuizStatus() {
+        countScore();
+        System.out.println("User: "+Username);
+        System.out.println("Total Score: "+Score+"/"+Questions.length);
+        for (Question q:Questions) {
+            q.displayStatus();
+            System.out.println();
+        }
+    }
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
     public void generateQuestions() {
@@ -81,7 +89,7 @@ public class BasicMathQuiz {
         private double[] RandomizeOptions;
 
         //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
-        public Question() { // CREATES A RANDOMIZED QUESTION
+        public Question() {
             // MAKING THE QUESTION (RANDOMIZING IT)
             int num1 = random.nextInt(500)+1; // Starts from 1 and ends at 500
             int num2 = random.nextInt(500)+1; // Starts from 1 and ends at 500
@@ -109,7 +117,11 @@ public class BasicMathQuiz {
             double range = 10.0;
             for (int i = 0; i < GeneratedOptions.length; i++) {
                 double min = PromptAnswer - range;
-                GeneratedOptions[i] = min + random.nextDouble(range * 2); // The chances of the generative wrong answers will be in a range of 10 towards the correct answer
+                double generatedOptions = min + random.nextDouble(range * 2); // The chances of the generative wrong answers will be in a range of 10 towards the correct answer
+                while (PromptAnswer == generatedOptions) { // WHILE IT IS THE SAME, GENERATE AGAIN UNTIL IT IS NOT THE SAME
+                    generatedOptions = min + random.nextDouble(range * 2);
+                }
+                GeneratedOptions[i] = generatedOptions;
             }
 
             // [ASSIGNING THE CORRECT PROMPT ANSWER]
@@ -157,7 +169,6 @@ public class BasicMathQuiz {
 
         //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
         public void displayStatus() {
-
             System.out.println("Question: "+Prompt+" = ??");
             System.out.println("Correct Answer: "+CorrectAnswer+". "+PromptAnswer);
             System.out.println("User Answer: "+UserAnswer);
@@ -165,10 +176,17 @@ public class BasicMathQuiz {
         }
         public void displayQuestion() {
             System.out.println("Question: "+Prompt+" = ??");
-            System.out.println("A. "+String.format("%.2f" ,RandomizeOptions[0])) ;
-            System.out.println("B. "+String.format("%.2f" ,RandomizeOptions[1]));
-            System.out.println("C. "+String.format("%.2f" ,RandomizeOptions[2]));
-            System.out.println("D. "+String.format("%.2f" ,RandomizeOptions[3]));
+            if (Prompt.contains("/")) {
+                System.out.println("A. "+String.format("%.2f" ,RandomizeOptions[0])) ;
+                System.out.println("B. "+String.format("%.2f" ,RandomizeOptions[1]));
+                System.out.println("C. "+String.format("%.2f" ,RandomizeOptions[2]));
+                System.out.println("D. "+String.format("%.2f" ,RandomizeOptions[3]));
+            } else {
+                System.out.println("A. "+String.format("%.0f" ,RandomizeOptions[0])) ;
+                System.out.println("B. "+String.format("%.0f" ,RandomizeOptions[1]));
+                System.out.println("C. "+String.format("%.0f" ,RandomizeOptions[2]));
+                System.out.println("D. "+String.format("%.0f" ,RandomizeOptions[3]));
+            }
         }
 
 
@@ -176,5 +194,7 @@ public class BasicMathQuiz {
     }
 }
 
+
+//! BUG: THERE WILL BE A CHANCE THAT A DUPLICATE OF  THE CORRECT ANSWER WILL SHOW IN THE OPTIONS (PLEASE REMOVE DUPLICATES OF CORRECT ANSWER)
 // TODO: DO TIME FOR LAST
-// TODO: CONFUSED ABOUT THE PROCESS OF THE WHOLE STRUCTURE
+// TODO: THERE IS A

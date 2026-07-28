@@ -1,7 +1,9 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: July 26, 2026. at 10:28 PM
+// Last Modified: July 27, 2026. at 10:42 PM
 
 import Classes.BasicMathQuiz;
+import Exceptions.InvalidQuestionChoiceException;
+import java.util.Scanner;
 
 public class Main {
     // =========================== CLASS VARIABLES =========================== \\
@@ -9,10 +11,46 @@ public class Main {
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
-        
+        startQuiz();
     }
 
     // =========================== METHODS =========================== \\
+    public static void startQuiz() {
+        Scanner input = new Scanner(System.in);
+
+        // [GENERATE QUESTIONS]
+        BMQ01.generateQuestions();
+        System.out.println();
+
+        // [START ANSWERING EACH QUESTION]
+        int count = 1;
+        for (BasicMathQuiz.Question q: BMQ01.getQuestions()) {
+            // SHOW QUESTION
+            System.out.println("+=================================+");
+            System.out.print(count+". ");
+            q.displayQuestion();
+            System.out.println();
+
+            // PROCESS USER INPUT
+            boolean ValidInput = false;
+            while (!ValidInput) {
+                try {
+                    System.out.print("ANSWER: ");
+                    char UserAnswer = input.next().charAt(0);
+                    System.out.println();
+                    q.answerQuestion(UserAnswer);
+
+                    ValidInput = true;
+                    count++;
+                } catch (InvalidQuestionChoiceException e) {
+                    System.out.println("ERROR: "+e.getMessage());
+                }
+            }
+        }
+
+        // [SHOW RESULTS]
+        BMQ01.displayStatus();
+    }
 }
 
  // IDEAS
@@ -33,3 +71,5 @@ public class Main {
 // MathQuizDatabase [CLASS]
 // 1. Sends the results of BasicMathQuiz (Question[])
 // 2. can retrieve the data of the Completed/Failed Quizes but can not change those
+
+// TODO: IMROVE PRINTING VISUALS

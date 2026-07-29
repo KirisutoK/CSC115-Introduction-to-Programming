@@ -1,8 +1,11 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: July 28, 2026. at  5:58 PM
+// Last Modified: July 29, 2026. at  6:38 PM
 
 import Classes.BasicMathQuiz;
+import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -19,7 +22,29 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         // [USER QUIZ CONFIGURATIONS]
+        System.out.println("╔═════════════════════════════════╗");
+        System.out.println("║       QUIZ CONFIGURATIONS       ║");
+        System.out.println("╚═════════════════════════════════╝");
 
+        try {
+            System.out.print("Username: ");
+            String UserName = input.nextLine();
+
+            System.out.print("Range: ");
+            int Range = input.nextInt();
+            input.nextLine(); // REFRESH LEFTOVER \n (CLEARNING BUFFER)
+            System.out.println();
+            BMQ01 = new BasicMathQuiz(UserName, Range);
+
+            // PRINTING
+            System.out.println("╔══════════════════════════════════╗");
+            System.out.println("║      QUIZ HAS BEEN CREATED!      ║");
+            System.out.println("╚══════════════════════════════════╝");
+            System.out.println("Username: "+UserName);
+            System.out.println("Range: "+BMQ01.getQuestions().length);
+        } catch (InputMismatchException e) {
+            System.out.println("ERROR: "+e.getMessage());
+        }
 
         // [GENERATE QUESTIONS]
         BMQ01.generateQuestions();
@@ -27,7 +52,11 @@ public class Main {
 
         // [START ANSWERING EACH QUESTION]
         int count = 1;
+        boolean QuizFinished = false;
         for (BasicMathQuiz.Question q: BMQ01.getQuestions()) {
+            // STOP IF THE USER DECIDEDS TO STOP
+            if (QuizFinished) break;
+
             // SHOW QUESTION
             System.out.println("+=================================+");
             System.out.print(count+". ");
@@ -47,11 +76,19 @@ public class Main {
                     count++;
                 } catch (InvalidQuestionChoiceException e) {
                     System.out.println("ERROR: "+e.getMessage());
+                } catch (FinishQuizException e) {
+                    System.out.println("[USER] "+BMQ01.getUsername()+" "+e.getMessage());
+                    System.out.println();
+                    QuizFinished = true;
+                    break; // stops the for loop?
                 }
             }
         }
 
         // [SHOW RESULTS]
+        System.out.println("╔══════════════════════════════════╗");
+        System.out.println("║             RESULTS║             ║");
+        System.out.println("╚══════════════════════════════════╝");
         BMQ01.displayStatus();
     }
 }
@@ -76,3 +113,4 @@ public class Main {
 // 2. can retrieve the data of the Completed/Failed Quizes but can not change those
 
 // TODO: IMROVE PRINTING VISUALS
+//! BUG: WHEN YOU INPUT 'E' AS THE RANGE, IT DOES NOT TRIGGER A SPECIAL CASE SCENARIO, IT TRIGGERS A LOGIC ERROR AND SOMEHOW THE DATA PASSESS THROUGH ANSWER QUESTION FOR LOOP?

@@ -1,35 +1,35 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: July 28, 2026. at  5:58 PM
+// Last Modified: July 29, 2026. at  6:37 PM
 
+import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
+
+import java.util.InputMismatchException;
 import java.util.Random;
 
 public class BasicMathQuiz {
     //=======VARIABLES=======//
-    Question[] Questions;
-    int Score;
-    String Username;
+    private Question[] Questions;
+    private int Score;
+    private String Username;
     // ADD TIMER LATER
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
     //! I AM PLANNING TO REMOVE THE PRINTING STUFF HERE AND MOVE IT INTO MAIN, THAT WAY WE CAN ONLY FOCUS THE CONSTRUCTOR AS BACKEND AND MAKE THE SCANNER METHODS EASIER TO READ!
     public BasicMathQuiz(String Username, int Questions) { // Name of the person who took the quiz, How many Questions
-        System.out.println("╔══════════════════════════════════╗");
-        System.out.println("║      QUIZ HAS BEEN CREATED!      ║");
-        System.out.println("╚══════════════════════════════════╝");
-        System.out.println("Username: "+Username);
         this.Username = Username;
-        if (Questions > 100) { // If it's greater than 100
-            this.Questions = new Question[100];
-            System.out.println("Range: 100");
-        } else if (Questions < 1) { // If it's less than 1
-            this.Questions = new  Question[1];
-            System.out.println("Range: 1");
-        } else {
-            this.Questions = new Question[Questions];
-            System.out.println("Range: "+Questions);
+        try {
+            if (Questions > 100) { // If it's greater than 100
+                this.Questions = new Question[100];
+            } else if (Questions < 1) { // If it's less than 1
+                this.Questions = new  Question[1];
+            } else {
+                this.Questions = new Question[Questions];
+            }
+        } catch (InputMismatchException e) {
+            throw new InputMismatchException();
         }
 
         // [DEFAULTS]
@@ -37,6 +37,9 @@ public class BasicMathQuiz {
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILE
+    public String getUsername() {
+        return Username;
+    }
     public void countScore() {
         Score = 0;
         for (Question q: Questions) {
@@ -142,7 +145,7 @@ public class BasicMathQuiz {
 
 
         //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
-        public boolean answerQuestion(char userAnswer) throws InvalidQuestionChoiceException {
+        public boolean answerQuestion(char userAnswer) throws InvalidQuestionChoiceException, FinishQuizException {
             // SETTING IT UP
             UserAnswer = Character.toUpperCase(userAnswer);
 
@@ -160,6 +163,8 @@ public class BasicMathQuiz {
                 case 'D':
                     AnsweredCorrectly = PromptAnswer == RandomizeOptions[3]; // If They are equal or not, return true or false.
                     break;
+                case 'E':
+                    throw new FinishQuizException();
                 default:
                     throw new InvalidQuestionChoiceException(); // WE ARE GOING TO NEED THIS WHEN SCANNING INPUTS IN THE MAIN METHOD. IF IT THROWS INVALID QUESTION, REPEAT TIL ITS VALID
             }

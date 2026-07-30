@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: July 30, 2026. at  6:47 PM
+// Last Modified: July 30, 2026. at  7:06 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -115,4 +115,6 @@ public class Main {
 // 1. Sends the results of BasicMathQuiz (Question[])
 // 2. can retrieve the data of the Completed/Failed Quizes but can not change those
 
-// TODO: IMROVE PRINTING VISUALS
+// TODO: DO BUG CHECK WITH CLAUDE
+// TODO: DESIGN HOW SERIALIZING WILL WORK WITH MY OWN DATABASE STRUCTURE
+// TODO: INITIAL IDEA WILL BE USING FILE AS THE DATA AND A FOLDER NAMED DATABASE WITH ALL THE DATAS IN IT.

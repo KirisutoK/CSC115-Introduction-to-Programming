@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: July 29, 2026. at  6:37 PM
+// Last Modified: July 30, 2026. at  7:06 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
@@ -17,7 +17,6 @@ public class BasicMathQuiz {
     // ADD TIMER LATER
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
-    //! I AM PLANNING TO REMOVE THE PRINTING STUFF HERE AND MOVE IT INTO MAIN, THAT WAY WE CAN ONLY FOCUS THE CONSTRUCTOR AS BACKEND AND MAKE THE SCANNER METHODS EASIER TO READ!
     public BasicMathQuiz(String Username, int Questions) { // Name of the person who took the quiz, How many Questions
         this.Username = Username;
         try {

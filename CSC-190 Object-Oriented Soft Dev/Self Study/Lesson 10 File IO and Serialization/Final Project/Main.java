@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: July 30, 2026. at  7:06 PM
+// Last Modified: July 31, 2026. at  5:59 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
     // =========================== CLASS VARIABLES =========================== \\
-    static BasicMathQuiz BMQ01 = new BasicMathQuiz("Christ", 10);
+    static BasicMathQuiz BMQ01;
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
@@ -89,6 +89,7 @@ public class Main {
             }
 
             // [SHOW RESULTS]
+            input.close();
             System.out.println("╔══════════════════════════════════╗");
             System.out.println("║             RESULTS║             ║");
             System.out.println("╚══════════════════════════════════╝");

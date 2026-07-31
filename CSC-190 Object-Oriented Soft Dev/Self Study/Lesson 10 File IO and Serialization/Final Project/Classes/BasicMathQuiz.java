@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: July 30, 2026. at  7:06 PM
+// Last Modified: July 31, 2026. at  6:10 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
@@ -10,6 +10,9 @@ import java.util.InputMismatchException;
 import java.util.Random;
 
 public class BasicMathQuiz {
+    //======= CONFIGURABLE VARIABLES=======//
+    static final int MAX_QUESTIONS = 100; // CHANGING THIS WILL CHANGE THE MAXIMUM QUESTIONS A USER CAN GENERATE QUESTIONS IN A QUIZ
+
     //=======VARIABLES=======//
     private Question[] Questions;
     private int Score;
@@ -19,16 +22,12 @@ public class BasicMathQuiz {
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
     public BasicMathQuiz(String Username, int Questions) { // Name of the person who took the quiz, How many Questions
         this.Username = Username;
-        try {
-            if (Questions > 100) { // If it's greater than 100
-                this.Questions = new Question[100];
-            } else if (Questions < 1) { // If it's less than 1
-                this.Questions = new  Question[1];
-            } else {
-                this.Questions = new Question[Questions];
-            }
-        } catch (InputMismatchException e) {
-            throw new InputMismatchException();
+        if (Questions > MAX_QUESTIONS) { // If it's greater than 100
+            this.Questions = new Question[100];
+        } else if (Questions < 1) { // If it's less than 1
+            this.Questions = new  Question[1];
+        } else {
+            this.Questions = new Question[Questions];
         }
 
         // [DEFAULTS]
@@ -104,7 +103,7 @@ public class BasicMathQuiz {
                 case "+": PromptAnswer = num1 + num2; break;
                 case "-": PromptAnswer = num1 - num2; break;
                 case "*": PromptAnswer = num1 * num2; break;
-                case "/": PromptAnswer = (num2 != 0) ? (double)num1/num2 : 0; break; // THIS IS A TERNARIES OR SOMETHING
+                case "/": PromptAnswer = (double)num1/num2; break;
             }
 
             // GENERATION THE CHOICES
@@ -120,7 +119,7 @@ public class BasicMathQuiz {
             for (int i = 0; i < GeneratedOptions.length; i++) {
                 double min = PromptAnswer - range;
                 double generatedOptions = min + random.nextDouble(range * 2); // The chances of the generative wrong answers will be in a range of 10 towards the correct answer
-                while (PromptAnswer == generatedOptions) { // WHILE IT IS THE SAME, GENERATE AGAIN UNTIL IT IS NOT THE SAME
+                while (Math.round(PromptAnswer) == Math.round(generatedOptions)) { // WHILE IT IS THE SAME, GENERATE AGAIN UNTIL IT IS NOT THE SAME
                     generatedOptions = min + random.nextDouble(range * 2);
                 }
                 GeneratedOptions[i] = generatedOptions;
@@ -168,7 +167,8 @@ public class BasicMathQuiz {
                     throw new InvalidQuestionChoiceException(); // WE ARE GOING TO NEED THIS WHEN SCANNING INPUTS IN THE MAIN METHOD. IF IT THROWS INVALID QUESTION, REPEAT TIL ITS VALID
             }
 
-            return false;
+            // CHECK IF IT ANSWERED CORRECTLY
+            return AnsweredCorrectly;
         }
 
         //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS

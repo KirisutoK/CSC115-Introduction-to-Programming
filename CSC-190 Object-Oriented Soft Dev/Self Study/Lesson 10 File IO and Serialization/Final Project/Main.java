@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: July 31, 2026. at  5:59 PM
+// Last Modified: August 01, 2026. at 10:28 AM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -49,14 +49,15 @@ public class Main {
                 System.out.println("ERROR: Range must be a numerical value!");
             }
         }
-            // [GENERATE QUESTIONS]
-            BMQ01.generateQuestions();
-            System.out.println();
 
-            // [START ANSWERING EACH QUESTION]
-            int count = 1;
-            boolean QuizFinished = false;
-            for (BasicMathQuiz.Question q : BMQ01.getQuestions()) {
+        // [GENERATE QUESTIONS]
+        BMQ01.generateQuestions();
+        System.out.println();
+
+        // [START ANSWERING EACH QUESTION]
+        int count = 1;
+        boolean QuizFinished = false;
+        for (BasicMathQuiz.Question q : BMQ01.getQuestions()) {
                 // STOP IF THE USER DECIDEDS TO STOP
                 if (QuizFinished) break;
 
@@ -88,13 +89,17 @@ public class Main {
                 }
             }
 
-            // [SHOW RESULTS]
-            input.close();
-            System.out.println("╔══════════════════════════════════╗");
-            System.out.println("║             RESULTS║             ║");
-            System.out.println("╚══════════════════════════════════╝");
-            BMQ01.displayStatus();
-        }
+        // [SHOW RESULTS]
+        input.close();
+        System.out.println("╔══════════════════════════════════╗");
+        System.out.println("║             RESULTS║             ║");
+        System.out.println("╚══════════════════════════════════╝");
+        BMQ01.displayStatus();
+
+        // [SERIALIZATION & LOGGING OPTIONS]
+        System.out.println();
+        System.out.println();
+    }
 }
 
  // IDEAS
@@ -116,6 +121,5 @@ public class Main {
 // 1. Sends the results of BasicMathQuiz (Question[])
 // 2. can retrieve the data of the Completed/Failed Quizes but can not change those
 
-// TODO: DO BUG CHECK WITH CLAUDE
 // TODO: DESIGN HOW SERIALIZING WILL WORK WITH MY OWN DATABASE STRUCTURE
 // TODO: INITIAL IDEA WILL BE USING FILE AS THE DATA AND A FOLDER NAMED DATABASE WITH ALL THE DATAS IN IT.

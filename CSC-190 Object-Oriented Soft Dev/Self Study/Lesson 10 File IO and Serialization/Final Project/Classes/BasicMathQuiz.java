@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: July 31, 2026. at  6:10 PM
+// Last Modified: August 01, 2026. at 10:26 AM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
@@ -199,6 +199,4 @@ public class BasicMathQuiz {
 }
 
 
-//! BUG: THERE WILL BE A CHANCE THAT A DUPLICATE OF  THE CORRECT ANSWER WILL SHOW IN THE OPTIONS (PLEASE REMOVE DUPLICATES OF CORRECT ANSWER)
 // TODO: DO TIME FOR LAST
-// TODO: THERE IS A

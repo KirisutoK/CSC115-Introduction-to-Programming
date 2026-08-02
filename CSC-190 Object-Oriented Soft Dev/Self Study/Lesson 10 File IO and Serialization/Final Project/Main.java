@@ -1,26 +1,34 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 01, 2026. at 10:28 AM
+// Last Modified: August 02, 2026. at 12:02 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
+import com.sun.source.tree.WhileLoopTree;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
     // =========================== CLASS VARIABLES =========================== \\
+    static Scanner input = new Scanner(System.in);
     static BasicMathQuiz BMQ01;
+    static boolean isActive = true;
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
-        startQuiz();
+        while (isActive) {
+            startQuiz();
+        }
     }
 
     // =========================== METHODS =========================== \\
     public static void startQuiz() {
-        Scanner input = new Scanner(System.in);
-
         // [USER QUIZ CONFIGURATIONS]
         System.out.println("╔═════════════════════════════════╗");
         System.out.println("║       QUIZ CONFIGURATIONS       ║");
@@ -90,15 +98,57 @@ public class Main {
             }
 
         // [SHOW RESULTS]
-        input.close();
         System.out.println("╔══════════════════════════════════╗");
-        System.out.println("║             RESULTS║             ║");
+        System.out.println("║             RESULTS              ║");
         System.out.println("╚══════════════════════════════════╝");
         BMQ01.displayStatus();
 
-        // [SERIALIZATION & LOGGING OPTIONS]
+        // [PROCESSING LOG AND SERIALIZATION] <====================== THIS IS WHERE WE ARE GOING TO DO THE LOG AND SERIALIZATION STUFF
+        try (File LogFolder = new File("C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Final Project\\Logs")) {
+            // [CREATE THE FOLDER]
+
+            // COUNT HOW MANY FOLDER THERE CURRENTLY ARE AND THEN NAME THE NEW FOLDER IN TO HOW MANY THE FOLDERS ARE CURRENTLY IN THERE IN THE LOGS FOLDER
+
+            // CREATE THE FILE INSIDE THE FOLDER [.ser AND .txt]
+
+        } catch (IOException e) {
+            System.out.println("ERROR: "+e.getMessage());
+        }
+
+        // [WOULD YOU LIKE TO TRY AGAIN?]
         System.out.println();
         System.out.println();
+        System.out.println("[]++++++++++++++++++++++++++++[]");
+        System.out.println("Would you like to try again? ");
+        System.out.println("1. Yes              2. No");
+        System.out.println();
+
+        ValidInput = false;
+        while (!ValidInput) {
+            try {
+                System.out.print("ANSWER: ");
+                int InputChoice = input.nextInt();
+
+                switch (InputChoice) {
+                    case 1:
+                        isActive = true;
+                        ValidInput = true;
+                        System.out.println();
+                        break;
+                    case 2:
+                        isActive = false;
+                        ValidInput = true;
+                        System.out.println();
+                        System.out.println("THANK YOU FOR PLAYING!");
+                        break;
+                    default:
+                        throw new InputMismatchException();
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("ERROR: Please choose between 1 and 2");
+            }
+        }
+        input.nextLine();
     }
 }
 

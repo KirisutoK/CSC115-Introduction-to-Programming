@@ -1,12 +1,15 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 01, 2026. at 10:26 AM
+// Last Modified: August 02, 2026. at 12:59 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
 
-import java.util.InputMismatchException;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class BasicMathQuiz {
@@ -71,6 +74,55 @@ public class BasicMathQuiz {
         countScore();
         System.out.println("Username: "+Username);
         System.out.println("Score: "+Score+"/"+Questions.length);
+    }
+
+    //! [SERIALIZATION AND I/O FILE] <===================== TRYING TO TEST IT OUT (ITS PRETTY HARD DEBUGGING THIS)
+    public void createLog() {
+        // FINDING PATH
+        String LogFolderPath = "C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Final Project\\Logs";
+        File LogFolder = new File(LogFolderPath);
+
+        // COUNTING HOW MANY FOLDERS THERE CURRENTLY ARE
+        File[] Logs = LogFolder.listFiles();
+        int LogsFoldersCount = 0;
+        for (File l:Logs) {
+            LogsFoldersCount++;
+        }
+
+        // CREATING THE FOLDER FOR THE LOGS(.txt and .ser) INSIDE THE LOGS FOLDER
+        String FolderName;
+        if (LogsFoldersCount < 10) { //... THIS IS JUST FOR NUMBERING PURPOSES
+            FolderName = "Log0"+LogsFoldersCount;
+            LogFolder = new File(LogFolderPath, FolderName);
+        } else {
+            FolderName = "Log"+LogsFoldersCount;
+            LogFolder = new File(LogFolderPath, FolderName);
+        }
+        LogFolder.mkdir();
+
+        // CREATING THE FILES INSIDE THE LOGS OF LOGS FOLDER
+        String FolderPath = LogFolderPath+"\\"+FolderName;
+        try {
+            LogFolder = new File(FolderPath, "Questions.txt");
+            LogFolder.createNewFile();
+            LogFolder = new File(FolderPath, "QuizStatus.txt");
+            LogFolder.createNewFile();
+            LogFolder = new File(FolderPath, "QuizObject.ser");
+            LogFolder.createNewFile();
+        } catch (IOException e) {
+            System.out.println("ERROR: "+e.getMessage());
+        }
+
+        // WRITING THE QUESTIONS FOR QUESTIONS.TXT
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FolderPath+"\\Questions.txt"))) {
+            // FOR EVERY QUESTION WRITE THE DISPLAY STATUS
+        } catch (IOException e) {
+            System.out.println("ERROR: "+e.getMessage());
+        }
+
+        // WRITING THE QUIZSTATUS FOR QUIZSTATUS.TXT
+
+        // SAVING THE CURRENT STATE OF OBJECT INTO A SER FILE
     }
 
 

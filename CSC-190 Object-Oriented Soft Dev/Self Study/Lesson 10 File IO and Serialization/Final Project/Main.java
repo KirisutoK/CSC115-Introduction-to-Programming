@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 02, 2026. at 12:02 PM
+// Last Modified: August 02, 2026. at 12:48 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -104,16 +104,6 @@ public class Main {
         BMQ01.displayStatus();
 
         // [PROCESSING LOG AND SERIALIZATION] <====================== THIS IS WHERE WE ARE GOING TO DO THE LOG AND SERIALIZATION STUFF
-        try (File LogFolder = new File("C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Final Project\\Logs")) {
-            // [CREATE THE FOLDER]
-
-            // COUNT HOW MANY FOLDER THERE CURRENTLY ARE AND THEN NAME THE NEW FOLDER IN TO HOW MANY THE FOLDERS ARE CURRENTLY IN THERE IN THE LOGS FOLDER
-
-            // CREATE THE FILE INSIDE THE FOLDER [.ser AND .txt]
-
-        } catch (IOException e) {
-            System.out.println("ERROR: "+e.getMessage());
-        }
 
         // [WOULD YOU LIKE TO TRY AGAIN?]
         System.out.println();

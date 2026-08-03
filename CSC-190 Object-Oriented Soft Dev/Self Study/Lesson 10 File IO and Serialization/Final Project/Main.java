@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 02, 2026. at 12:48 PM
+// Last Modified: August 02, 2026. at  9:35 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -104,6 +104,7 @@ public class Main {
         BMQ01.displayStatus();
 
         // [PROCESSING LOG AND SERIALIZATION] <====================== THIS IS WHERE WE ARE GOING TO DO THE LOG AND SERIALIZATION STUFF
+        BMQ01.createLog();
 
         // [WOULD YOU LIKE TO TRY AGAIN?]
         System.out.println();
@@ -136,6 +137,7 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("ERROR: Please choose between 1 and 2");
+                input.nextLine();
             }
         }
         input.nextLine();

@@ -1,15 +1,12 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 02, 2026. at 12:59 PM
+// Last Modified: August 02, 2026. at  9:44 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 public class BasicMathQuiz {
@@ -76,7 +73,6 @@ public class BasicMathQuiz {
         System.out.println("Score: "+Score+"/"+Questions.length);
     }
 
-    //! [SERIALIZATION AND I/O FILE] <===================== TRYING TO TEST IT OUT (ITS PRETTY HARD DEBUGGING THIS)
     public void createLog() {
         // FINDING PATH
         String LogFolderPath = "C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Final Project\\Logs";
@@ -105,8 +101,6 @@ public class BasicMathQuiz {
         try {
             LogFolder = new File(FolderPath, "Questions.txt");
             LogFolder.createNewFile();
-            LogFolder = new File(FolderPath, "QuizStatus.txt");
-            LogFolder.createNewFile();
             LogFolder = new File(FolderPath, "QuizObject.ser");
             LogFolder.createNewFile();
         } catch (IOException e) {
@@ -115,14 +109,40 @@ public class BasicMathQuiz {
 
         // WRITING THE QUESTIONS FOR QUESTIONS.TXT
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FolderPath+"\\Questions.txt"))) {
-            // FOR EVERY QUESTION WRITE THE DISPLAY STATUS
+            // GENERAL INFORMATION
+            bw.write("Username: "+getUsername()); bw.newLine();
+            bw.write("Total Score: "+Score+"/"+Questions.length);
+            bw.newLine();
+            bw.newLine();
+
+            // EACH QUESTIONS
+            int Count = 1;
+            for (Question q: Questions) {
+                bw.write("+----------------------------------------------------+");
+                bw.newLine();
+                // CHECKING
+                if (q.AnsweredCorrectly) {
+                    bw.write("✅ ");
+                } else {
+                    bw.write("❌ ");
+                }
+                // NUMBERING
+                bw.write(Count+". ");
+                // QUESTION
+                bw.write(q.getQuestionStatus());
+                Count++;
+            }
         } catch (IOException e) {
             System.out.println("ERROR: "+e.getMessage());
         }
 
-        // WRITING THE QUIZSTATUS FOR QUIZSTATUS.TXT
-
         // SAVING THE CURRENT STATE OF OBJECT INTO A SER FILE
+        // NOTE: STILL THINKING OF OF HOW TO DESERIALIZE IT
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FolderPath+"\\QuizObject.ser"))) {
+            oos.writeObject(getClass());
+        } catch (IOException e) {
+            System.out.println("ERROR: "+e.getMessage());
+        }
     }
 
 
@@ -135,7 +155,8 @@ public class BasicMathQuiz {
         private String Prompt;
         private double PromptAnswer;
         private char CorrectAnswer; // DEFAULT IS UPPERCASE
-        private char UserAnswer; // THIS IS AUTOMATICALLY CONVERTED INTO UPPERCASE FOR DEFAULT\
+        private char UserAnswerCharacter; // THIS IS AUTOMATICALLY CONVERTED INTO UPPERCASE FOR DEFAULT\
+        private double UserAnswerNumber;
         private boolean AnsweredCorrectly;
 
         // [OPERATIONAL VARIABLES]
@@ -192,25 +213,50 @@ public class BasicMathQuiz {
         public boolean getAnsweredCorrectly() {
             return AnsweredCorrectly;
         }
+        public String getQuestionStatus() {
+            if (Prompt.contains("/")) {
+                return "Question: " +Prompt+" = ?? \n"+
+                        "A. "+String.format("%.0f" ,RandomizeOptions[0])+"\n"+
+                        "B. "+String.format("%.0f" ,RandomizeOptions[1])+"\n"+
+                        "C. "+String.format("%.0f" ,RandomizeOptions[2])+"\n"+
+                        "D. "+String.format("%.0f" ,RandomizeOptions[3])+"\n"+
+                        "\n"+
+                        "Correct Answer: ["+CorrectAnswer+"] "+String.format("%.2f", PromptAnswer)+"\n"+
+                        "User Answer: ["+UserAnswerCharacter +"] "+String.format("%.2f", UserAnswerNumber)+"\n";
+            }
+
+            return "Question: " +Prompt+" = ?? \n"+
+                    "A. "+String.format("%.0f" ,RandomizeOptions[0])+"\n"+
+                    "B. "+String.format("%.0f" ,RandomizeOptions[1])+"\n"+
+                    "C. "+String.format("%.0f" ,RandomizeOptions[2])+"\n"+
+                    "D. "+String.format("%.0f" ,RandomizeOptions[3])+"\n"+
+                    "\n"+
+                    "Correct Answer: ["+CorrectAnswer+"] "+String.format("%.0f", PromptAnswer)+"\n"+
+                    "User Answer: ["+UserAnswerCharacter +"] "+String.format("%.0f", UserAnswerNumber)+"\n";
+        }
 
 
         //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
         public boolean answerQuestion(char userAnswer) throws InvalidQuestionChoiceException, FinishQuizException {
             // SETTING IT UP
-            UserAnswer = Character.toUpperCase(userAnswer);
+            UserAnswerCharacter = Character.toUpperCase(userAnswer);
 
             // PROCESSING THE USER ANSWER
-            switch (UserAnswer) {
+            switch (UserAnswerCharacter) {
                 case 'A':
+                    UserAnswerNumber = RandomizeOptions[0]; // this is for printing out and showing what the user had picked (For logs)
                     AnsweredCorrectly = PromptAnswer == RandomizeOptions[0]; // If They are equal or not, return true or false.
                     break;
                 case 'B':
+                    UserAnswerNumber = RandomizeOptions[1]; // this is for printing out and showing what the user had picked (For logs)
                     AnsweredCorrectly = PromptAnswer == RandomizeOptions[1]; // If They are equal or not, return true or false.
                     break;
                 case 'C':
+                    UserAnswerNumber = RandomizeOptions[2]; // this is for printing out and showing what the user had picked (For logs)
                     AnsweredCorrectly = PromptAnswer == RandomizeOptions[2]; // If They are equal or not, return true or false.
                     break;
                 case 'D':
+                    UserAnswerNumber = RandomizeOptions[3]; // this is for printing out and showing what the user had picked (For logs)
                     AnsweredCorrectly = PromptAnswer == RandomizeOptions[3]; // If They are equal or not, return true or false.
                     break;
                 case 'E':
@@ -227,7 +273,7 @@ public class BasicMathQuiz {
         public void displayStatus() {
             System.out.println("Question: "+Prompt+" = ??");
             System.out.println("Correct Answer: "+CorrectAnswer+". "+PromptAnswer);
-            System.out.println("User Answer: "+UserAnswer);
+            System.out.println("User Answer: "+ UserAnswerCharacter);
             System.out.println("Check: "+AnsweredCorrectly);
         }
         public void displayQuestion() {
@@ -246,9 +292,11 @@ public class BasicMathQuiz {
         }
 
 
+
         // ================================================== OTHER CLASSES ================================================== \\
     }
 }
 
 
 // TODO: DO TIME FOR LAST
+// TODO: ADD AN OPTION IN THE WOULD YOU LIKE TO TRY AGAIN UNDER YES, IF YES WOULD YOU LIKE TO CREATE A NEW QUIZ OBJECT OR THE SAME OBJECT? (SAME NAME AND RANGE)

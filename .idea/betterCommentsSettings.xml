@@ -60,6 +60,12 @@
           <option name="color" value="#006666FF" />
           <option name="type" value="+[" />
         </CustomTag>
+        <CustomTag>
+          <option name="bold" value="true" />
+          <option name="color" value="#FF9933FF" />
+          <option name="italic" value="true" />
+          <option name="type" value="NOTE:" />
+        </CustomTag>
       </list>
     </option>
   </component>

@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 02, 2026. at  9:44 PM
+// Last Modified: August 03, 2026. at 11:15 AM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
@@ -12,6 +12,8 @@ import java.util.Random;
 public class BasicMathQuiz {
     //======= CONFIGURABLE VARIABLES=======//
     static final int MAX_QUESTIONS = 100; // CHANGING THIS WILL CHANGE THE MAXIMUM QUESTIONS A USER CAN GENERATE QUESTIONS IN A QUIZ
+    static final String LogFolderPath = "C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Final Project\\Logs";
+    static final File LogFolder = new File(LogFolderPath);
 
     //=======VARIABLES=======//
     private Question[] Questions;
@@ -49,21 +51,25 @@ public class BasicMathQuiz {
     public Question[] getQuestions() {
         return Questions;
     }
-    public void saveQuizStatus() {
-        countScore();
-        System.out.println("User: "+Username);
-        System.out.println("Total Score: "+Score+"/"+Questions.length);
-        for (Question q:Questions) {
-            q.displayStatus();
-            System.out.println();
-        }
+    public File[] getLogFolders() {
+        return LogFolder.listFiles();
     }
-
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
     public void generateQuestions() {
         for (int i = 0; i < Questions.length; i++) {
             Questions[i] = new Question();
         }
+    }
+    public BasicMathQuiz loadLog(String FilePath) { // This just loads up every single variables of the class and i will be configuring score and questions. only name and range stays
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FilePath))) {
+            return (BasicMathQuiz) ois.readObject();
+        } catch (IOException e) {
+            System.out.println("ERROR: "+e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("ERROR: "+e.getMessage());
+        }
+
+        return null;
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
@@ -72,37 +78,33 @@ public class BasicMathQuiz {
         System.out.println("Username: "+Username);
         System.out.println("Score: "+Score+"/"+Questions.length);
     }
-
     public void createLog() {
-        // FINDING PATH
-        String LogFolderPath = "C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Final Project\\Logs";
-        File LogFolder = new File(LogFolderPath);
 
         // COUNTING HOW MANY FOLDERS THERE CURRENTLY ARE
-        File[] Logs = LogFolder.listFiles();
         int LogsFoldersCount = 0;
-        for (File l:Logs) {
+        for (File l:getLogFolders()) {
             LogsFoldersCount++;
         }
 
         // CREATING THE FOLDER FOR THE LOGS(.txt and .ser) INSIDE THE LOGS FOLDER
         String FolderName;
+        File LogFolderChildren;
         if (LogsFoldersCount < 10) { //... THIS IS JUST FOR NUMBERING PURPOSES
             FolderName = "Log0"+LogsFoldersCount;
-            LogFolder = new File(LogFolderPath, FolderName);
+            LogFolderChildren = new File(LogFolderPath, FolderName);
         } else {
             FolderName = "Log"+LogsFoldersCount;
-            LogFolder = new File(LogFolderPath, FolderName);
+            LogFolderChildren = new File(LogFolderPath, FolderName);
         }
-        LogFolder.mkdir();
+        LogFolderChildren.mkdir();
 
         // CREATING THE FILES INSIDE THE LOGS OF LOGS FOLDER
         String FolderPath = LogFolderPath+"\\"+FolderName;
         try {
-            LogFolder = new File(FolderPath, "Questions.txt");
-            LogFolder.createNewFile();
-            LogFolder = new File(FolderPath, "QuizObject.ser");
-            LogFolder.createNewFile();
+            LogFolderChildren = new File(FolderPath, "Questions.txt");
+            LogFolderChildren.createNewFile();
+            LogFolderChildren = new File(FolderPath, "QuizObject.ser");
+            LogFolderChildren.createNewFile();
         } catch (IOException e) {
             System.out.println("ERROR: "+e.getMessage());
         }
@@ -137,14 +139,12 @@ public class BasicMathQuiz {
         }
 
         // SAVING THE CURRENT STATE OF OBJECT INTO A SER FILE
-        // NOTE: STILL THINKING OF OF HOW TO DESERIALIZE IT
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FolderPath+"\\QuizObject.ser"))) {
             oos.writeObject(getClass());
         } catch (IOException e) {
             System.out.println("ERROR: "+e.getMessage());
         }
     }
-
 
     // ================================================== OTHER CLASSES ================================================== \\
     public static class Question {

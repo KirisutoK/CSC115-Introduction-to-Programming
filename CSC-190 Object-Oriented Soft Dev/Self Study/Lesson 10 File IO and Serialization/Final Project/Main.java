@@ -1,16 +1,10 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 02, 2026. at  9:35 PM
+// Last Modified: August 03, 2026. at 11:28 AM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
-import com.sun.source.tree.WhileLoopTree;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -19,11 +13,14 @@ public class Main {
     static Scanner input = new Scanner(System.in);
     static BasicMathQuiz BMQ01;
     static boolean isActive = true;
+    static boolean ValidInput = false;
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
         while (isActive) {
             startQuiz();
+            AnswerQuiz();
+            EndQuiz();
         }
     }
 
@@ -36,7 +33,6 @@ public class Main {
         System.out.print("Username: ");
         String UserName = input.nextLine();
 
-        boolean ValidInput = false;
         while (!ValidInput) {
             try {
                 System.out.print("Range: ");
@@ -61,41 +57,42 @@ public class Main {
         // [GENERATE QUESTIONS]
         BMQ01.generateQuestions();
         System.out.println();
-
+    }
+    public static void AnswerQuiz() {
         // [START ANSWERING EACH QUESTION]
         int count = 1;
         boolean QuizFinished = false;
         for (BasicMathQuiz.Question q : BMQ01.getQuestions()) {
-                // STOP IF THE USER DECIDEDS TO STOP
-                if (QuizFinished) break;
+            // STOP IF THE USER DECIDEDS TO STOP
+            if (QuizFinished) break;
 
-                // SHOW QUESTION
-                System.out.println("+=================================+");
-                System.out.print(count + ". ");
-                q.displayQuestion();
-                System.out.println();
+            // SHOW QUESTION
+            System.out.println("+=================================+");
+            System.out.print(count + ". ");
+            q.displayQuestion();
+            System.out.println();
 
-                // PROCESS USER INPUT
-                ValidInput = false;
-                while (!ValidInput) {
-                    try {
-                        System.out.print("ANSWER: ");
-                        char UserAnswer = input.next().charAt(0);
-                        System.out.println();
-                        q.answerQuestion(UserAnswer);
+            // PROCESS USER INPUT
+            ValidInput = false;
+            while (!ValidInput) {
+                try {
+                    System.out.print("ANSWER: ");
+                    char UserAnswer = input.next().charAt(0);
+                    System.out.println();
+                    q.answerQuestion(UserAnswer);
 
-                        ValidInput = true;
-                        count++;
-                    } catch (InvalidQuestionChoiceException e) {
-                        System.out.println("ERROR: " + e.getMessage());
-                    } catch (FinishQuizException e) {
-                        System.out.println("[USER] " + BMQ01.getUsername() + " " + e.getMessage());
-                        System.out.println();
-                        QuizFinished = true;
-                        break; // stops the for loop?
-                    }
+                    ValidInput = true;
+                    count++;
+                } catch (InvalidQuestionChoiceException e) {
+                    System.out.println("ERROR: " + e.getMessage());
+                } catch (FinishQuizException e) {
+                    System.out.println("[USER] " + BMQ01.getUsername() + " " + e.getMessage());
+                    System.out.println();
+                    QuizFinished = true;
+                    break; // stops the for loop?
                 }
             }
+        }
 
         // [SHOW RESULTS]
         System.out.println("╔══════════════════════════════════╗");
@@ -105,7 +102,8 @@ public class Main {
 
         // [PROCESSING LOG AND SERIALIZATION] <====================== THIS IS WHERE WE ARE GOING TO DO THE LOG AND SERIALIZATION STUFF
         BMQ01.createLog();
-
+    }
+    public static void EndQuiz() {
         // [WOULD YOU LIKE TO TRY AGAIN?]
         System.out.println();
         System.out.println();
@@ -122,7 +120,6 @@ public class Main {
 
                 switch (InputChoice) {
                     case 1:
-                        isActive = true;
                         ValidInput = true;
                         System.out.println();
                         break;
@@ -141,6 +138,38 @@ public class Main {
             }
         }
         input.nextLine();
+    }
+    public static void loadQuiz() {
+        System.out.println("[]++++++++++++++++++++++++++++[]");
+        System.out.println("1. Create New Quiz");
+        System.out.println("2. Create Old Quiz");
+        System.out.println();
+
+        ValidInput = false;
+        while (!ValidInput) {
+            try {
+                System.out.print("ANSWER: ");
+                int InputChoice = input.nextInt();
+
+                switch (InputChoice) {
+                    case 1:
+                        isActive = true;
+                        ValidInput = true;
+                        System.out.println();
+                        break;
+                    case 2:
+                        isActive = false;
+                        ValidInput = true;
+                        System.out.println();
+                        break;
+                    default:
+                        throw new InputMismatchException();
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("ERROR: Please choose between 1 and 2");
+                input.nextLine();
+            }
+        }
     }
 }
 
@@ -163,5 +192,4 @@ public class Main {
 // 1. Sends the results of BasicMathQuiz (Question[])
 // 2. can retrieve the data of the Completed/Failed Quizes but can not change those
 
-// TODO: DESIGN HOW SERIALIZING WILL WORK WITH MY OWN DATABASE STRUCTURE
-// TODO: INITIAL IDEA WILL BE USING FILE AS THE DATA AND A FOLDER NAMED DATABASE WITH ALL THE DATAS IN IT.
+// TODO: DESIGN HOW SERIALIZ

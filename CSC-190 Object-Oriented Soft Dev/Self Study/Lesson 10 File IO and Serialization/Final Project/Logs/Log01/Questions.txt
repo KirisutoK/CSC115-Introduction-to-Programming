@@ -1,0 +1,12 @@
+Username: Christ
+Total Score: 0/1
+
++----------------------------------------------------+
+❌ 1. Question: 407/314 = ?? 
+A. -7
+B. 1
+C. -7
+D. 6
+
+Correct Answer: [B] 1.30
+User Answer: [D] 6.31

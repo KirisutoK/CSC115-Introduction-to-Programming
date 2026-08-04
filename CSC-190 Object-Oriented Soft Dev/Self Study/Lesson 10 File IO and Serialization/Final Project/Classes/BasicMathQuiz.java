@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 03, 2026. at 11:15 AM
+// Last Modified: August 04, 2026. at  7:47 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
@@ -9,7 +9,7 @@ import Exceptions.InvalidQuestionChoiceException;
 import java.io.*;
 import java.util.Random;
 
-public class BasicMathQuiz {
+public class BasicMathQuiz implements Serializable {
     //======= CONFIGURABLE VARIABLES=======//
     static final int MAX_QUESTIONS = 100; // CHANGING THIS WILL CHANGE THE MAXIMUM QUESTIONS A USER CAN GENERATE QUESTIONS IN A QUIZ
     static final String LogFolderPath = "C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Final Project\\Logs";
@@ -54,21 +54,34 @@ public class BasicMathQuiz {
     public File[] getLogFolders() {
         return LogFolder.listFiles();
     }
+    public String getLogObject(File f) {
+        String FolderPath = f.getAbsolutePath();
+
+        return FolderPath+"\\QuizObject.ser";
+    }
+
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
     public void generateQuestions() {
         for (int i = 0; i < Questions.length; i++) {
             Questions[i] = new Question();
         }
     }
-    public BasicMathQuiz loadLog(String FilePath) { // This just loads up every single variables of the class and i will be configuring score and questions. only name and range stays
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FilePath))) {
-            return (BasicMathQuiz) ois.readObject();
+    public BasicMathQuiz loadLog(int index) { // This just loads up every single variables of the class and i will be configuring score and questions. only name and range stays
+        File[] LogFolders = getLogFolders();
+        File SelectedLogObjectFile = new File(getLogObject(LogFolders[index-1]));
+        BasicMathQuiz SelectedLogObject;
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SelectedLogObjectFile))) {
+            SelectedLogObject = (BasicMathQuiz) ois.readObject();
+            return SelectedLogObject;
+            
         } catch (IOException e) {
             System.out.println("ERROR: "+e.getMessage());
         } catch (ClassNotFoundException e) {
             System.out.println("ERROR: "+e.getMessage());
         }
 
+        System.out.println("ERROR: Object is null!");
         return null;
     }
 
@@ -77,6 +90,29 @@ public class BasicMathQuiz {
         countScore();
         System.out.println("Username: "+Username);
         System.out.println("Score: "+Score+"/"+Questions.length);
+    }
+    public void displayHistory() {
+        BasicMathQuiz SelectedObject;
+        int count = 1;
+
+        System.out.println("+++++++++++++++++++++ HISTORY +++++++++++++++++++++");
+        for (File f:getLogFolders()) {
+            File ClassObject = new File(getLogObject(f));
+
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ClassObject))) {
+                SelectedObject = (BasicMathQuiz) ois.readObject();
+                System.out.println(count+". ");
+                System.out.println("Username: "+SelectedObject.getUsername());
+                System.out.println("Range: "+SelectedObject.getQuestions().length);
+                System.out.println("Total Score: "+SelectedObject.Score+"/"+SelectedObject.getQuestions().length);
+                System.out.println();
+                count++;
+            } catch (IOException e) {
+                System.out.println("ERROR: "+e.getMessage());
+            } catch (ClassNotFoundException e) {
+                System.out.println("ERROR: "+e.getMessage());
+            }
+        }
     }
     public void createLog() {
 
@@ -140,14 +176,14 @@ public class BasicMathQuiz {
 
         // SAVING THE CURRENT STATE OF OBJECT INTO A SER FILE
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FolderPath+"\\QuizObject.ser"))) {
-            oos.writeObject(getClass());
+            oos.writeObject(this);
         } catch (IOException e) {
             System.out.println("ERROR: "+e.getMessage());
         }
     }
 
     // ================================================== OTHER CLASSES ================================================== \\
-    public static class Question {
+    public static class Question implements Serializable {
         //=======VARIABLES=======//
         Random random = new Random();
 
@@ -297,6 +333,10 @@ public class BasicMathQuiz {
     }
 }
 
-
 // TODO: DO TIME FOR LAST
 // TODO: ADD AN OPTION IN THE WOULD YOU LIKE TO TRY AGAIN UNDER YES, IF YES WOULD YOU LIKE TO CREATE A NEW QUIZ OBJECT OR THE SAME OBJECT? (SAME NAME AND RANGE)
+// BUG: WHEN CREATING A NEW QUIZ, IT AUTOMATICALLY SETS THE RANGE WHEN LOGICALLY, A USER MUST SET IT EVERY SINGLE TIME
+
+// LESSON LEARNED: A class must be Serializeable before we can save and load the selected object.
+// LESSON LEARNED: 'getClass()' only returns the metadata of the class.
+// LESSON LEARNED: 'this' returns the current object/class

@@ -6,7 +6,7 @@
       <list>
         <CustomTag>
           <option name="backgroundColor" value="#FF000028" />
-          <option name="color" value="#FF2D00" />
+          <option name="color" value="#FF2D00FF" />
           <option name="type" value="!" />
         </CustomTag>
         <CustomTag>
@@ -65,6 +65,16 @@
           <option name="color" value="#FF9933FF" />
           <option name="italic" value="true" />
           <option name="type" value="NOTE:" />
+        </CustomTag>
+        <CustomTag>
+          <option name="backgroundColor" value="#660000FF" />
+          <option name="color" value="#FF2D00FF" />
+          <option name="type" value="BUG:" />
+        </CustomTag>
+        <CustomTag>
+          <option name="color" value="#999999FF" />
+          <option name="italic" value="true" />
+          <option name="type" value="LESSON LEARNED:" />
         </CustomTag>
       </list>
     </option>

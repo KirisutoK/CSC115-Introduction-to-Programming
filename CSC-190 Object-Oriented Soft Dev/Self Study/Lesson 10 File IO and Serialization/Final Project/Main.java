@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 03, 2026. at 11:28 AM
+// Last Modified: August 04, 2026. at  7:10 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -122,6 +122,7 @@ public class Main {
                     case 1:
                         ValidInput = true;
                         System.out.println();
+                        loadQuiz();
                         break;
                     case 2:
                         isActive = false;
@@ -139,7 +140,7 @@ public class Main {
         }
         input.nextLine();
     }
-    public static void loadQuiz() {
+    public static void loadQuiz() { //! <==================================== YOU LEFT ON THIS METHOD, INITIALLY THINKING OF USING A BOOLEAN CONDITION TO BETWEEN NEW QUIZ AND EXISTING QUIZ
         System.out.println("[]++++++++++++++++++++++++++++[]");
         System.out.println("1. Create New Quiz");
         System.out.println("2. Create Old Quiz");
@@ -150,16 +151,30 @@ public class Main {
             try {
                 System.out.print("ANSWER: ");
                 int InputChoice = input.nextInt();
+                System.out.println();
 
                 switch (InputChoice) {
                     case 1:
-                        isActive = true;
                         ValidInput = true;
-                        System.out.println();
                         break;
                     case 2:
-                        isActive = false;
                         ValidInput = true;
+
+                        BMQ01.displayHistory();
+
+                        System.out.println();
+                        System.out.println("Which save would you to load? \n");
+                        boolean ValidInput01 = false;
+                        while (!ValidInput01) {
+                            try {
+                                System.out.print("Answer");
+                                int //! <================================================ YOU LEFT HERE! INITIALLY FINISHING UP ON FUNCTIONALLY FOR USERS TO PICK WHICH SAVED FILE THEY WANNA LOAD UP
+
+                            } catch (InputMismatchException e) {
+                                System.out.println("ERROR: Please select a number from 0 to "+BMQ01.getLogFolders().length);
+                            }
+                        }
+
                         System.out.println();
                         break;
                     default:
@@ -191,5 +206,3 @@ public class Main {
 // MathQuizDatabase [CLASS]
 // 1. Sends the results of BasicMathQuiz (Question[])
 // 2. can retrieve the data of the Completed/Failed Quizes but can not change those
-
-// TODO: DESIGN HOW SERIALIZ

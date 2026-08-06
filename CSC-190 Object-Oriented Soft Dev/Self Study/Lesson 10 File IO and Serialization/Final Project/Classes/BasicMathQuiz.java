@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 05, 2026. at 10:08 PM
+// Last Modified: August 06, 2026. at  7:05 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
@@ -90,6 +90,12 @@ public class BasicMathQuiz implements Serializable {
         countScore();
         System.out.println("Username: "+Username);
         System.out.println("Score: "+Score+"/"+Questions.length);
+        System.out.println();
+        int count = 1;
+        for (Question q: Questions) {
+            System.out.println(count+". "+(q.AnsweredCorrectly ? "✅" : "❌"));
+            count++;
+        }
     }
     public void displayHistory() {
         BasicMathQuiz SelectedObject;

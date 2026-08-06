@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 04, 2026. at  7:47 PM
+// Last Modified: August 05, 2026. at 10:08 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
@@ -334,7 +334,6 @@ public class BasicMathQuiz implements Serializable {
 }
 
 // TODO: DO TIME FOR LAST
-// TODO: ADD AN OPTION IN THE WOULD YOU LIKE TO TRY AGAIN UNDER YES, IF YES WOULD YOU LIKE TO CREATE A NEW QUIZ OBJECT OR THE SAME OBJECT? (SAME NAME AND RANGE)
 // BUG: WHEN CREATING A NEW QUIZ, IT AUTOMATICALLY SETS THE RANGE WHEN LOGICALLY, A USER MUST SET IT EVERY SINGLE TIME
 
 // LESSON LEARNED: A class must be Serializeable before we can save and load the selected object.

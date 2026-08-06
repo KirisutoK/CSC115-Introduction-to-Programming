@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 04, 2026. at  7:10 PM
+// Last Modified: August 05, 2026. at 10:08 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -14,11 +14,16 @@ public class Main {
     static BasicMathQuiz BMQ01;
     static boolean isActive = true;
     static boolean ValidInput = false;
+    static boolean newQuiz = true;
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
         while (isActive) {
-            startQuiz();
+            if (newQuiz) {
+                startQuiz();
+            } else {
+                loadQuiz();
+            }
             AnswerQuiz();
             EndQuiz();
         }
@@ -121,8 +126,37 @@ public class Main {
                 switch (InputChoice) {
                     case 1:
                         ValidInput = true;
+
                         System.out.println();
-                        loadQuiz();
+                        System.out.println("[]++++++++++++++++++++++++++++[]");
+                        System.out.println("1. Create New Quiz");
+                        System.out.println("2. Create Old Quiz");
+                        System.out.println();
+
+                        boolean ValidInput01 = false;
+                        while (!ValidInput01) {
+                            try {
+                                System.out.print("ANSWER: ");
+                                int InputChoice01 = input.nextInt();
+                                System.out.println();
+
+                                switch (InputChoice01) {
+                                    case 1:
+                                        newQuiz = true;
+                                        ValidInput01 = true;
+                                        break;
+                                    case 2:
+                                        newQuiz = false;
+                                        ValidInput01 = true;
+                                        break;
+                                    default:
+                                        throw new InputMismatchException();
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("ERROR: please choose between 1 and 2");
+                            }
+                        }
+
                         break;
                     case 2:
                         isActive = false;
@@ -140,51 +174,30 @@ public class Main {
         }
         input.nextLine();
     }
-    public static void loadQuiz() { //! <==================================== YOU LEFT ON THIS METHOD, INITIALLY THINKING OF USING A BOOLEAN CONDITION TO BETWEEN NEW QUIZ AND EXISTING QUIZ
-        System.out.println("[]++++++++++++++++++++++++++++[]");
-        System.out.println("1. Create New Quiz");
-        System.out.println("2. Create Old Quiz");
+    public static void loadQuiz() {
+        BMQ01.displayHistory();
+
         System.out.println();
-
-        ValidInput = false;
-        while (!ValidInput) {
+        System.out.println("Which save would you like to load? \n");
+        boolean ValidInput01 = false;
+        while (!ValidInput01) {
             try {
-                System.out.print("ANSWER: ");
-                int InputChoice = input.nextInt();
-                System.out.println();
+                System.out.print("Answer: ");
+                int PickedIndex = input.nextInt();
 
-                switch (InputChoice) {
-                    case 1:
-                        ValidInput = true;
-                        break;
-                    case 2:
-                        ValidInput = true;
-
-                        BMQ01.displayHistory();
-
-                        System.out.println();
-                        System.out.println("Which save would you to load? \n");
-                        boolean ValidInput01 = false;
-                        while (!ValidInput01) {
-                            try {
-                                System.out.print("Answer");
-                                int //! <================================================ YOU LEFT HERE! INITIALLY FINISHING UP ON FUNCTIONALLY FOR USERS TO PICK WHICH SAVED FILE THEY WANNA LOAD UP
-
-                            } catch (InputMismatchException e) {
-                                System.out.println("ERROR: Please select a number from 0 to "+BMQ01.getLogFolders().length);
-                            }
-                        }
-
-                        System.out.println();
-                        break;
-                    default:
-                        throw new InputMismatchException();
+                if (PickedIndex < 0 || PickedIndex > BMQ01.getLogFolders().length) {
+                    throw new InputMismatchException();
                 }
+
+                BMQ01 = BMQ01.loadLog(PickedIndex);
+                System.out.println(BMQ01.getLogFolders()[PickedIndex-1].getName()+" has successfully loaded!");
+
+                ValidInput01 = true;
             } catch (InputMismatchException e) {
-                System.out.println("ERROR: Please choose between 1 and 2");
-                input.nextLine();
+                System.out.println("ERROR: Please select a number from 0 to "+BMQ01.getLogFolders().length);
             }
         }
+        System.out.println();
     }
 }
 
@@ -206,3 +219,6 @@ public class Main {
 // MathQuizDatabase [CLASS]
 // 1. Sends the results of BasicMathQuiz (Question[])
 // 2. can retrieve the data of the Completed/Failed Quizes but can not change those
+
+// NOTE: YOU HAVE FINISHED FIXING THE WHILE LOOP FOR DESERIALIZATION. (TIMESTAMP)
+// NOTE: THERE ARE CURRENTLY 1 BUG THAT WE HAVE ENCOUNTERED AND THAT IS THE AUTOMATIC RANGE INPUT WHEN LOADING UP A QUIZ

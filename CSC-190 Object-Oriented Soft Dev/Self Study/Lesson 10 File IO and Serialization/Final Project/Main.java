@@ -1,9 +1,10 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 05, 2026. at 10:08 PM
+// Last Modified: August 07, 2026. at  7:04 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
+import Exceptions.SkipQuizException;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -37,7 +38,8 @@ public class Main {
         System.out.println("╚═════════════════════════════════╝");
         System.out.print("Username: ");
         String UserName = input.nextLine();
-
+        
+        ValidInput = false;
         while (!ValidInput) {
             try {
                 System.out.print("Range: ");
@@ -91,10 +93,15 @@ public class Main {
                 } catch (InvalidQuestionChoiceException e) {
                     System.out.println("ERROR: " + e.getMessage());
                 } catch (FinishQuizException e) {
-                    System.out.println("[USER] " + BMQ01.getUsername() + " " + e.getMessage());
+                    System.out.println("[USER] "+BMQ01.getUsername()+" "+ e.getMessage());
                     System.out.println();
                     QuizFinished = true;
                     break; // stops the for loop?
+                } catch (SkipQuizException e) {
+                    System.out.println("[USER] "+BMQ01.getUsername()+" "+e.getMessage()+" "+count);
+                    System.out.println();
+                    count++;
+                    break;
                 }
             }
         }
@@ -154,6 +161,7 @@ public class Main {
                                 }
                             } catch (InputMismatchException e) {
                                 System.out.println("ERROR: please choose between 1 and 2");
+                                input.nextLine(); // REFRESHED BUFFER (LEFTOVER \n)
                             }
                         }
 
@@ -185,7 +193,7 @@ public class Main {
                 System.out.print("Answer: ");
                 int PickedIndex = input.nextInt();
 
-                if (PickedIndex < 0 || PickedIndex > BMQ01.getLogFolders().length) {
+                if (PickedIndex < 1 || PickedIndex > BMQ01.getLogFolders().length) {
                     throw new InputMismatchException();
                 }
 
@@ -194,7 +202,8 @@ public class Main {
 
                 ValidInput01 = true;
             } catch (InputMismatchException e) {
-                System.out.println("ERROR: Please select a number from 0 to "+BMQ01.getLogFolders().length);
+                System.out.println("ERROR: Please select a number from 1 to "+BMQ01.getLogFolders().length);
+                input.nextLine(); // REFRESHED BUFFER (LEFTOVER \n)
             }
         }
         System.out.println();
@@ -220,5 +229,3 @@ public class Main {
 // 1. Sends the results of BasicMathQuiz (Question[])
 // 2. can retrieve the data of the Completed/Failed Quizes but can not change those
 
-// NOTE: YOU HAVE FINISHED FIXING THE WHILE LOOP FOR DESERIALIZATION. (TIMESTAMP)
-// NOTE: THERE ARE CURRENTLY 1 BUG THAT WE HAVE ENCOUNTERED AND THAT IS THE AUTOMATIC RANGE INPUT WHEN LOADING UP A QUIZ

@@ -1,10 +1,11 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 06, 2026. at  7:05 PM
+// Last Modified: August 07, 2026. at  7:10 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
+import Exceptions.SkipQuizException;
 
 import java.io.*;
 import java.util.Random;
@@ -188,6 +189,11 @@ public class BasicMathQuiz implements Serializable {
         }
     }
 
+    // [SAFETY MEASURES METHOD]
+    public void EnsureLogFolder() { //! <===================================== YOU LEFT HERE
+        // TODO: YOU WILL NEED TO IMPLEMENT A WAY WHEN SCENARIOS SUCH AS MISSING FOLDER, ACCIDENTAL FOLDER DELETIONS. THIS METHOD IS TO CHECK IF EVERYTHING IS ALRIGHT BEFORE INITIALIZAING DANGEROUS CODE.
+    }
+
     // ================================================== OTHER CLASSES ================================================== \\
     public static class Question implements Serializable {
         //=======VARIABLES=======//
@@ -200,6 +206,7 @@ public class BasicMathQuiz implements Serializable {
         private char UserAnswerCharacter; // THIS IS AUTOMATICALLY CONVERTED INTO UPPERCASE FOR DEFAULT\
         private double UserAnswerNumber;
         private boolean AnsweredCorrectly;
+        private boolean Skipped;
 
         // [OPERATIONAL VARIABLES]
         private double[] RandomizeOptions;
@@ -264,7 +271,7 @@ public class BasicMathQuiz implements Serializable {
                         "D. "+String.format("%.0f" ,RandomizeOptions[3])+"\n"+
                         "\n"+
                         "Correct Answer: ["+CorrectAnswer+"] "+String.format("%.2f", PromptAnswer)+"\n"+
-                        "User Answer: ["+UserAnswerCharacter +"] "+String.format("%.2f", UserAnswerNumber)+"\n";
+                        "User Answer: "+((Skipped) ? "SKIPPED \n" : "["+UserAnswerCharacter +"] "+String.format("%.2f", UserAnswerNumber)+"\n"); //... <=========== TERNARIES
             }
 
             return "Question: " +Prompt+" = ?? \n"+
@@ -274,12 +281,12 @@ public class BasicMathQuiz implements Serializable {
                     "D. "+String.format("%.0f" ,RandomizeOptions[3])+"\n"+
                     "\n"+
                     "Correct Answer: ["+CorrectAnswer+"] "+String.format("%.0f", PromptAnswer)+"\n"+
-                    "User Answer: ["+UserAnswerCharacter +"] "+String.format("%.0f", UserAnswerNumber)+"\n";
+                    "User Answer: "+((Skipped) ? "SKIPPED \n" : "["+UserAnswerCharacter+"] "+String.format("%.2f", UserAnswerNumber)+"\n") ; //... <=========== TERNARIES
         }
 
 
         //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
-        public boolean answerQuestion(char userAnswer) throws InvalidQuestionChoiceException, FinishQuizException {
+        public boolean answerQuestion(char userAnswer) throws InvalidQuestionChoiceException, FinishQuizException, SkipQuizException {
             // SETTING IT UP
             UserAnswerCharacter = Character.toUpperCase(userAnswer);
 
@@ -302,6 +309,10 @@ public class BasicMathQuiz implements Serializable {
                     AnsweredCorrectly = PromptAnswer == RandomizeOptions[3]; // If They are equal or not, return true or false.
                     break;
                 case 'E':
+                    Skipped = true;
+                    AnsweredCorrectly = false;
+                    throw new SkipQuizException();
+                case 'F':
                     throw new FinishQuizException();
                 default:
                     throw new InvalidQuestionChoiceException(); // WE ARE GOING TO NEED THIS WHEN SCANNING INPUTS IN THE MAIN METHOD. IF IT THROWS INVALID QUESTION, REPEAT TIL ITS VALID
@@ -312,12 +323,6 @@ public class BasicMathQuiz implements Serializable {
         }
 
         //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
-        public void displayStatus() {
-            System.out.println("Question: "+Prompt+" = ??");
-            System.out.println("Correct Answer: "+CorrectAnswer+". "+PromptAnswer);
-            System.out.println("User Answer: "+ UserAnswerCharacter);
-            System.out.println("Check: "+AnsweredCorrectly);
-        }
         public void displayQuestion() {
             System.out.println("Question: "+Prompt+" = ??");
             if (Prompt.contains("/")) {
@@ -325,11 +330,17 @@ public class BasicMathQuiz implements Serializable {
                 System.out.println("B. "+String.format("%.2f" ,RandomizeOptions[1]));
                 System.out.println("C. "+String.format("%.2f" ,RandomizeOptions[2]));
                 System.out.println("D. "+String.format("%.2f" ,RandomizeOptions[3]));
+                System.out.println();
+                System.out.println("E. Skip Question");
+                System.out.println("F. End Quiz");
             } else {
                 System.out.println("A. "+String.format("%.0f" ,RandomizeOptions[0])) ;
                 System.out.println("B. "+String.format("%.0f" ,RandomizeOptions[1]));
                 System.out.println("C. "+String.format("%.0f" ,RandomizeOptions[2]));
                 System.out.println("D. "+String.format("%.0f" ,RandomizeOptions[3]));
+                System.out.println();
+                System.out.println("E. Skip Question");
+                System.out.println("F. End Quiz");
             }
         }
 
@@ -338,9 +349,9 @@ public class BasicMathQuiz implements Serializable {
         // ================================================== OTHER CLASSES ================================================== \\
     }
 }
-
-// TODO: DO TIME FOR LAST
-// BUG: WHEN CREATING A NEW QUIZ, IT AUTOMATICALLY SETS THE RANGE WHEN LOGICALLY, A USER MUST SET IT EVERY SINGLE TIME
+// TODO: DO TIME FOR LAST (I AM NOT GONNA DO THIS)
+// TODO: IF YOU HAVE FREE TIME, ADD SOME MENU IN THE START (NOT NEEDED FOR LEARNING, ITS MORE OF JUST A UI THINGY)
+// TODO: CHECK CLAUDE FOR BUG CHECKS (2/6)
 
 // LESSON LEARNED: A class must be Serializeable before we can save and load the selected object.
 // LESSON LEARNED: 'getClass()' only returns the metadata of the class.

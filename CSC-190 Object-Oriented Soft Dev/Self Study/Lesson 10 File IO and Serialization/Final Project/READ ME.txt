@@ -1,0 +1,1 @@
+This must be the working directory in order to have the correct designed folder structure of the program

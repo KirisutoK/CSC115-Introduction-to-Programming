@@ -1,0 +1,12 @@
+Username: cHRIST
+Total Score: 0/1
+
++----------------------------------------------------+
+❌ 1. Question: 214-377 = ?? 
+A. -154
+B. -163
+C. -164
+D. -165
+
+Correct Answer: [B] -163
+User Answer: [A] -154.31

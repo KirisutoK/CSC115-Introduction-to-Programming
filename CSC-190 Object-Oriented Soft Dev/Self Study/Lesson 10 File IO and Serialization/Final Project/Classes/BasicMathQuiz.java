@@ -1,7 +1,7 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 07, 2026. at  7:10 PM
+// Last Modified: August 08, 2026. at  9:24 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
@@ -13,8 +13,7 @@ import java.util.Random;
 public class BasicMathQuiz implements Serializable {
     //======= CONFIGURABLE VARIABLES=======//
     static final int MAX_QUESTIONS = 100; // CHANGING THIS WILL CHANGE THE MAXIMUM QUESTIONS A USER CAN GENERATE QUESTIONS IN A QUIZ
-    static final String LogFolderPath = "C:\\Users\\kiris\\OneDrive - Finger Lakes Community College\\Documents\\FLCC\\Coding\\Java\\CSC-190 Object-Oriented Soft Dev\\Self Study\\Lesson 10 File IO and Serialization\\Final Project\\Logs";
-    static final File LogFolder = new File(LogFolderPath);
+    static final File LogFolder = new File("Logs");
 
     //=======VARIABLES=======//
     private Question[] Questions;
@@ -68,8 +67,7 @@ public class BasicMathQuiz implements Serializable {
         }
     }
     public BasicMathQuiz loadLog(int index) { // This just loads up every single variables of the class and i will be configuring score and questions. only name and range stays
-        File[] LogFolders = getLogFolders();
-        File SelectedLogObjectFile = new File(getLogObject(LogFolders[index-1]));
+        File SelectedLogObjectFile = new File(getLogObject(getLogFolders()[index-1]));  //! <============= THIS IS WHERE I LEFT OF (JUST DID SOME CHANGES, YOU DONT NEED TO DO ANYTHING AT ALL, THIS IS JUST A MARK.
         BasicMathQuiz SelectedLogObject;
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SelectedLogObjectFile))) {
@@ -134,26 +132,25 @@ public class BasicMathQuiz implements Serializable {
         File LogFolderChildren;
         if (LogsFoldersCount < 10) { //... THIS IS JUST FOR NUMBERING PURPOSES
             FolderName = "Log0"+LogsFoldersCount;
-            LogFolderChildren = new File(LogFolderPath, FolderName);
+            LogFolderChildren = new File(LogFolder, FolderName);
         } else {
             FolderName = "Log"+LogsFoldersCount;
-            LogFolderChildren = new File(LogFolderPath, FolderName);
+            LogFolderChildren = new File(LogFolder, FolderName);
         }
         LogFolderChildren.mkdir();
 
         // CREATING THE FILES INSIDE THE LOGS OF LOGS FOLDER
-        String FolderPath = LogFolderPath+"\\"+FolderName;
+        File QuestionFile = new File(LogFolderChildren, "Questions.txt");
+        File QuizObjectFile = new File(LogFolderChildren, "QuizObject.ser");
         try {
-            LogFolderChildren = new File(FolderPath, "Questions.txt");
-            LogFolderChildren.createNewFile();
-            LogFolderChildren = new File(FolderPath, "QuizObject.ser");
-            LogFolderChildren.createNewFile();
+            QuestionFile.createNewFile();
+            QuizObjectFile.createNewFile();
         } catch (IOException e) {
             System.out.println("ERROR: "+e.getMessage());
         }
 
         // WRITING THE QUESTIONS FOR QUESTIONS.TXT
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FolderPath+"\\Questions.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(QuestionFile))) {
             // GENERAL INFORMATION
             bw.write("Username: "+getUsername()); bw.newLine();
             bw.write("Total Score: "+Score+"/"+Questions.length);
@@ -182,7 +179,7 @@ public class BasicMathQuiz implements Serializable {
         }
 
         // SAVING THE CURRENT STATE OF OBJECT INTO A SER FILE
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FolderPath+"\\QuizObject.ser"))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(QuizObjectFile))) {
             oos.writeObject(this);
         } catch (IOException e) {
             System.out.println("ERROR: "+e.getMessage());
@@ -192,6 +189,8 @@ public class BasicMathQuiz implements Serializable {
     // [SAFETY MEASURES METHOD]
     public void EnsureLogFolder() { //! <===================================== YOU LEFT HERE
         // TODO: YOU WILL NEED TO IMPLEMENT A WAY WHEN SCENARIOS SUCH AS MISSING FOLDER, ACCIDENTAL FOLDER DELETIONS. THIS METHOD IS TO CHECK IF EVERYTHING IS ALRIGHT BEFORE INITIALIZAING DANGEROUS CODE.
+
+        
     }
 
     // ================================================== OTHER CLASSES ================================================== \\

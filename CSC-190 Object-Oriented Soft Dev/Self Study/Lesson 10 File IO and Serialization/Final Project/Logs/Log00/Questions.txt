@@ -1,12 +1,12 @@
-Username: 1
+Username: Christ
 Total Score: 0/1
 
 +----------------------------------------------------+
-❌ 1. Question: 183/2 = ?? 
-A. 84
-B. 89
-C. 94
-D. 92
+❌ 1. Question: 25*126 = ?? 
+A. 3154
+B. 3159
+C. 3152
+D. 3150
 
-Correct Answer: [D] 91.50
-User Answer: [F] 0.00
+Correct Answer: [D] 3150
+User Answer: [A] 3153.97

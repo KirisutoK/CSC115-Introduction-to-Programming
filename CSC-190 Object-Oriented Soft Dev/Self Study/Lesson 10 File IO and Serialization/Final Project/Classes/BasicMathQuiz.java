@@ -1,13 +1,14 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 08, 2026. at  9:24 PM
+// Last Modified: August 09, 2026. at 10:27 PM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
 import Exceptions.SkipQuizException;
 
 import java.io.*;
+import java.util.HashSet;
 import java.util.Random;
 
 public class BasicMathQuiz implements Serializable {
@@ -31,6 +32,7 @@ public class BasicMathQuiz implements Serializable {
         } else {
             this.Questions = new Question[Questions];
         }
+        ensureLogFolder();
 
         // [DEFAULTS]
         // TODO: StartTime = System.currentTimeMillis(); ////////// <================= DO THIS AFTER IMPLEMENTING ALMOST EVERYTHING
@@ -55,9 +57,7 @@ public class BasicMathQuiz implements Serializable {
         return LogFolder.listFiles();
     }
     public String getLogObject(File f) {
-        String FolderPath = f.getAbsolutePath();
-
-        return FolderPath+"\\QuizObject.ser";
+        return new File(f, "QuizObject.ser").getPath();
     }
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
@@ -67,7 +67,7 @@ public class BasicMathQuiz implements Serializable {
         }
     }
     public BasicMathQuiz loadLog(int index) { // This just loads up every single variables of the class and i will be configuring score and questions. only name and range stays
-        File SelectedLogObjectFile = new File(getLogObject(getLogFolders()[index-1]));  //! <============= THIS IS WHERE I LEFT OF (JUST DID SOME CHANGES, YOU DONT NEED TO DO ANYTHING AT ALL, THIS IS JUST A MARK.
+        File SelectedLogObjectFile = new File(getLogObject(getLogFolders()[index-1]));
         BasicMathQuiz SelectedLogObject;
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SelectedLogObjectFile))) {
@@ -106,7 +106,7 @@ public class BasicMathQuiz implements Serializable {
 
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ClassObject))) {
                 SelectedObject = (BasicMathQuiz) ois.readObject();
-                System.out.println(count+". ");
+                System.out.println("["+count+"] "+ClassObject.getParentFile().getName());
                 System.out.println("Username: "+SelectedObject.getUsername());
                 System.out.println("Range: "+SelectedObject.getQuestions().length);
                 System.out.println("Total Score: "+SelectedObject.Score+"/"+SelectedObject.getQuestions().length);
@@ -120,24 +120,35 @@ public class BasicMathQuiz implements Serializable {
         }
     }
     public void createLog() {
+        // CHECK IF WE HAVE A LOG FOLDER
+        ensureLogFolder();
 
-        // COUNTING HOW MANY FOLDERS THERE CURRENTLY ARE
-        int LogsFoldersCount = 0;
-        for (File l:getLogFolders()) {
-            LogsFoldersCount++;
+        // CHECKING WHAT ARE THE AVAILABLE FOLDER SLOT NUMBERS
+        HashSet<Integer> CurrentUsedIndex = new HashSet<>();
+                // NOTE: We will be storing numbers in a hashset to avoid gaps when users may delete a log
+                // NOTE: If the Log00 and Log02 exist, and then we can do a for loop for every hashset value + 1
+                // NOTE: We can check that 01 does not exist and will we create it.
+                // NOTE: If all of the folders are correct. then the +1 will create an empty slot to create another loop.
+        for (File l:getLogFolders()) { //... THIS CHECKS HOW MANY INDEX ARE CURRENTLY AVAILABLE
+            CurrentUsedIndex.add(Integer.valueOf(l.getName().substring(3))); // Get the number of the name of the folder and add it into the hashset
         }
 
-        // CREATING THE FOLDER FOR THE LOGS(.txt and .ser) INSIDE THE LOGS FOLDER
+        // ASSIGNING THE NUMBERS INTO THE LOGFOLDER NAME
         String FolderName;
-        File LogFolderChildren;
-        if (LogsFoldersCount < 10) { //... THIS IS JUST FOR NUMBERING PURPOSES
-            FolderName = "Log0"+LogsFoldersCount;
-            LogFolderChildren = new File(LogFolder, FolderName);
-        } else {
-            FolderName = "Log"+LogsFoldersCount;
-            LogFolderChildren = new File(LogFolder, FolderName);
+        File LogFolderChildren = null; //... we need to initialize this first since java compiles will return an error
+        for (int i = 0; i < CurrentUsedIndex.size()+1; i++ ) { // NOTE: +1 because we need an extra slot to fill in what is missing and what slot on what needs to be created
+            if (!CurrentUsedIndex.contains(i)) { // if it does not contain this number then
+                if (i < 10) { // IF THE NUMBER IS BELOW 10
+                    FolderName = "Log0"+i;
+                    LogFolderChildren = new File(LogFolder, FolderName);
+                } else {
+                    FolderName = "Log"+i;
+                    LogFolderChildren = new File(LogFolder, FolderName);
+                }
+                LogFolderChildren.mkdir();
+                break;
+            }
         }
-        LogFolderChildren.mkdir();
 
         // CREATING THE FILES INSIDE THE LOGS OF LOGS FOLDER
         File QuestionFile = new File(LogFolderChildren, "Questions.txt");
@@ -187,10 +198,13 @@ public class BasicMathQuiz implements Serializable {
     }
 
     // [SAFETY MEASURES METHOD]
-    public void EnsureLogFolder() { //! <===================================== YOU LEFT HERE
-        // TODO: YOU WILL NEED TO IMPLEMENT A WAY WHEN SCENARIOS SUCH AS MISSING FOLDER, ACCIDENTAL FOLDER DELETIONS. THIS METHOD IS TO CHECK IF EVERYTHING IS ALRIGHT BEFORE INITIALIZAING DANGEROUS CODE.
+    public void ensureLogFolder() { //! <===================================== YOU LEFT HERE
+        // NOTE: THIS METHOD IS TO ENSURE THAT WE HAVE A FOLDER WHERE WE CAN SAVE THE FOLDER OF LOGS AND PREVENTING DANGEROUS CODE FROM RUNNING
 
-        
+        // CHECK IF WE HAVE LOG FOLDER
+        if (!LogFolder.exists()) {
+            LogFolder.mkdir();
+        }
     }
 
     // ================================================== OTHER CLASSES ================================================== \\
@@ -355,3 +369,4 @@ public class BasicMathQuiz implements Serializable {
 // LESSON LEARNED: A class must be Serializeable before we can save and load the selected object.
 // LESSON LEARNED: 'getClass()' only returns the metadata of the class.
 // LESSON LEARNED: 'this' returns the current object/class
+// LESSON LEARNED: A working directory determines where the file/folder will be created if you are not using absolute paths.

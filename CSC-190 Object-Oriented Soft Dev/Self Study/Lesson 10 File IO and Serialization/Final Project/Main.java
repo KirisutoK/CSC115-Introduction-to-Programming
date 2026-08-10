@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 07, 2026. at  7:04 PM
+// Last Modified: August 09, 2026. at  9:26 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -198,12 +198,19 @@ public class Main {
                 }
 
                 BMQ01 = BMQ01.loadLog(PickedIndex);
-                System.out.println(BMQ01.getLogFolders()[PickedIndex-1].getName()+" has successfully loaded!");
 
+                if (BMQ01 == null) {
+                    throw new NullPointerException();
+                }
+
+                System.out.println(BMQ01.getLogFolders()[PickedIndex-1].getName()+" has successfully loaded!");
                 ValidInput01 = true;
             } catch (InputMismatchException e) {
                 System.out.println("ERROR: Please select a number from 1 to "+BMQ01.getLogFolders().length);
                 input.nextLine(); // REFRESHED BUFFER (LEFTOVER \n)
+            } catch (NullPointerException e) {
+                System.out.println("ERROR: The selected object is null!");
+                input.nextLine();
             }
         }
         System.out.println();

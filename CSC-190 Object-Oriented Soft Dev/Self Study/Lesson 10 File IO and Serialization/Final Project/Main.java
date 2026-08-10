@@ -1,9 +1,10 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 09, 2026. at  9:26 PM
+// Last Modified: August 09, 2026. at 10:52 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
+import Exceptions.NoLogsException;
 import Exceptions.SkipQuizException;
 
 import java.util.InputMismatchException;
@@ -153,9 +154,21 @@ public class Main {
                                         ValidInput01 = true;
                                         break;
                                     case 2:
-                                        newQuiz = false;
-                                        ValidInput01 = true;
-                                        break;
+                                        try {
+                                            if (BMQ01.getLogFolders().length == 0) { //... THIS IS A SECURITY MEASURE IF THERE ARE NO LOGS THAT EXIST
+                                                throw new NoLogsException();
+                                            }
+
+                                            newQuiz = false;
+                                            ValidInput01 = true;
+                                            break;
+                                        } catch (NoLogsException e) {
+                                            System.out.println("ERROR: THERE ARE CURRENTLY NO LOGS IN THE PROGRAM (IT MAY GOT DELETED)");
+                                            newQuiz = true;
+                                            ValidInput01 = true;
+                                            input.nextLine(); // REFRESHED BUFFER (LEFTOVER \n)
+                                            return; // stops the whole method
+                                        }
                                     default:
                                         throw new InputMismatchException();
                                 }

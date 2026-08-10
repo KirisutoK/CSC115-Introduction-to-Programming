@@ -1,13 +1,15 @@
 package Classes;
 
 // Creation Date: July 25, 2026. at 10:21 PM
-// Last Modified: August 09, 2026. at 10:27 PM
+// Last Modified: August 10, 2026. at 12:31 AM
 
 import Exceptions.FinishQuizException;
 import Exceptions.InvalidQuestionChoiceException;
 import Exceptions.SkipQuizException;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -54,7 +56,16 @@ public class BasicMathQuiz implements Serializable {
         return Questions;
     }
     public File[] getLogFolders() {
-        return LogFolder.listFiles();
+        ensureLogFolder(); //... this methods checks if it exists and if its a folder then create if the folder hasnt made it yet
+
+        if (LogFolder.listFiles() == null) { //... if the log folder is empty, return 0 instead of a null.
+            return new File[0];
+        }
+
+        File[] LogFolders = LogFolder.listFiles();
+        Arrays.sort(LogFolders);
+        
+        return LogFolders;
     }
     public String getLogObject(File f) {
         return new File(f, "QuizObject.ser").getPath();
@@ -120,8 +131,9 @@ public class BasicMathQuiz implements Serializable {
         }
     }
     public void createLog() {
-        // CHECK IF WE HAVE A LOG FOLDER
-        ensureLogFolder();
+        // [START UPS]
+        ensureLogFolder(); // Check if Folder exist and if it's a directory, else create a folder named Logs
+        countScore(); // Updates score
 
         // CHECKING WHAT ARE THE AVAILABLE FOLDER SLOT NUMBERS
         HashSet<Integer> CurrentUsedIndex = new HashSet<>();
@@ -130,7 +142,13 @@ public class BasicMathQuiz implements Serializable {
                 // NOTE: We can check that 01 does not exist and will we create it.
                 // NOTE: If all of the folders are correct. then the +1 will create an empty slot to create another loop.
         for (File l:getLogFolders()) { //... THIS CHECKS HOW MANY INDEX ARE CURRENTLY AVAILABLE
-            CurrentUsedIndex.add(Integer.valueOf(l.getName().substring(3))); // Get the number of the name of the folder and add it into the hashset
+            if (l.getName().matches("Log\\d+")) { // ... THIS IS TO MAKE SURE THAT ANY STRAY FILES OR FOLDERS THAT IS NOT A LOG FOLDER WILL BE IGNORED
+                        // NOTE: `\\d` means any single digit
+                        // NOTE: `+` means one or more digit
+                CurrentUsedIndex.add(Integer.valueOf(l.getName().substring(3))); // Get the number of the name of the folder and add it into the hashset
+            } else {
+                continue; // Skip the current file or folder
+            }
         }
 
         // ASSIGNING THE NUMBERS INTO THE LOGFOLDER NAME
@@ -198,11 +216,16 @@ public class BasicMathQuiz implements Serializable {
     }
 
     // [SAFETY MEASURES METHOD]
-    public void ensureLogFolder() { //! <===================================== YOU LEFT HERE
+    public void ensureLogFolder() {
         // NOTE: THIS METHOD IS TO ENSURE THAT WE HAVE A FOLDER WHERE WE CAN SAVE THE FOLDER OF LOGS AND PREVENTING DANGEROUS CODE FROM RUNNING
 
-        // CHECK IF WE HAVE LOG FOLDER
-        if (!LogFolder.exists()) {
+        // CHECK IF THE FILE EXIST
+        if (!LogFolder.exists()) { // If it does not exist
+            LogFolder.mkdir();
+        }
+
+        // CHECK IF THE FILE IS A DIRECTORY
+        if (!LogFolder.isDirectory()) { // if it is not a directory
             LogFolder.mkdir();
         }
     }
@@ -253,11 +276,27 @@ public class BasicMathQuiz implements Serializable {
             double range = 10.0;
             for (int i = 0; i < GeneratedOptions.length; i++) {
                 double min = PromptAnswer - range;
-                double generatedOptions = min + random.nextDouble(range * 2); // The chances of the generative wrong answers will be in a range of 10 towards the correct answer
-                while (Math.round(PromptAnswer) == Math.round(generatedOptions)) { // WHILE IT IS THE SAME, GENERATE AGAIN UNTIL IT IS NOT THE SAME
-                    generatedOptions = min + random.nextDouble(range * 2);
+                double generatedValue = 0; // the value of this initialization does not matter since we will randomized it during the while loop
+
+                boolean isUnique = false; // this is because generatedValue has not been generated yet
+                while (!isUnique) {
+                    generatedValue = min + random.nextDouble(range * 2); // The chances of the generative wrong answers will be in a range of 10 towards the correct answer
+                    isUnique = true;
+
+                    //... CHECK 1 -> IF THE GENERATED VALUE IS THE SAME AS THE PROMPT VALUE
+                    if (Math.round(PromptAnswer) == Math.round(generatedValue)) {
+                        isUnique = false;
+                    }
+
+                    //... CHECK 2 -> IF ANY OF THE OTHER GENERATED OPTIONS ARE THE SAME THEN THE CURRECT GENERATED VALUE IS NOT UNIQUE
+                    for (int j = 0; j < i; j++) {
+                        if (Math.round(generatedValue) == Math.round(GeneratedOptions[j])) {
+                            isUnique = false;
+                        }
+                    }
                 }
-                GeneratedOptions[i] = generatedOptions;
+
+                GeneratedOptions[i] = generatedValue;
             }
 
             // [ASSIGNING THE CORRECT PROMPT ANSWER]
@@ -364,7 +403,7 @@ public class BasicMathQuiz implements Serializable {
 }
 // TODO: DO TIME FOR LAST (I AM NOT GONNA DO THIS)
 // TODO: IF YOU HAVE FREE TIME, ADD SOME MENU IN THE START (NOT NEEDED FOR LEARNING, ITS MORE OF JUST A UI THINGY)
-// TODO: CHECK CLAUDE FOR BUG CHECKS (2/6)
+// TODO: CHECK CLAUDE FOR BUG CHECKS (I THINK I ALMOST FIXED MOST OF THE BUGS)
 
 // LESSON LEARNED: A class must be Serializeable before we can save and load the selected object.
 // LESSON LEARNED: 'getClass()' only returns the metadata of the class.

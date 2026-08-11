@@ -1,5 +1,5 @@
 // Creation Date: July 25, 2026. at 10:05 PM
-// Last Modified: August 09, 2026. at 10:52 PM
+// Last Modified: August 10, 2026. at  8:44 PM
 
 import Classes.BasicMathQuiz;
 import Exceptions.FinishQuizException;
@@ -71,38 +71,38 @@ public class Main {
         int count = 1;
         boolean QuizFinished = false;
         for (BasicMathQuiz.Question q : BMQ01.getQuestions()) {
-            // STOP IF THE USER DECIDEDS TO STOP
-            if (QuizFinished) break;
-
-            // SHOW QUESTION
-            System.out.println("+=================================+");
-            System.out.print(count + ". ");
-            q.displayQuestion();
-            System.out.println();
 
             // PROCESS USER INPUT
-            ValidInput = false;
+            ValidInput = false ; // If UserFinishQuiz is true, then make this true, if it is false, then make it false.
             while (!ValidInput) {
                 try {
-                    System.out.print("ANSWER: ");
-                    char UserAnswer = input.next().charAt(0);
-                    System.out.println();
-                    q.answerQuestion(UserAnswer);
+                    if (QuizFinished) { // IF USER HAD DECIDED THAT
+                        q.answerQuestion('E');
+                    } else { // IF USER DID NOT DECIDE TO FINISH QUIZ
+                        System.out.println("+=================================+");
+                        System.out.print(count + ". ");
+                        q.displayQuestion();
+                        System.out.println();
+                        System.out.print("ANSWER: ");
+
+                        char UserAnswer = input.next().charAt(0);
+                        System.out.println();
+                        q.answerQuestion(UserAnswer);
+                    }
 
                     ValidInput = true;
                     count++;
                 } catch (InvalidQuestionChoiceException e) {
                     System.out.println("ERROR: " + e.getMessage());
-                } catch (FinishQuizException e) {
-                    System.out.println("[USER] "+BMQ01.getUsername()+" "+ e.getMessage());
-                    System.out.println();
-                    QuizFinished = true;
-                    break; // stops the for loop?
                 } catch (SkipQuizException e) {
                     System.out.println("[USER] "+BMQ01.getUsername()+" "+e.getMessage()+" "+count);
                     System.out.println();
                     count++;
                     break;
+                } catch (FinishQuizException e) {
+                    System.out.println("[USER] "+BMQ01.getUsername()+" "+ e.getMessage());
+                    System.out.println();
+                    QuizFinished = true;
                 }
             }
         }

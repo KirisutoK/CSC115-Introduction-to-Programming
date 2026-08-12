@@ -1,0 +1,3 @@
+This must be the working directory in order to have the correct designed folder structure of the program.
+
+This program can run both in Mac and Linux.

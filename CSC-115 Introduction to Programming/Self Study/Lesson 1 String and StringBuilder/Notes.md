@@ -88,6 +88,7 @@ s.toUpperCase();          // "  HELLO, JAVA WORLD!  "
 s.toLowerCase();          // "  hello, java world!  "
 s.contains("Java");       // true
 s.indexOf("Java");        // position of first occurrence
+s.lastIndexOf("Java");    // Searchs up all the 'java' words and returns the starting point of the int where it was found last.
 s.replace("Java", "C#");  // replaces all occurrences
 s.split(",");             // splits into a String array by delimiter
 s.substring(2, 7);        // characters from index 2 up to (not including) 7

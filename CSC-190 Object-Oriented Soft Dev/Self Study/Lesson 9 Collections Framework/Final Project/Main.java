@@ -1,5 +1,5 @@
 // Creation Date: June 30, 2026. at 3:13 AM
-// Last Modified: July 13, 2026. at  8:01 PM
+// Last Modified: August 14, 2026. at  7:57 PM
 
 import Exceptions.ChoiceOutOfBoundsException;
 
@@ -242,11 +242,11 @@ public class Main {
 
 // Requirements:
 // 1. Must use all 3 collections — ArrayList, HashMap, and HashSet — each serving a meaningful and logical purpose
-// 2. Must have at least 3 classes outside of Main
+// 2. Must have at least 3 classes outside of StringUtils
 // 3. Must demonstrate at least one case where collections work together — not just separately
 // 4. Must use each of these methods at least once across your entire project:
 //      → add(), remove(), contains() or containsKey(), size(), and a loop through a collection
-// 5. Must have a fully working Main.java demonstrating the full system end-to-end
+// 5. Must have a fully working StringUtils.java demonstrating the full system end-to-end
 // 6. The system must make real-world logical sense — each collection choice should make sense for why that specific collection was chosen
 // 7. Must handle at least one case where a duplicate is rejected and show it in Mai
 

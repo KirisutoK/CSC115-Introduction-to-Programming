@@ -1,5 +1,5 @@
 // Creation Date: June 08, 2026. at 11:15 AM
-// Last Modified: June 12, 2026. at  8:08 PM
+// Last Modified: August 14, 2026. at  7:57 PM
 
 public class Main {
     public static void main(String[] args) {
@@ -39,6 +39,6 @@ public class Main {
 // ✅ 2. Must have at least one static nested class that is instantiated without an outer object
 // ✅ 3. Must have at least one inner class that directly accesses an outer class member
 // ✅ 4. Must have at least 5 classes total (including nested/inner classes)
-// ✅ 5. Must have a fully working Main.java that demonstrates all nested/inner classes being used
+// ✅ 5. Must have a fully working StringUtils.java that demonstrates all nested/inner classes being used
 // ✅ 6. The system must make real-world logical sense
 // ✅ 7. Must demonstrate that you understand when and why to use each type — the choice of which class gets which type should make sense

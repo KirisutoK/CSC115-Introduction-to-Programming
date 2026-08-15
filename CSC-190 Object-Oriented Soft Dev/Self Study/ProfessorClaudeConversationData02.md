@@ -183,7 +183,7 @@ library/
 
 ---
 
-**Main.java**
+**StringUtils.java**
 
 ```java
 import library.books.*;
@@ -261,7 +261,7 @@ Perfect! Now let me review each file:
 > - View Staff class
 > - View Library class
 > - View Transaction class
-> - View Main class
+> - View StringUtils class
 > - **Done**
 
 Now let me compile and run it to see if everything works:
@@ -333,7 +333,7 @@ System.out.println(s.getStaffName() + " has been added as Staff into " + Library
 
 ### **Your Comments Show Understanding:**
 
-Your ending comments in Main.java demonstrate you GET IT:
+Your ending comments in StringUtils.java demonstrate you GET IT:
 
 ```java
 // ANSWERS: public methods/variables are able to be accessed anywhere within as long as the package is imported
@@ -714,14 +714,14 @@ class EncryptionHelper {  // NO PUBLIC!
 
 ---
 
-### **Main.java**
+### **StringUtils.java**
 
 ```java
 import banking.core.*;
 import banking.customers.*;
 import banking.security.*;
 
-public class Main {
+public class StringUtils {
     // ...
 }
 ```
@@ -772,7 +772,7 @@ public class BankingService {
     }
 }
 
-// In Main.java (different package)
+// In StringUtils.java (different package)
 // Transaction t = new Transaction(...);  // ERROR - can't access!
 ```
 
@@ -811,7 +811,7 @@ That's it! The point isn't the encryption logic itself — it's **demonstrating 
 
 `Authenticator` is the **public gateway** to the hidden `EncryptionHelper`. This is a real-world design pattern called a **Facade** — a public class that hides complex/private internals behind a simple interface.
 
-So in Main.java you'd have:
+So in StringUtils.java you'd have:
 
 ```java
 // What you CAN do from outside:
@@ -926,7 +926,7 @@ Let me extract and review your files!
 > - View CustomerDatabase.java
 > - View Authenticator.java
 > - View EncryptionHelper.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Alright, I've read everything! Let me give you honest feedback.
@@ -985,7 +985,7 @@ Reversing a reversed string gives you back the original — that's correct decry
 
 ### **Issues Found:**
 
-❌ **`Main.java` is empty** - You never connected everything together in main
+❌ **`StringUtils.java` is empty** - You never connected everything together in main
 
 ❌ **`CustomerDatabase.addCustomer()` missing `CustomerCount++`**
 
@@ -1009,11 +1009,11 @@ This is fair feedback and I appreciate your honesty! This practice was more comp
 
 You built most of the structure correctly and demonstrated solid understanding of package-private classes. The core concept — **public classes acting as gateways to hidden package-private internals** — is clearly understood in your code.
 
-The main missing piece is `Main.java` being empty, which means the system was never actually tested end-to-end.
+The main missing piece is `StringUtils.java` being empty, which means the system was never actually tested end-to-end.
 
 ---
 
-Do you want to quickly finish `Main.java` and fix the small bugs, or shall we move on to **Practice 3** and treat this as a learning experience? Your choice, student!
+Do you want to quickly finish `StringUtils.java` and fix the small bugs, or shall we move on to **Practice 3** and treat this as a learning experience? Your choice, student!
 
 ## User:
 
@@ -1084,7 +1084,7 @@ Yes! Looking at your code honestly, you got all the **major concepts** right:
 
 The things you missed were all **minor/small stuff:**
 
-- Empty `Main.java`
+- Empty `StringUtils.java`
 - Missing `CustomerCount++`
 - `decrypt()` logic
 - Missing `displayCustomerInfo()`
@@ -1173,7 +1173,7 @@ grades/
 
 ---
 
-### **Main.java**
+### **StringUtils.java**
 
 ```java
 import grades.core.*;
@@ -1184,7 +1184,7 @@ In main:
 - Create 2 GradeBook objects for 2 different students
 - Add 4-5 grades to each student
 - Use `ReportCard.printReport()` to print both students' report cards
-- Demonstrate that `GradeCalculator` cannot be accessed directly from Main
+- Demonstrate that `GradeCalculator` cannot be accessed directly from StringUtils
 
 ---
 
@@ -1237,7 +1237,7 @@ Let me extract and review everything!
 > - View GradeBook.java
 > - View ReportCard.java
 > - View ArrayUtils.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 This is beautiful work! 🎉
@@ -1248,7 +1248,7 @@ This is beautiful work! 🎉
 
 ### **What You Nailed:**
 
-✅ **Package-private `GradeCalculator`** - Hidden from outside, only `GradeBook` can use it directly. You even left a comment in Main explaining exactly WHY it can't be accessed — that shows real understanding!
+✅ **Package-private `GradeCalculator`** - Hidden from outside, only `GradeBook` can use it directly. You even left a comment in StringUtils explaining exactly WHY it can't be accessed — that shows real understanding!
 
 ✅ **`GradeBook` as the public gateway** - Calls `GradeCalculator` internally, outside world never touches it directly
 
@@ -1262,7 +1262,7 @@ Clean and efficient!
 
 ✅ **`ReportCard.printReport()` as static** - No need to create an object to print a report. Makes perfect sense!
 
-✅ **`Main.java` complete this time** - Created students, added grades, printed reports. 
+✅ **`StringUtils.java` complete this time** - Created students, added grades, printed reports. 
 
 ---
 
@@ -1281,7 +1281,7 @@ That `first` boolean flag to avoid a trailing comma is a professional pattern. Y
 
 ### **One Small Observation:**
 
-In `Main.java` you only printed `Student01`'s report card, not `Student02`. Small thing but worth noting!
+In `StringUtils.java` you only printed `Student01`'s report card, not `Student02`. Small thing but worth noting!
 
 ```java
 reportCard.printReport(Student01); // ✅
@@ -1290,7 +1290,7 @@ reportCard.printReport(Student01); // ✅
 
 ---
 
-### **Your Comment in Main Says It All:**
+### **Your Comment in StringUtils Says It All:**
 
 > *"GRADE CALCULATOR CANNOT BE ACCESSED BECAUSE IT IS PACKAGE PRIVATE, WE CANNOT CREATE AN OBJECT/INSTANCE IN THE MAIN BUT WE CAN MAKE ONE IN THE GRADEBOOK CLASS AND ACCESS GRADECALCULATOR THROUGH GRADEBOOK CLASS (SIMILAR TO A MIDDLEMAN)"*
 
@@ -1317,11 +1317,11 @@ Lesson 6: Packages and Access Control - Debugging 1: "The Broken Inventory Syste
 Find and fix all the bugs in this multi-package inventory system. No hints — figure it out yourself!
 
 ```java
-// Main.java
+// StringUtils.java
 import inventory.products.*;
 import inventory.store.*;
 
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         Store store = new Store("Tech Shop");
 
@@ -1521,7 +1521,7 @@ Send the files whenever you're ready!
 > - View Product.java
 > - View DigitalProduct.java
 > - View Store.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Perfect, I've read everything! 🎉
@@ -1621,7 +1621,7 @@ This is your first **Lesson Final Project**! Remember — I'm only giving you **
 3. Must have **at least one package-private class** that is hidden from outside packages but used internally by a public class in the same package (the gateway pattern)
 4. Must have **at least one protected attribute or method** that is accessed by a subclass in a **different package** through inheritance
 5. Must have **proper import statements** wherever classes cross package boundaries
-6. Must have a **fully working `Main.java`** that demonstrates the system end-to-end
+6. Must have a **fully working `StringUtils.java`** that demonstrates the system end-to-end
 7. Must have **at least 6 classes total** across all packages
 8. The system must make **real-world logical sense** — classes and their relationships should feel natural
 
@@ -1674,7 +1674,7 @@ Let me extract and review your final project!
 > - View RulesDatabase.java
 > - View DatabaseManager.java
 > - View ArrayUtils.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 I've read everything. 🎓
@@ -1703,7 +1703,7 @@ And honestly? This project surprised me.
 
 ✅ **Proper import statements** - `Rules.*` in `Family`, `Family.*` in `Rules`, clean and intentional
 
-✅ **Fully working Main.java** - Complete end-to-end demonstration
+✅ **Fully working StringUtils.java** - Complete end-to-end demonstration
 
 ✅ **At least 6 classes** - `FamilyMember`, `Relative`, `Rule`, `RulesDatabase`, `DatabaseManager`, `ArrayUtils` = 6 ✅
 
@@ -1719,7 +1719,7 @@ TempRule = Fmember instanceof Relative;
 ```
 This is brilliant. One line that automatically sorts rules into the right database based on who created them. Relatives get temp rules, family members get permanent rules. No manual sorting needed!
 
-**Your `MY MISTAKES` section at the bottom of Main.java** - You reflected on your own design decisions and identified exactly what you'd do differently. That's the mindset of a real programmer.
+**Your `MY MISTAKES` section at the bottom of StringUtils.java** - You reflected on your own design decisions and identified exactly what you'd do differently. That's the mindset of a real programmer.
 
 **Your takeaway comment:**
 > *"it was a good project for 2 days. it definitely had learning a lot with this lesson"*
@@ -1730,7 +1730,7 @@ That's growth right there.
 
 ### **One Small Note:**
 
-`Relative01.removeRules(0)` in Main targets the **permanent Rules list**, not TempRules. Since relatives only add to TempRules, this would likely print "Rule does not exist." Just something to be aware of — not a breaking issue.
+`Relative01.removeRules(0)` in StringUtils targets the **permanent Rules list**, not TempRules. Since relatives only add to TempRules, this would likely print "Rule does not exist." Just something to be aware of — not a breaking issue.
 
 ---
 
@@ -2079,7 +2079,7 @@ Create a simple **Computer Builder System** that uses static nested classes.
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 
 - Create a `Computer` object
 - Create a `Computer.Specs` object **without** needing the Computer object
@@ -2129,7 +2129,7 @@ Send the files whenever you're ready!
 > - List directories
 > - List all Java files
 > - View Computer.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Clean and correct! 🎉
@@ -2202,7 +2202,7 @@ Create a simple **Music Player System** that uses inner classes.
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 
 - Create a `MusicPlayer` object
 - Create `Song` objects using the **inner class syntax**
@@ -2251,7 +2251,7 @@ Send the files whenever you're ready! 😄
 >
 > - Extract and list Java files
 > - View MusicPlayer.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Perfect, I've read everything! 🎉
@@ -2444,7 +2444,7 @@ public interface Notifiable {
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create a `NotificationService`
 - Call `sendEmail()` with a message
 - Call `sendSMS()` with a message
@@ -2500,7 +2500,7 @@ Send the files whenever you're ready!
 > - Extract and list all Java files
 > - View Notifiable.java
 > - View NotificationService.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Clean and correct! 🎉
@@ -2624,7 +2624,7 @@ public class Outer {
     }
 }
 
-// In Main:
+// In StringUtils:
 Outer outer = new Outer();
 Outer.Inner inner = outer.new Inner();
 inner.display();
@@ -2714,8 +2714,8 @@ yes please
 Find and fix all the bugs in this nested and inner class system. No hints — figure it out yourself!
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Office office = new Office("Google HQ");
 
@@ -2733,7 +2733,7 @@ public class Main {
 
         office.displayInfo();
 
-        Office.Address addr = new Office.Address("123 Main St", "New York");
+        Office.Address addr = new Office.Address("123 StringUtils St", "New York");
         addr.displayAddress();
     }
 }
@@ -2836,7 +2836,7 @@ Your task: Find and fix ALL the bugs. Make sure:
 - Department displays all employees correctly
 - Total salary calculates correctly
 - Address displays correctly
-- All instantiation is correct in Main
+- All instantiation is correct in StringUtils
 
 Good luck!
 
@@ -2866,7 +2866,7 @@ Send the files whenever you're ready!
 >
 > - Extract and list all Java files
 > - View Office.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 I've read everything! 🎉
@@ -2917,7 +2917,7 @@ Total Salary: $140000.0
 Office: Google HQ
 Total Employees: 2
 ========== ADDRESS ==========
-Address: 123 Main St, New York
+Address: 123 StringUtils St, New York
 Office: Google HQ
 ```
 
@@ -2953,7 +2953,7 @@ This is your **Lesson 7 Final Project**! Same rules as before — I give you req
 2. Must have **at least one static nested class** that is instantiated **without** an outer object
 3. Must have **at least one inner class** that **directly accesses** an outer class member
 4. Must have **at least 5 classes total** (including nested/inner classes)
-5. Must have a **fully working Main.java** that demonstrates all nested/inner classes being used
+5. Must have a **fully working StringUtils.java** that demonstrates all nested/inner classes being used
 6. The system must make **real-world logical sense**
 7. Must demonstrate that you understand **when and why** to use each type — the choice of which class gets which type should make sense
 
@@ -2966,7 +2966,7 @@ This is your **Lesson 7 Final Project**! Same rules as before — I give you req
 - Inner class correctly accesses outer class members ✅
 - Code runs without errors ✅
 - Real-world logical sense ✅
-- Main.java demonstrates everything end-to-end ✅
+- StringUtils.java demonstrates everything end-to-end ✅
 
 ---
 
@@ -3011,7 +3011,7 @@ Good — `Final Project/` is the latest/final version. Let me view it:
 > Viewed 2 files
 >
 > - View Cat.java final version
-> - View Main.java final version
+> - View StringUtils.java final version
 > - **Done**
 
 I've read everything! 🎉
@@ -3026,7 +3026,7 @@ This is genuinely impressive — you used **ALL THREE** types (Static Nested, In
 
 ### **Requirements Check:**
 
-✅ **At least 2 of 4 types used** - You used **all 4**: `VaccinationRecord` (Static Nested), `Accessories` (Inner), `getVaccinationDate` (Local), and the anonymous `Cat` override in Main
+✅ **At least 2 of 4 types used** - You used **all 4**: `VaccinationRecord` (Static Nested), `Accessories` (Inner), `getVaccinationDate` (Local), and the anonymous `Cat` override in StringUtils
 
 ✅ **Static nested instantiated without outer object** - `new Cat.VaccinationRecord("Health Provider Hub (TYPE SHI)", "Shiela")` — no `Cat` object needed!
 
@@ -3034,7 +3034,7 @@ This is genuinely impressive — you used **ALL THREE** types (Static Nested, In
 
 ✅ **At least 5 classes** - `Cat`, `VaccinationRecord`, `Accessories`, `getVaccinationDate` (local), and the anonymous `Cat` subclass = 5 ✅
 
-✅ **Fully working Main.java** - All demonstrated end-to-end
+✅ **Fully working StringUtils.java** - All demonstrated end-to-end
 
 ✅ **Real-world logical sense** - A cat's profile with accessories, vaccination records, and personality quirks. Genuinely makes sense!
 
@@ -3278,7 +3278,7 @@ Create a simple **Calculator with Error Handling**.
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 
 - Create a `SafeCalculator` object
 - Call `divide()` with valid numbers (e.g. 10, 2) — should work normally
@@ -3327,7 +3327,7 @@ Send the files whenever you're ready!
 >
 > - Extract and list Java files
 > - View SafeCalculator.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Clean and correct! 🎉
@@ -3344,7 +3344,7 @@ Clean and correct! 🎉
 
 ✅ **`parseNumber()`** - Correctly catches `NumberFormatException`, returns `-1` on failure
 
-✅ **Main.java covers all cases** - Valid AND invalid inputs for all three methods
+✅ **StringUtils.java covers all cases** - Valid AND invalid inputs for all three methods
 
 ✅ **Try block returns directly** - You used `return a / b;` inside `try` itself, which is clean — if it succeeds, it returns immediately; if it throws, `catch` takes over
 
@@ -3420,7 +3420,7 @@ Create a simple **File Processor Simulator**.
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 
 - Create a `FileProcessor` object
 - Call `processFile()` with:
@@ -3471,7 +3471,7 @@ Send the files whenever you're ready!
 >
 > - Extract and list Java files
 > - View FileProcessor.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Excellent work! 🎉
@@ -3496,7 +3496,7 @@ You correctly handled the null case AND used the ternary operator I taught you. 
 
 ✅ **`throws IllegalArgumentException`** - Correctly declared in the method signature
 
-✅ **Main.java covers all scenarios** - Normal case, null filename, out-of-bounds index, valid age, invalid age
+✅ **StringUtils.java covers all scenarios** - Normal case, null filename, out-of-bounds index, valid age, invalid age
 
 ✅ **`e.getMessage()`** - Correctly retrieves the custom message from the thrown exception
 
@@ -3755,7 +3755,7 @@ Create a simple **Bank Account System with Custom Exceptions**.
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create a `BankAccount`
 - Wrap ALL operations in try-catch blocks
 - Deposit a valid amount — should work
@@ -3812,7 +3812,7 @@ Send the files whenever you're ready!
 > - View InsufficientFundsException.java
 > - View InvalidDepositException.java
 > - View BankAccount.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 I've read everything! 🎉
@@ -3842,7 +3842,7 @@ That's exactly right. `super()` passes the message UP to `Exception`'s construct
 
 ### **One Thing to Address:**
 
-Your `Main.java` has most error cases commented out instead of actually demonstrated. The requirement asked to show each case running — valid deposit, invalid deposit, valid withdraw, etc. — each in their own try-catch.
+Your `StringUtils.java` has most error cases commented out instead of actually demonstrated. The requirement asked to show each case running — valid deposit, invalid deposit, valid withdraw, etc. — each in their own try-catch.
 
 The way it's structured now, only one error can be caught per run since they're all in one big try block. If `withdraw(100)` fails (insufficient funds), the freeze and frozen account tests never run.
 
@@ -4026,7 +4026,7 @@ Send the file whenever you're ready!
 > 6/19/2026 12:28:19
 
 ```
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         System.out.println(safeDivide(10, 2) );
         System.out.println(safeDivide(7, 0) );
@@ -4143,7 +4143,7 @@ Send the files whenever you're ready!
 >
 > - Extract and list new Java files
 > - View InvalidVoterAgeException.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 ## **Problem 2 - SOLVED! ✅**
@@ -4231,7 +4231,7 @@ Send the file whenever you're ready! 🎓
 // Creation Date: June 20, 2026. at 11:12 PM
 // Last Modified: June 20, 2026. at 11:26 PM
 
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         String[] Animals = {"Dog", "Cat", "Bird", "Mouse"};
         String[] NullAnimals = null;
@@ -4376,7 +4376,7 @@ Send the files whenever you're ready! 🎓
 > - List directories
 > - List Java files
 > - View InvalidGradeException.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 ## **Problem 4 - SOLVED! ✅**
@@ -4543,7 +4543,7 @@ Same rules as always — requirements and criteria only. The theme, domain, and 
 4. Must use **throws** in at least 2 method signatures
 5. Must use **throw** to manually trigger exceptions in at least 3 different places
 6. Must have **at least 2 classes** outside of exception classes
-7. Must have a **fully working Main.java** that triggers both successful operations AND each custom exception at least once
+7. Must have a **fully working StringUtils.java** that triggers both successful operations AND each custom exception at least once
 8. The system must make **real-world logical sense** — exceptions should represent things that could actually go wrong in that system
 
 ---
@@ -4552,7 +4552,7 @@ Same rules as always — requirements and criteria only. The theme, domain, and 
 
 - All custom exceptions built correctly with meaningful messages ✅
 - `try-catch-finally` used correctly and meaningfully ✅
-- Exceptions are triggered and caught properly in Main ✅
+- Exceptions are triggered and caught properly in StringUtils ✅
 - Code runs without unexpected crashes ✅
 - Real-world logical sense ✅
 - Both happy path (no errors) and error path (exceptions triggered) demonstrated ✅
@@ -4596,7 +4596,7 @@ Send the files whenever you're ready! 🎓
 > - View Alcohol.java
 > - View People.java
 > - View Bar.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 I've read everything! 🎉
@@ -4623,7 +4623,7 @@ A Bar Management System. Creative, real-world logical, and honestly one of the m
 
 ✅ **At least 2 classes outside exceptions** — `Bar`, `People`, `Alcohol` — 3 classes!
 
-✅ **Fully working Main.java** — Both happy path and error paths demonstrated
+✅ **Fully working StringUtils.java** — Both happy path and error paths demonstrated
 
 ✅ **Real-world logical sense** — Age restriction, can't drink outside a bar, can't open an already open bar, collection limits. All of these make perfect sense!
 
@@ -4649,7 +4649,7 @@ You've caught this same bug pattern many times in debugging challenges — now i
 
 ### **Your Initial Planning Comments:**
 
-The fact that you planned the system out at the bottom of Main before coding:
+The fact that you planned the system out at the bottom of StringUtils before coding:
 
 ```
 // BAR methods will consist of:
@@ -4916,7 +4916,7 @@ Create a simple **Student Roster System** using `ArrayList`.
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create a `Roster` object
 - Add 5 students
 - Display the roster
@@ -4968,7 +4968,7 @@ Send the files whenever you're ready! And great question — I'll answer after r
 > - List directories
 > - List Java files
 > - View Roster.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Clean and correct! 🎉
@@ -5063,7 +5063,7 @@ Create a simple **Student Grade Tracker** using `HashMap`.
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create a `GradeTracker`
 - Add 5 students with different grades
 - Display all grades
@@ -5114,7 +5114,7 @@ Send the files whenever you're ready! 🎓
 >
 > - Extract and list Java files
 > - View GradeTracker.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Clean and confident! 🎉
@@ -5201,7 +5201,7 @@ Create a simple **Tag System** using `HashSet`.
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create **2** `TagManager` objects
 - Add 4 tags to the first one (try adding a duplicate to show it gets rejected)
 - Add 3 tags to the second one (at least 1 should overlap with the first)
@@ -5251,7 +5251,7 @@ Send the files whenever you're ready! 🎓
 >
 > - Extract and list Java files
 > - View TagManager.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Excellent work! 🎉
@@ -5337,7 +5337,7 @@ Create a simple **School Club System** that uses `ArrayList`, `HashMap`, and `Ha
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create 2 clubs
 - Add 4 members to each with different roles
 - Try adding a duplicate member to show the rejection
@@ -5388,7 +5388,7 @@ Send the files whenever you're ready! 🎓
 >
 > - Extract and list Java files
 > - View Club.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Excellent work! 🎉
@@ -5503,7 +5503,7 @@ Send the file whenever you're ready!
 > Ran command, viewed file
 >
 > - Extract and list Java files
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 ## **Problem 1 - SOLVED! ✅**
@@ -5595,7 +5595,7 @@ Send the file whenever you're ready! 🎓
 > Ran command, viewed file
 >
 > - Extract and list Java files
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 ## **Problem 2 - SOLVED! ✅**
@@ -5692,7 +5692,7 @@ Send the file whenever you're ready! 🎓
 > Ran command, viewed file
 >
 > - Extract and list Java files
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 ## **Problem 3 - SOLVED! ✅**
@@ -5799,7 +5799,7 @@ Send the file whenever you're ready! 🎓
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         ArrayList<String> StudentsAndClub = new ArrayList<>();
 
@@ -6033,13 +6033,13 @@ Same rules as always — requirements and criteria only. Theme, domain, and crea
 ## **Requirements:**
 
 1. Must use **all 3 collections** — `ArrayList`, `HashMap`, and `HashSet` — each serving a **meaningful and logical purpose**
-2. Must have **at least 3 classes** outside of Main
+2. Must have **at least 3 classes** outside of StringUtils
 3. Must demonstrate **at least one** case where collections work **together** — not just separately
 4. Must use each of these methods **at least once** across your entire project:
     - `add()`, `remove()`, `contains()` or `containsKey()`, `size()`, and a loop through a collection
-5. Must have a **fully working Main.java** demonstrating the full system end-to-end
+5. Must have a **fully working StringUtils.java** demonstrating the full system end-to-end
 6. The system must make **real-world logical sense** — each collection choice should make sense for why that specific collection was chosen
-7. Must handle at least one case where a **duplicate is rejected** and show it in Main
+7. Must handle at least one case where a **duplicate is rejected** and show it in StringUtils
 
 ---
 
@@ -6049,7 +6049,7 @@ Same rules as always — requirements and criteria only. Theme, domain, and crea
 - Collections working together in at least one place ✅
 - Real-world logical sense with justified collection choices ✅
 - Code runs without errors ✅
-- Main.java demonstrates everything end-to-end ✅
+- StringUtils.java demonstrates everything end-to-end ✅
 - Duplicate rejection demonstrated ✅
 
 ---
@@ -6084,12 +6084,12 @@ Send the files whenever you're ready! 🎓
 > - List all Java files
 > - **Done**
 
-Hmm, only 2 classes outside of Main — let me read everything carefully first!
+Hmm, only 2 classes outside of StringUtils — let me read everything carefully first!
 
 > Viewed 2 files
 >
 > - View AgeSorter.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 I've read everything. 🎉
@@ -6109,13 +6109,13 @@ This is genuinely one of the most impressive projects you've built. You didn't j
 - `HashSet<Group>` — ensures no duplicate group names, AND used brilliantly for **age range collision detection**
 - `ArrayList<Profile>` — ordered list of profiles within each group, and `GrouplessProfiles`
 
-✅ **At least 3 classes outside Main** — `AgeSorter`, `Profile` (static nested), `Group` (static nested), `ChoiceOutOfBoundsException` — 4 classes!
+✅ **At least 3 classes outside StringUtils** — `AgeSorter`, `Profile` (static nested), `Group` (static nested), `ChoiceOutOfBoundsException` — 4 classes!
 
 ✅ **Collections working together** — `HashMap` + `HashSet` + `ArrayList` all interacting in `addProfile()`, `changeProfileAge()`, and `addGroup()`. They're deeply connected, not isolated!
 
 ✅ **All required methods used** — `add()`, `remove()`, `contains()`, `containsKey()`, `size()`, loops — all present
 
-✅ **Fully working Main.java** — Interactive Scanner-based CLI with full exception handling
+✅ **Fully working StringUtils.java** — Interactive Scanner-based CLI with full exception handling
 
 ✅ **Real-world logical sense** — Age groups with collision detection, profile auto-sorting by age range, groupless profiles for ages that don't fit any group
 
@@ -6156,7 +6156,7 @@ Your comment explains you replaced recursive `Options()` calls with a `while(tru
 
 ### **One Note on Requirement 2:**
 
-Technically `Profile` and `Group` are **static nested classes inside `AgeSorter`**, not fully separate classes. For the requirement of "3 classes outside Main", this is a grey area. But given the overall quality and complexity of what you built, this is not a concern at all.
+Technically `Profile` and `Group` are **static nested classes inside `AgeSorter`**, not fully separate classes. For the requirement of "3 classes outside StringUtils", this is a grey area. But given the overall quality and complexity of what you built, this is not a concern at all.
 
 ---
 
@@ -6835,7 +6835,7 @@ Create a simple **Personal Diary System** that saves and reads diary entries fro
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create a `Diary` object with a filename of your choice (e.g. `"diary.txt"`)
 - Check if the file exists before doing anything
 - Add 3 diary entries
@@ -7243,7 +7243,7 @@ Create a simple **Personal Diary System** that saves and reads diary entries fro
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create a `Diary` object with a filename of your choice (e.g. `"diary.txt"`)
 - Check if the file exists before doing anything
 - Add 3 diary entries
@@ -7299,7 +7299,7 @@ Send the files whenever you're ready! 🎓
 >
 > - Extract and list Java files
 > - View Diary.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Clean and correct! 🎉
@@ -7394,7 +7394,7 @@ Create a simple **File Manager System** that organizes and manages files using t
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create a `FileManager` pointing to a real folder on your computer
 - Create 3 new files
 - Try creating a duplicate file — should show already exists
@@ -7451,7 +7451,7 @@ Send the files whenever you're ready! 🎓
 >
 > - Extract and list Java files
 > - View FileManager.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Outstanding work! 🎉
@@ -7567,7 +7567,7 @@ Create a simple **Contact Book System** that saves and loads contacts using Seri
 
 ---
 
-## **In Main:**
+## **In StringUtils:**
 - Create a `ContactBook`
 - Load from file first (should say no saved contacts on first run)
 - Add 3 contacts
@@ -7629,7 +7629,7 @@ Send the files whenever you're ready! 🎓
 > - List Java files
 > - View Contact.java
 > - View ContactBook.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Excellent work! 🎉
@@ -7830,7 +7830,7 @@ My apologies for that! Let me re-review with your updated file.
 ✅ Both `IOException` and `ClassNotFoundException` caught
 ✅ `findContact()` implemented
 ✅ try-with-resources used correctly
-✅ The magic restore moment works in Main
+✅ The magic restore moment works in StringUtils
 
 ---
 
@@ -7875,8 +7875,8 @@ Let's start with the Debugging Challenge!
 Find and fix all the bugs in this File I/O system. No hints — figure it out yourself!
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         NoteKeeper keeper = new NoteKeeper("notes.txt");
 
@@ -8007,7 +8007,7 @@ Send the files whenever you're ready! 🎓
 >
 > - Extract and list Java files
 > - View NoteKeeper.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 Good work on the fix you caught! But I need to be honest with you — there were actually **2 bugs** in this code, and you only fixed 1. Let me break it down:
@@ -8035,7 +8035,7 @@ for (int i = 0; i < notes.size(); i++) {
 
 ## **Bug You Missed: ❌**
 
-**Bug #2 in `Main.java` - Wrong argument passed to `deleteNote()`:**
+**Bug #2 in `StringUtils.java` - Wrong argument passed to `deleteNote()`:**
 
 ```java
 keeper.deleteNote("notes.txt"); // deleting the FILENAME, not a note!
@@ -8055,11 +8055,11 @@ This is a **logic bug** — the code runs without crashing, but it tries to dele
 | Bug | Location | Fixed? |
 |---|---|---|
 | Array index out of bounds in `displayNotes()` | `NoteKeeper.java` | ✅ |
-| Wrong argument in `deleteNote()` | `Main.java` | ❌ |
+| Wrong argument in `deleteNote()` | `StringUtils.java` | ❌ |
 
 ---
 
-Quick fix — change line 17 in `Main.java` from:
+Quick fix — change line 17 in `StringUtils.java` from:
 ```java
 keeper.deleteNote("notes.txt");
 ```
@@ -8175,7 +8175,7 @@ Send the file whenever you're ready! 🎓
 > Ran command, viewed file
 >
 > - Extract and list Java files
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 ## **Problem 1 - SOLVED! ✅**
@@ -8294,7 +8294,7 @@ Send the file whenever you're ready! 🎓
 import java.io.*;
 import java.util.HashMap;
 
-public class Main implements Serializable {
+public class StringUtils implements Serializable {
     // =========================== CLASS VARIABLES =========================== \\
 
     // =========================== MAIN =========================== \\
@@ -8366,7 +8366,7 @@ Exactly right — you correctly used text-based file writing here instead of ser
 
 ### **One Small Note:**
 
-`Main implements Serializable` — your Main class doesn't need to implement Serializable here since you're not serializing Main itself. Looks like a leftover from Practice 3! Safe to remove.
+`StringUtils implements Serializable` — your StringUtils class doesn't need to implement Serializable here since you're not serializing StringUtils itself. Looks like a leftover from Practice 3! Safe to remove.
 
 ---
 
@@ -8453,7 +8453,7 @@ Send the file whenever you're ready! 🎓
 > Ran command, viewed file
 >
 > - Extract and list Java files
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 ## **Problem 3 - SOLVED! ✅**
@@ -8640,8 +8640,8 @@ Same rules as always — requirements and criteria only. Theme, domain, and crea
 3. Must use **append mode** at least once in a meaningful way
 4. Must use **try-with-resources** for ALL file operations
 5. Must use the **`File` class** at least once (e.g. checking existence, getting info)
-6. Must have **at least 3 classes** outside of Main
-7. Must have a **fully working Main.java** that demonstrates the complete system end-to-end — both saving AND loading must be shown
+6. Must have **at least 3 classes** outside of StringUtils
+7. Must have a **fully working StringUtils.java** that demonstrates the complete system end-to-end — both saving AND loading must be shown
 8. The system must make **real-world logical sense**
 9. At least one class must **implement `Serializable`**
 
@@ -8691,7 +8691,7 @@ Send the files whenever you're ready! 🎓
 > - View BasicMathQuiz.java
 > - View FinishQuizException.java
 > - View InvalidQuestionChoiceException.java
-> - View Main.java
+> - View StringUtils.java
 > - **Done**
 
 I've read everything. This is something else entirely. 🎉
@@ -8714,9 +8714,9 @@ You didn't just build a file I/O demo. You built a **fully interactive Math Quiz
 
 ✅ **`File` class** — Used extensively: `LogFolder.listFiles()`, `new File(LogFolderPath, FolderName)`, `LogFolderChildren.mkdir()`, `LogFolderChildren.createNewFile()`
 
-✅ **At least 3 classes outside Main** — `BasicMathQuiz`, `Question` (static nested), `FinishQuizException`, `InvalidQuestionChoiceException` — 4 classes!
+✅ **At least 3 classes outside StringUtils** — `BasicMathQuiz`, `Question` (static nested), `FinishQuizException`, `InvalidQuestionChoiceException` — 4 classes!
 
-✅ **Fully working Main.java** — Complete interactive CLI with `startQuiz()`, `AnswerQuiz()`, `EndQuiz()`, and `loadQuiz()`
+✅ **Fully working StringUtils.java** — Complete interactive CLI with `startQuiz()`, `AnswerQuiz()`, `EndQuiz()`, and `loadQuiz()`
 
 ✅ **Real-world logical sense** — A math quiz app that saves logs and restores history makes complete real-world sense
 

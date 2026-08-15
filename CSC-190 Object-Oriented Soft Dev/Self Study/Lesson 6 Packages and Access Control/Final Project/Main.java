@@ -1,5 +1,5 @@
 // Creation Date: June 02, 2026. at 2:13 PM
-// Last Modified: June 02, 2026. at 10:13 PM
+// Last Modified: August 14, 2026. at  7:57 PM
 
 import Family.*;
 import Rules.*;
@@ -60,7 +60,7 @@ public class Main {
 // TODO: Must have at least one package-private class that is hidden from outside packages but used internally by a public class in the same package (the gateway pattern)
 // TODO: Must have at least one protected attribute or method that is accessed by a subclass in a different package through inheritance
 // TODO: Must have proper import statements wherever classes cross package boundaries
-// TODO: Must have a fully working Main.java that demonstrates the system end-to-end
+// TODO: Must have a fully working StringUtils.java that demonstrates the system end-to-end
 // TODO: Must have at least 6 classes total across all packages
 // TODO: The system must make real-world logical sense — classes and their relationships should feel natural
 

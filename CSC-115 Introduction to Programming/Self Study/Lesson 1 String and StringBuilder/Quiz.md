@@ -120,16 +120,16 @@ Strings in Java are considered ______, meaning once created, their value cannot 
 
 ## ✏️ My Answers
 
-| Question | My Answer |
-|----------|-----------|
-| 1        |           |
-| 2        |           |
-| 3        |           |
-| 4        |           |
-| 5        |           |
-| 6        |           |
-| 7        |           |
-| 8        |           |
+| Question | My Answer                        |
+|----------|----------------------------------|
+| 1        | A                                |
+| 2        | B                                |
+| 3        | B                                |
+| 4        | A                                |
+| 5        | ? I am pretty sure this is anana |
+| 6        | B                                |
+| 7        | C                                |
+| 8        | B                                |
 
 ---
 
@@ -138,11 +138,11 @@ Strings in Java are considered ______, meaning once created, their value cannot 
 
 | Question | Correct Answer | Explanation |
 |----------|----------------|-------------|
-| 1        |                |             |
-| 2        |                |             |
-| 3        |                |             |
-| 4        |                |             |
-| 5        |                |             |
-| 6        |                |             |
-| 7        |                |             |
-| 8        |                |             |
+| 1        | B              | ❌           |
+| 2        | B              | 	✅          |
+| 3        | B              | 	✅          |
+| 4        | A              | ✅           |
+| 5        | anana          | ✅           |
+| 6        | B              | ✅           |
+| 7        | C              | ✅           |
+| 8        | B              | ✅           |

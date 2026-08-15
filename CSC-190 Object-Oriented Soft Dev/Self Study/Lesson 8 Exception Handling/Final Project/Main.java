@@ -1,5 +1,5 @@
 // Creation Date: June 24, 2026. at 10:01 PM
-// Last Modified: June 24, 2026. at 11:37 PM
+// Last Modified: August 14, 2026. at  7:57 PM
 
 import Exceptions.*;
 
@@ -103,7 +103,7 @@ public class Main {
 // Must use throws in at least 2 method signatures
 // Must use throw to manually trigger exceptions in at least 3 different places
 // Must have at least 2 classes outside of exception classes
-// Must have a fully working Main.java that triggers both successful operations AND each custom exception at least once
+// Must have a fully working StringUtils.java that triggers both successful operations AND each custom exception at least once
 // The system must make real-world logical sense — exceptions should represent things that could actually go wrong in that system
 
 // MY INITIAL IDEA:

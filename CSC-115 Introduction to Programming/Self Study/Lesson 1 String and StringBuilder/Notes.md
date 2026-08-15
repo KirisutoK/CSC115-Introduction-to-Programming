@@ -95,6 +95,7 @@ s.substring(2, 7);        // characters from index 2 up to (not including) 7
 s.charAt(0);              // character at index 0
 s.equals("Hello");        // content comparison (use this, NOT ==, for Strings!)
 s.equalsIgnoreCase("HELLO"); // case-insensitive comparison
+s.concat("Hello");        // Appends and returns a new String
 ```
 
 ### ⚠️ Important: `==` vs `.equals()`

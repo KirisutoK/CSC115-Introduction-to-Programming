@@ -90,7 +90,7 @@ Take your time and share your code when you're done. Don't worry if it's not per
     5. In your main method, create at least 2 Book objects and print their information
 */
 
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         Book book1 = new Book("One Piece", "Eichiiro Oda", 1975); // Title, Author, PageCount
         Book book2 = new Book("Jojo","Mugen", 644); // Title, Author, PageCount
@@ -371,7 +371,7 @@ Go ahead when you're ready!
 > 12/25/2025 13:53:53
 
 ```java
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         Student student1 = new Student("Jonathan", 001, 4.5, "Hamon"); //Name, StudentID, GPA, Major
         Student student2 = new Student("Jotaro", 002); //Name, StudentID   
@@ -524,7 +524,7 @@ Create a **Library System** with two classes:
 - Method `returnBook()` - returns the borrowed book (if they have one) and sets `borrowedBook` to null
 - Method to display member info including borrowed book details
 
-**In Main:**
+**In StringUtils:**
 - Create 3 books
 - Create 2 members
 - Have member 1 borrow a book
@@ -601,7 +601,7 @@ public class Book {
 ```
 
 ```java
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         //===========INSTANCES/OBJECTS===========\\
         Book book1 = new Book("One Piece", "Eichiro Oda", "03243243"); // Title, Author, ISBN
@@ -751,7 +751,7 @@ Create a **simple Bank System** with two classes that work together:
 - Method `transferBetweenOwnAccounts(double amount, String fromAccount, String toAccount)` - transfers money between their own two accounts
 - Method to display customer info including both account details (if they exist)
 
-**In Main:**
+**In StringUtils:**
 - Create 2 customers
 - Create 4 bank accounts (2 for each customer - one primary, one savings)
 - Use `openAccount()` to assign accounts to customers
@@ -779,7 +779,7 @@ This builds on what you just learned! Take your time.
 
 > File: Customers.java
 
-> File: Main.java
+> File: StringUtils.java
 
 ## Assistant:
 
@@ -844,8 +844,8 @@ I'm giving you a Restaurant Order System with **3 classes** that have multiple b
 **Here's the broken code:**
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Item pizza = new Item("Pizza", 12.99);
         Item burger = new Item("Burger", 8.50);
@@ -983,7 +983,7 @@ I understand - you're working on the debugging challenge. I'll wait for you to s
 
 > File: Item.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Order.java
 
@@ -1072,7 +1072,7 @@ Create a **School Management System**:
 
 ---
 
-**In Main:**
+**In StringUtils:**
 1. Create a School
 2. Create 3 courses with different max student limits (e.g., 2, 3, 2)
 3. Add courses to the school
@@ -1119,7 +1119,7 @@ I'm here when you're ready to share your solution.
 
 > File: Course.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: School.java
 
@@ -1195,8 +1195,8 @@ Great idea! Debugging practice will sharpen your ability to spot issues quickly.
 This code is supposed to manage a library where members can borrow books. There are **3 bugs** - find and fix them all.
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Library library = new Library("City Library");
         
@@ -1361,7 +1361,7 @@ Take your time and share your fixed code when ready!
 
 > File: Library.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Member.java
 
@@ -1414,8 +1414,8 @@ Yes please
 This is a bit more complex. There are **4 bugs** hidden in this code. The system should manage students, their grades, and calculate averages.
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Classroom classroom = new Classroom("Math 101", 5);
         
@@ -1586,7 +1586,7 @@ Take your time and share your solution when ready!
 
 > File: Classroom.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Student.java
 
@@ -1651,7 +1651,7 @@ I'm ready when you share the corrected code.
 
 > File: Classroom.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Student.java
 
@@ -1759,7 +1759,7 @@ Create a **Student Registration System** that tracks how many students have been
 - Instance method: `displayInfo()` - displays student name and ID
 - Getters for name and studentId
 
-**In Main:**
+**In StringUtils:**
 1. Print total students (should be 0)
 2. Create 5 Student objects (only pass names, IDs should auto-generate)
 3. Print total students (should be 5)
@@ -1783,7 +1783,7 @@ Take your time and share your code when ready!
 
 > 1/9/2026 13:47:05
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Student.java
 
@@ -1887,7 +1887,7 @@ Create a **MathHelper** utility class (similar to how the Math class works) that
 - Instance method: `getResult()` - returns current result
 - Instance method: `reset()` - resets result to 0
 
-**In Main:**
+**In StringUtils:**
 1. Use MathHelper methods WITHOUT creating an object (call with `MathHelper.methodName()`)
    - Calculate area and perimeter of a circle with radius 5
    - Calculate area and perimeter of a rectangle 10x6
@@ -1935,7 +1935,7 @@ I'm ready when you share your files.
 
 > File: Calculator.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: MathHelper.java
 
@@ -1959,7 +1959,7 @@ I'm ready when you share your files.
 
 ✅ **Calculator instance class** - Properly maintains state with instance variable `result`
 
-✅ **Your comment in Main** - Shows you understand WHY the constructor is private! That's the key insight.
+✅ **Your comment in StringUtils** - Shows you understand WHY the constructor is private! That's the key insight.
 
 ✅ **Calculation formulas** - All your math formulas are correct (circle area, perimeter, etc.)
 
@@ -2067,7 +2067,7 @@ Create a **Bank Account System** with interest rate management.
 
 ---
 
-**In Main:**
+**In StringUtils:**
 1. Print bank name and interest rate BEFORE creating any accounts (static block should run)
 2. Create 3 BankAccount objects with different initial balances
 3. Print total accounts and total balance
@@ -2111,7 +2111,7 @@ I'm ready to review your code!
 
 > File: BankAccount.java
 
-> File: Main.java
+> File: StringUtils.java
 
 ## Assistant:
 
@@ -2232,8 +2232,8 @@ Let me give you **1-2 debugging challenges** focused on **Static Members and Met
 This code is supposed to track employee IDs and count total employees, but there are **3 bugs**. Find and fix them!
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         System.out.println("Total employees: " + Employee.getTotalEmployees());
         
@@ -2320,7 +2320,7 @@ Take your time!
 
 > File: Employee.java
 
-> File: Main.java
+> File: StringUtils.java
 
 ## Assistant:
 
@@ -2395,8 +2395,8 @@ Remember: I don't want to see any comments or hints in the code, i want to figur
 Find and fix all the bugs in this code. No hints, no comments - figure it out yourself!
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         System.out.println("Bank: " + Account.getBankName());
         System.out.println("Minimum balance: $" + Account.getMinimumBalance());
@@ -2501,7 +2501,7 @@ Good luck!
 
 > File: Employee.java
 
-> File: Main.java
+> File: StringUtils.java
 
 My bad this is the wrong files. let me resend them
 
@@ -2517,7 +2517,7 @@ No problem, I'll wait for the correct files for the Account/Bank debugging chall
 
 > File: Account.java
 
-> File: Main.java
+> File: StringUtils.java
 
 ## Assistant:
 
@@ -2633,7 +2633,7 @@ Let's start with the basics of inheritance!
 
 ---
 
-**In Main:**
+**In StringUtils:**
 1. Create a Dog object
 2. Create a Cat object
 3. Create a Bird object (that can fly)
@@ -2666,7 +2666,7 @@ Take your time!
 
 > File: Dog.java
 
-> File: Main.java
+> File: StringUtils.java
 
 ## Assistant:
 
@@ -2793,7 +2793,7 @@ This practice focuses on the `super` keyword in different contexts and more comp
 
 ---
 
-**In Main:**
+**In StringUtils:**
 1. Create a Manager with $80,000 base salary, $20,000 bonus, team of 5
 2. Create a Developer with $70,000 base salary, "Java" language, $10,000 project bonus
 3. Create another Developer with $75,000 base salary, "Python" language, $15,000 project bonus
@@ -2846,7 +2846,7 @@ Go ahead and start coding!
 
 > File: Intern.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Manager.java
 
@@ -2985,7 +2985,7 @@ This practice introduces **multi-level inheritance** (inheritance chains) and th
 
 ---
 
-**In Main:**
+**In StringUtils:**
 1. Create a Car object
 2. Create an ElectricCar object (this extends Car, which extends Vehicle - 3 levels!)
 3. Create a Motorcycle object
@@ -3017,7 +3017,7 @@ Take your time with this one - it's testing advanced inheritance concepts!
 
 > File: ElectricCar.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Motorcycle.java
 
@@ -3179,7 +3179,7 @@ This is a complex real-world scenario that combines everything you've learned ab
 
 ---
 
-**In Main:**
+**In StringUtils:**
 1. Create 2 Professors with different departments
 2. Create 1 GraduateStudent with the first Professor as their advisor
 3. Create 2 regular Students
@@ -3227,7 +3227,7 @@ I'm ready to review your code when you upload the files!
 
 > File: GraduateStudent.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Person.java
 
@@ -3350,8 +3350,8 @@ Find and fix all the bugs in this inheritance-based system. No hints in the code
 ---
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Shape shape1 = new Shape("Red");
         Circle circle1 = new Circle("Blue", 5.0);
@@ -3457,7 +3457,7 @@ Good luck!
 
 > File: Circle.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Rectangle.java
 
@@ -3475,7 +3475,7 @@ Okay, I'm ready for the corrected files!
 
 > 1/16/2026 23:51:09
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Rectangle.java
 
@@ -3565,8 +3565,8 @@ Find and fix all the bugs in this banking system with inheritance. No hints - fi
 ---
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         BankAccount basic = new BankAccount("John", "ACC001", 1000.0);
         SavingsAccount savings = new SavingsAccount("Sarah", "SAV001", 2000.0, 0.05);
@@ -3712,7 +3712,7 @@ Good luck with "The Banking Hierarchy Bug Hunt"!
 
 > File: CheckingAccount.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: SavingsAccount.java
 
@@ -3849,7 +3849,7 @@ Welcome to Polymorphism! This is where inheritance becomes really powerful.
 
 ---
 
-**In Main (This is where polymorphism happens!):**
+**In StringUtils (This is where polymorphism happens!):**
 
 1. Create a **Payment array** of size 5 (type: `Payment[]`)
 
@@ -3892,7 +3892,7 @@ Take your time with this one - polymorphism is a big concept!
 
 > File: CreditCardPayment.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Payment.java
 
@@ -4062,7 +4062,7 @@ This practice explores **downcasting**, **type checking**, and more complex poly
 
 ---
 
-**In Main (Advanced Polymorphism!):**
+**In StringUtils (Advanced Polymorphism!):**
 
 1. Create a **Media array** of size 6 with:
    - 2 Movies (one with duration > 120, one < 120)
@@ -4117,7 +4117,7 @@ Take your time - this is more advanced!
 
 > 1/19/2026 14:56:15
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Media.java
 
@@ -4467,7 +4467,7 @@ This practice demonstrates how methods can accept and return parent types while 
 
 ---
 
-**In Main:**
+**In StringUtils:**
 
 1. Create a ZooKeeper
 2. Create 6 animals:
@@ -4575,7 +4575,7 @@ And keep `hunt()` as a separate action the Lion can do independently.
 
 > File: Lion.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Mammal.java
 
@@ -4746,8 +4746,8 @@ Find and fix all the bugs in this polymorphic shape system. No hints - figure it
 ---
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Shape[] shapes = new Shape[5];
         
@@ -4920,7 +4920,7 @@ Good luck!
 
 > File: Circle.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Rectangle.java
 
@@ -4942,7 +4942,7 @@ Okay, I'm ready for the corrected files!
 
 > File: Circle.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: Rectangle.java
 
@@ -4960,22 +4960,22 @@ Okay, I'm ready for the corrected files!
 
 ## Bugs You Fixed in "The Shape Hierarchy Chaos":
 
-✅ **Bug #1 in Main.java - `calculateTotalArea()` array bounds:**
+✅ **Bug #1 in StringUtils.java - `calculateTotalArea()` array bounds:**
 - ❌ Original: `for (int i = 0; i <= shapes.length; i++)`
 - ✅ Your fix: `for (int i = 0; i <= shapes.length-1; i++)` (or could use `i < shapes.length`)
 - **Why it was broken**: Using `<=` with `shapes.length` tries to access index 5 in an array of size 5 (valid indices are 0-4), causing ArrayIndexOutOfBoundsException
 
-✅ **Bug #2 in Main.java - `getShapesByType()` class name comparison:**
+✅ **Bug #2 in StringUtils.java - `getShapesByType()` class name comparison:**
 - ❌ Original: `s.getClass().getName().equals(type)` 
 - ✅ Your fix: `s.getClass().getSimpleName().equals(type)`
 - **Why it was broken**: `getName()` returns the full qualified name like `"package.Circle"`, not just `"Circle"`. `getSimpleName()` returns just the class name.
 
-✅ **Bug #3 in Main.java - `getShapesByType()` String comparison:**
+✅ **Bug #3 in StringUtils.java - `getShapesByType()` String comparison:**
 - ❌ Original: `s.getClass().getName() == type`
 - ✅ Your fix: `s.getClass().getSimpleName().equals(type)`
 - **Why it was broken**: Using `==` compares object references, not String contents. Must use `.equals()` for String comparison.
 
-✅ **Bug #4 in Main.java - `findLargestShape()` logic error:**
+✅ **Bug #4 in StringUtils.java - `findLargestShape()` logic error:**
 - ❌ Original: `if (s.getArea() < largest.getArea())`
 - ✅ Your fix: `if (s.getArea() > largest.getArea())`
 - **Why it was broken**: Using `<` finds the SMALLEST shape, not the largest!
@@ -5057,8 +5057,8 @@ Find and fix all the bugs in this polymorphic employee payroll system. No hints 
 ---
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Employee[] employees = new Employee[5];
         
@@ -5271,7 +5271,7 @@ I'm ready to review your fixed code!
 
 > File: FullTimeEmployee.java
 
-> File: Main.java
+> File: StringUtils.java
 
 > File: PartTimeEmployee.java
 
@@ -5285,17 +5285,17 @@ I'm ready to review your fixed code!
 
 ## Bugs You Fixed in "The Employee Payroll Disaster":
 
-✅ **Bug #1 in Main.java - `filterByType()` String comparison:**
+✅ **Bug #1 in StringUtils.java - `filterByType()` String comparison:**
 - ❌ Original: `if (e.getClass().getSimpleName() == type)`
 - ✅ Your fix: `if (e.getClass().getSimpleName().equals(type))`
 - **Why it was broken**: Using `==` compares object references, not String contents. Must use `.equals()` for String comparison.
 
-✅ **Bug #2 in Main.java - `filterByType()` missing index increment:**
+✅ **Bug #2 in StringUtils.java - `filterByType()` missing index increment:**
 - ❌ Original: Missing `index++` after adding to result array
 - ✅ Your fix: Added `index++;`
 - **Why it was broken**: Without incrementing index, all filtered employees would be placed at index 0, overwriting each other, and only the last one would be in the array.
 
-✅ **Bug #3 in Main.java - `findHighestPaid()` logic error:**
+✅ **Bug #3 in StringUtils.java - `findHighestPaid()` logic error:**
 - ❌ Original: `if (employees[i].calculateMonthlySalary() < highest.calculateMonthlySalary())`
 - ✅ Your fix: `if (employees[i].calculateMonthlySalary() > highest.calculateMonthlySalary())`
 - **Why it was broken**: Using `<` finds the LOWEST paid employee, not the highest!
@@ -5469,7 +5469,7 @@ This is the grand finale! You'll create a polymorphic system with sorting, compa
 
 ---
 
-**In Main:**
+**In StringUtils:**
 
 1. Create an InventoryManager with capacity 10
 
@@ -5544,7 +5544,7 @@ I'm ready to review your code!
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         // CREATING OBJECTS or INSTANCES
         Electronics Electronics01 = new Electronics("Iphone 16", 1609.99, 3, "E001", 24, "Apple");
@@ -6039,7 +6039,7 @@ Animal a = new Dog();  ✓ (Dog extends Animal)
 
 ---
 
-**In Main:**
+**In StringUtils:**
 
 1. Try to create a Vehicle object directly (this should fail - comment it out to show you understand)
    ```java
@@ -6278,7 +6278,7 @@ public class Truck extends Vehicle{
 ```
 
 ```
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         // CREATING OBJECTS OR INSTANCES
                 // Vehicle Vehicle01 = new Vehicle("V01", "Toyota", "2026",123.4);             // DOES NOT WORK BECAUSE THE CLASS OR OBJECT IS ABSTRACT
@@ -6596,7 +6596,7 @@ public interface Adjustable {
 
 ---
 
-**In Main:**
+**In StringUtils:**
 
 1. Create a polymorphic array `SmartDevice[]` with 6 devices:
    - 2 SmartLights
@@ -7252,8 +7252,8 @@ Find and fix all the bugs in this abstract class and interface system. No hints 
 ---
 
 ```java
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Payment[] payments = new Payment[4];
         
@@ -7442,8 +7442,8 @@ Good luck with "The Payment System Disaster"!
 > 2/25/2026 12:46:50
 
 ```
-// Main.java
-public class Main {
+// StringUtils.java
+public class StringUtils {
     public static void main(String[] args) {
         Payment[] payments = new Payment[4];
 
@@ -7888,7 +7888,7 @@ public interface Payable {
 
 ---
 
-**In Main:**
+**In StringUtils:**
 
 1. Create a University
 
@@ -8940,13 +8940,13 @@ public class Library {
 
 ---
 
-**Main.java** (in default package or separate package)
+**StringUtils.java** (in default package or separate package)
 ```java
 import library.books.*;
 import library.members.*;
 import library.management.*;
 
-public class Main {
+public class StringUtils {
     public static void main(String[] args) {
         // Create library
         Library lib = new Library("City Library");

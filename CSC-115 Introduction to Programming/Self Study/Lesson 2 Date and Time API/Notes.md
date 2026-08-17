@@ -190,16 +190,18 @@ LocalDate parsed = LocalDate.parse("08/14/2026", formatter);
 
 **Common pattern letters:**
 
-| Pattern | Meaning | Example |
-|---|---|---|
-| `yyyy` | Year | 2026 |
-| `MM` | Month (number) | 08 |
-| `MMMM` | Month (full name) | August |
-| `dd` | Day of month | 14 |
-| `EEEE` | Day of week (full) | Friday |
-| `HH` | Hour (24h) | 14 |
-| `mm` | Minute | 30 |
-| `ss` | Second | 00 |
+| Pattern | Meaning            | Example |
+|---------|--------------------|---------|
+| `yyyy`  | Year               | 2026    |
+| `MM`    | Month (number)     | 08      |
+| `MMMM`  | Month (full name)  | August  |
+| `dd`    | Day of month       | 14      |
+| `EEEE`  | Day of week (full) | Friday  |
+| `a`      | Day of Time        | AM/PM   |
+| `HH`    | Hour (24h)         | 14      |
+| `hh`    | Hour (12h)         | 14      |
+| `mm`    | Minute             | 30      |
+| `ss`    | Second             | 00      |
 
 > ⚠️ When parsing a pattern with `EEEE`, the day name in your string must actually match the date — Java throws a `DateTimeParseException` if they don't match.
 
@@ -215,6 +217,11 @@ ZonedDateTime tokyo = zdt.withZoneSameInstant(ZoneId.of("Asia/Tokyo"));
 ```
 
 Common timezone IDs: `"America/New_York"`, `"Europe/London"`, `"Asia/Tokyo"`, `"UTC"`
+
+to find all the available timezones that java currently has (not UTC):
+````java
+ZoneId.getAvailableZoneIds().stream().sorted().forEach(System.out::println);
+````
 
 ---
 

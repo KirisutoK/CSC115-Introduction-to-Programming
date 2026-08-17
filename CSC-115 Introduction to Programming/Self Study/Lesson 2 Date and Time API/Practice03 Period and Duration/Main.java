@@ -1,5 +1,5 @@
 // Creation Date: August 16, 2026. at 9:12 AM
-// Last Modified: August 16, 2026. at 11:27 AM
+// Last Modified: August 16, 2026. at 11:38 AM
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -59,15 +59,21 @@ public class Main {
     public static void calculateHoursPassed(LocalTime lt ,int HoursAdded) {
         LocalTime ltPlus = lt.plusHours(HoursAdded);
 
-        // CALCULATING THE DURATION
+        // [CALCULATING THE DURATION]
         Duration dr = Duration.between(lt, ltPlus); // LESSON LEARNED: Duration works different to Period, Duration does not have getHours(), getMinutes() so we have to manually calculate those.
-        long totalSecondsOfDr = dr.toSeconds();
 
-        long hours   = totalSecondsOfDr / 3600;
-        long minutes = (totalSecondsOfDr % 3600) / 60;
-        long seconds = totalSecondsOfDr % 60;
+        // FOR BEFORE JAVA9
+        // long totalSecondsOfDr = dr.toSeconds();
+        // long hours   = totalSecondsOfDr / 3600;
+        // long minutes = (totalSecondsOfDr % 3600) / 60;
+        // long seconds = totalSecondsOfDr % 60;
 
-        // FORMATTING AND PRINTING THE DURATION
+        // FOR JAVA9 AND ABOVE
+        long hours   = dr.toHoursPart();
+        long minutes = dr.toMinutesPart();
+        long seconds = dr.toSecondsPart();
+
+        // [FORMATTING AND PRINTING THE DURATION]
         DateTimeFormatter dtformatter = DateTimeFormatter.ofPattern("hh:mm a");
 
         System.out.println("[ HOURS PASSED ]");
@@ -77,15 +83,21 @@ public class Main {
     }
     public static void calculateHoursWorked(LocalTime clockIn, LocalTime clockOut) {
 
-        // CALCULATING THE DURATION
+        // [CALCULATING THE DURATION]
         Duration dr = Duration.between(clockIn, clockOut);
-        long totalSecondsOfDr = dr.toSeconds();
 
-        long hours   = totalSecondsOfDr / 3600;
-        long minutes = (totalSecondsOfDr % 3600) / 60;
-        long seconds = totalSecondsOfDr % 60;
+        // FOR BEFORE JAVA9
+        // long totalSecondsOfDr = dr.toSeconds();
+        // long hours   = totalSecondsOfDr / 3600;
+        // long minutes = (totalSecondsOfDr % 3600) / 60;
+        // long seconds = totalSecondsOfDr % 60;
 
-        // FORMATING AND PRINTING THE DURATION
+        // FOR JAVA9 AND ABOVE
+         long hours   = dr.toHoursPart();
+         long minutes = dr.toMinutesPart();
+         long seconds = dr.toSecondsPart();
+
+        // [FORMATING AND PRINTING THE DURATION]
         DateTimeFormatter dtformatter = DateTimeFormatter.ofPattern("hh:mm a");
 
         System.out.println("[ TOTAL HOURS WORKED ]");
@@ -93,5 +105,7 @@ public class Main {
         System.out.println("End Time: "+clockOut.format(dtformatter));
         System.out.println("Total Hours: "+hours+" hours, "+minutes+" minutes, "+seconds+" seconds.");
     }
+
+    
     
 }

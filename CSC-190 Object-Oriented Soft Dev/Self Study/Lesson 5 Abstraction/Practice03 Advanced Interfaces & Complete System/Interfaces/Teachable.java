@@ -2,7 +2,7 @@ package Interfaces;
 import Classes.Course;
 
 // Creation Date: February 27, 2026. at 9:11 PM
-// Last Modified: March 01, 2026. at 11:15 AM
+// Last Modified: August 21, 2026. at 11:34 PM
 
 public interface Teachable { // A Template/Contract that gives requirements for a class
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
@@ -14,4 +14,4 @@ public interface Teachable { // A Template/Contract that gives requirements for 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
 }
 
-// Methods and Interface is static by default
+// ReuseableMethods and Interface is static by default

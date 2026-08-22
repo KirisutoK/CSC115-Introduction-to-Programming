@@ -1,5 +1,5 @@
 // Creation Date: March 31, 2026. at 10:55 AM
-// Last Modified: May 20, 2026. at 10:49 PM
+// Last Modified: August 21, 2026. at 11:34 PM
 
 import java.util.Random;
 
@@ -22,7 +22,7 @@ public class Main {
 }
 
 
-// Methods to work on:
+// ReuseableMethods to work on:
 // Generating random table
 // Random generation with new array
 //

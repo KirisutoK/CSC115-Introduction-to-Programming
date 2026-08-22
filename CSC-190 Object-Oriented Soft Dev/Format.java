@@ -41,6 +41,6 @@ public interface Format { // A Template/Contract that gives requirements for a c
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
 }
 
-// Methods and Interface is static by default
+// ReuseableMethods and Interface is static by default
 
 */

@@ -1826,7 +1826,7 @@ Key terminology:
     • Fully qualified name: The full path of a class (Classes.Person.Academic.AP_Student)
 
 Common uses:
-→ Organizing code by feature (Classes, Interfaces, Utils)
+→ Organizing code by feature (Classes, Interfaces, Misc.ReuseableMethods)
 → Avoiding name conflicts (two projects can both have a "Course" class)
 → Grouping related things together (all interfaces in one package)
 → Controlling who can access what

@@ -7096,7 +7096,7 @@ public class SmartCamera
 **Perfect!** Interfaces are contracts - classes that implement them MUST provide the methods.
 
 ```java
-// Methods and Interface is static by default
+// ReuseableMethods and Interface is static by default
 ```
 
 Small correction: Interface methods are `public abstract` by default, not static. But your understanding of interfaces as templates is spot-on!

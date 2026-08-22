@@ -69,7 +69,7 @@ public class Password {
         scanner.close();
     }
 
-    // ===========================Methods===========================\\
+    // ===========================ReuseableMethods===========================\\
     
     public static void displayMenu() {
         System.out.println("""

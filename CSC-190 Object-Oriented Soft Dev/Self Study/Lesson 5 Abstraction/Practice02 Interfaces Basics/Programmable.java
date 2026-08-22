@@ -8,4 +8,4 @@ public interface Programmable { // A Template/Contract that gives requirements f
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
 }
 
-// Methods and Interface is static by default
+// ReuseableMethods and Interface is static by default

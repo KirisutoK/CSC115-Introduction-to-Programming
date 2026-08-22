@@ -71,12 +71,12 @@ public class Player {
         return MaxHealth;
     }
 
-    //=================Healing Methods==============\\
+    //=================Healing ReuseableMethods==============\\
     public void fullHeal() {
         this.Health = this.MaxHealth;
     }
 
-    //=================Leveling Methods==============\\
+    //=================Leveling ReuseableMethods==============\\
     public void addExp(int expGained) {
         this.Experience += expGained;
         Dialogue("\n+ Gained " + expGained + " EXP!");
@@ -108,7 +108,7 @@ public class Player {
         Dialogue("\nNext level at: " + this.ExperienceToNextLevel + " EXP");
     }
 
-    //=================Other Methods=================\\
+    //=================Other ReuseableMethods=================\\
 
     public String getAttackMessage() {
         switch (this.Pet) {

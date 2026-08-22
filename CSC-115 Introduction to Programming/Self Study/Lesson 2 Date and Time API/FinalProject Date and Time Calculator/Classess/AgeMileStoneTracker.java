@@ -1,11 +1,12 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 21, 2026. at 11:35 PM
+// Last Modified: August 22, 2026. at  1:48 PM
 
 import Misc.ReuseableMethods;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.*;
 import java.util.Scanner;
 
@@ -52,7 +53,26 @@ public class AgeMileStoneTracker {
     private void loadFile(File f) {
 
     }
-    private void createFile(File f) {
+    private void createFile(File f, String SaveFileName) {
+        // [CHECK IF IT ALREADY EXIST]
+        if (f.exists() && f.isFile()) { //! <============================================= LEFT HERE!!!! INITIALLY THINKING OF PUTTING THIS SECURITY CHECK AFTER THE FOLDER CREATIONS AND SEE IF THE PARAMETER `SaveFileName` matches to any existing files inside Saves>AgeMileStoneTracker.
+            return;
+        }
+
+        //... CHECK THE DIRECTORY OF `Saves`
+        File SavesFolder = new File("Saves");
+        if (!SavesFolder.exists() || SavesFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then.
+            SavesFolder.mkdir();
+        }
+
+        //... UNDER DIRECTORY OF `Saves`, CREATE ANOTHER DIRECTORY CALLED `AgeMileStoneTracker`
+        File AgeMileStoneTrackerFolder = new File(SavesFolder, "AgeMileStoneTracker");
+        if (!AgeMileStoneTrackerFolder.exists() || AgeMileStoneTrackerFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then
+            AgeMileStoneTrackerFolder.mkdir();
+        }
+
+        //... UNDER `AgeMileStoneTracker`, CREATE THE FILE
+        File SaveFile = new File(SaveFileName);
 
     }
 
@@ -77,8 +97,10 @@ public class AgeMileStoneTracker {
         // [PROCESSING OUTPUTS]
         switch (Answer) {
             case 1:
+                createFile();
                 break;
             case 2:
+                loadFile();
                 break;
             default:
                 break;

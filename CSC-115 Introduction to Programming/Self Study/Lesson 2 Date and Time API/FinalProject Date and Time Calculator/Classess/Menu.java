@@ -1,8 +1,9 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: August 22, 2026. at 12:06 AM
+// Last Modified: August 23, 2026. at  8:51 PM
 
+import java.time.DateTimeException;
 import java.util.Scanner;
 
 import Misc.ReuseableMethods;
@@ -44,6 +45,7 @@ public class Menu {
 
         // PROCESSING INPUTS
         int Answer = ReuseableMethods.getAnswer(1, 6); // CustomUtil.getAnswer(start, end);
+        System.out.println();
 
         // PROCESSING OUTPUTS
         switch (Answer) {
@@ -61,32 +63,55 @@ public class Menu {
             case 6:
                 break;
             default:
-                System.out.println("ERROR: Invalid Answer in MainMenu Method");
+                System.out.println("[ERROR] Invalid Answer in MainMenu Method");
                 break;
 
         }
     }
 
 
-    // [AgeMileStoneTracker ReuseableMethods]
-    public static void startAgeMileStoneTracker() { //! <====================================   THIS IS WHERE YOU LEFT OFFF!!!!!!!!!
+    // [AgeMileStoneTracker Methods]
+    public static void startAgeMileStoneTracker() {
         // PROCESS DATE INPUT
+        boolean ValidInput = false;
+        while (!ValidInput) {
+            try {
+                System.out.println("Please enter your Birthday: ");
+                System.out.println("(Month DayOfMonth Year) => ex: 12/05/2006");
+                System.out.print("Answer: ");
+                String Birthday = input.nextLine();
 
-        // INITIALIZE OUTPUT (OBJECT CREATION)
+                // LETS SPLIT THEM LINES AND CONVERT IT INTO INTEGERS THEN PASS IT ON
+                String[] Lines = Birthday.split("/");
 
+                // ADD THE CONVERTED LINES INTO THE CONSTRUCTOR
+                AMST = new AgeMileStoneTracker(Username, Integer.parseInt(Lines[0]), Integer.parseInt(Lines[1]), Integer.parseInt(Lines[2]));
 
+                ValidInput = true;
+            } catch (DateTimeException e) {
+                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] Please follow the Date Format which is `MM/DD/YY` or `Month/DayOfMonth/Year`.");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] You are missing the required numbers, please enter your Birthday, separating with `/`.");
+            } catch (Exception e) {
+                System.out.println("[UNEXPECTED ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+            } finally {
+                System.out.println();
+            }
+        }
+
+        // INITIALIZE OUTPUT (START RUNNING THE AMST MENU)
+        AMST.AMST_Menu();
     }
     
 
 
 
-    // [DayPlanner ReuseableMethods]
-    // [MultiTimeZoneMeetingPlanner ReuseableMethods]
-    // [SubscriptionTracker ReuseableMethods]
-    // [WorkHoursTracker ReuseableMethods]
-
-
-
+    // [DayPlanner Methods]
+    // [MultiTimeZoneMeetingPlanner Methods]
+    // [SubscriptionTracker Methods]
+    // [WorkHoursTracker Methods]
 
 
     // ================================================== OTHER CLASSES ================================================== \\

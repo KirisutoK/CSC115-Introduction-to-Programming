@@ -1,5 +1,5 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: August 21, 2026. at  9:38 PM
+// Last Modified: August 23, 2026. at  9:38 PM
 
 import Classess.Menu;
 
@@ -12,19 +12,17 @@ public class Main {
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
-        startMenu();
+        enterUsername();
+        menu.MainMenu();
     }
 
     // =========================== METHODS =========================== \\
 
-    public static void startMenu() {
+    public static void enterUsername() {
         System.out.print("Enter Username: "); menu = new Menu(input.nextLine());
         System.out.println();
-
-        menu.MainMenu();
     }
 
 }
 
-// INITIAL IDEAS:
-//
+//! YOU LEFT OFF  AT FIGURING OUT HOW TO MAKE THE USER GO BACK TO WHERE THE USER HAD WENT. INITIAL IDEA OF THIS IS USING A WHILE LOOP FOR THOSE METHODS.

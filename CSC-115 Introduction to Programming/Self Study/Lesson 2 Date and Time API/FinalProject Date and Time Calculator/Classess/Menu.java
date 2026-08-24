@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: August 23, 2026. at  8:51 PM
+// Last Modified: August 23, 2026. at  9:38 PM
 
 import java.time.DateTimeException;
 import java.util.Scanner;
@@ -51,6 +51,9 @@ public class Menu {
         switch (Answer) {
             case 1:
                 startAgeMileStoneTracker();
+
+                AMST.AMST_Menu();
+
                 break;
             case 2:
                 break;
@@ -71,7 +74,7 @@ public class Menu {
 
 
     // [AgeMileStoneTracker Methods]
-    public static void startAgeMileStoneTracker() {
+    public static boolean startAgeMileStoneTracker() {
         // PROCESS DATE INPUT
         boolean ValidInput = false;
         while (!ValidInput) {
@@ -101,8 +104,7 @@ public class Menu {
             }
         }
 
-        // INITIALIZE OUTPUT (START RUNNING THE AMST MENU)
-        AMST.AMST_Menu();
+        return ValidInput; // Note: I know that this will always return true, its just that its for readability.
     }
     
 

@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 23, 2026. at  9:22 PM
+// Last Modified: August 24, 2026. at 12:03 PM
 
 import Misc.ReuseableMethods;
 
@@ -50,7 +50,7 @@ public class AgeMileStoneTracker {
         LocalDate nextBirthday = LocalDate.of(TodayLD.getYear(), BirthdateLD.getMonth(), BirthdateLD.getDayOfMonth());
 
         while (nextBirthday.isBefore(TodayLD)) { // while its next birthday is before today
-            nextBirthday.plusYears(1);
+            nextBirthday = nextBirthday.plusYears(1);
         }
 
         Period p = Period.between(TodayLD, nextBirthday);
@@ -113,7 +113,7 @@ public class AgeMileStoneTracker {
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
-    public void AMST_Menu() {
+    public boolean AMST_Menu() {
         // [DISPLAY]
         System.out.println("╔═════════════════════════════════════════════════════════════════╗");
         System.out.println("║                      AGE MILESTONE TRACKER                      ║");
@@ -126,17 +126,13 @@ public class AgeMileStoneTracker {
         System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢ ");
         System.out.println("║ 1. Create File                                                  ║");
         System.out.println("║ 2. Load File                                                    ║");
-        System.out.println("║ 3. View Save Files                                              ║"); // NOTE: THINKING OF REMOVING THIS!
+        System.out.println("║ 3. Change Birthday                                              ║");
         System.out.println("║ 4. Go Back                                                      ║");
         System.out.println("╚═════════════════════════════════════════════════════════════════╝");
         System.out.println();
 
         // [PROCESSING INPUTS]
         int Answer = ReuseableMethods.getAnswer(1, 4);
-        while (Answer == 4) { // NOTE: THIS IS A PLACEHOLDER RESPONSE FOR 3, (NEED SOME EXTRA LEARNING WITH THIS)
-            System.out.println("This feature is currently in Development, Thank you!");
-            Answer = ReuseableMethods.getAnswer(1, 4);
-        }
 
         // [PROCESSING OUTPUTS]
         switch (Answer) {
@@ -162,13 +158,16 @@ public class AgeMileStoneTracker {
 
                 break;
             case 4:
-                // NOTE: I HAVE NO IDEA HOW TO DO THIS BUT LEARNING IT WILL BE SUPER AMAZING!
-                break;
+                return false; // false means it stopped running
             default:
                 break;
         }
+
+        return true; // true means its still running
     }
-    public void AMST_FileMenu(String FileName) { //! <========================= YOU LEFT ON THIS SPOT (THINKING OF ADDING THE FEATURE SOF MODYING THE FILE AND THEN ADDING THE FEATURE TO LOAD UP A FILE.
+    public void AMST_FileMenu(String FileName) {
+
+        //! <========================= YOU LEFT ON THIS SPOT (THINKING OF ADDING THE FEATURE SOF MODYING THE FILE AND THEN ADDING THE FEATURE TO LOAD UP A FILE.
 
         // NOTE: THERE IS NO FEATURES FOR THIS ONE YET, EVERYTHING IS IN DEVELOPMENT
         // [DISPLAY]

@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: August 23, 2026. at  9:38 PM
+// Last Modified: August 24, 2026. at 12:03 PM
 
 import java.time.DateTimeException;
 import java.util.Scanner;
@@ -28,7 +28,7 @@ public class Menu {
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
-    public void MainMenu() {
+    public boolean MainMenu() {
         // DISPLAY
         System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                      DATE AND TIME CALCULATOR 1.0                      ║");
@@ -37,7 +37,7 @@ public class Menu {
         System.out.println("║                                                                        ║");
         System.out.println("║ 1. Age MileStone Tracker             4. Subscription Tracker           ║");
         System.out.println("║ 2. Day Planner                       5. Work Hours Tracker             ║");
-        System.out.println("║ 3. Multi-TimeZone Tracker            6. Period/Duration Calculator     ║");
+        System.out.println("║ 3. Multi-TimeZone Tracker            6. Change Username                ║");
         System.out.println("║                                                                        ║");
         System.out.println("╚════════════════════════════════════════════════════════════════════════╝");
         System.out.println();
@@ -52,7 +52,12 @@ public class Menu {
             case 1:
                 startAgeMileStoneTracker();
 
-                AMST.AMST_Menu();
+                boolean FeatureRunning = true;
+                while (FeatureRunning) {
+                    FeatureRunning = AMST.AMST_Menu(); //... This runs multiple process
+                            //... Runs the Method
+                            //... Returns boolean
+                }
 
                 break;
             case 2:
@@ -64,17 +69,18 @@ public class Menu {
             case 5:
                 break;
             case 6:
-                break;
+                return true; // This returns false because it means that user choose an execution where a method to go back? (Lowky confused with the logic here)
             default:
                 System.out.println("[ERROR] Invalid Answer in MainMenu Method");
                 break;
 
         }
+        return false; // Only Case 6 of Switch(Answer) will return true
     }
 
 
     // [AgeMileStoneTracker Methods]
-    public static boolean startAgeMileStoneTracker() {
+    public static void startAgeMileStoneTracker() {
         // PROCESS DATE INPUT
         boolean ValidInput = false;
         while (!ValidInput) {
@@ -104,7 +110,8 @@ public class Menu {
             }
         }
 
-        return ValidInput; // Note: I know that this will always return true, its just that its for readability.
+        // Note: We had a return here before (returned ValidInput)
+        // Note: I know that this will always return true, it's just that it's for readability.
     }
     
 

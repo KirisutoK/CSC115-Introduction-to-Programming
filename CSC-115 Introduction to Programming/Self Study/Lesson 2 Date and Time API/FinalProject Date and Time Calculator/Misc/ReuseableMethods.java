@@ -1,6 +1,7 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: August 23, 2026. at  8:50 PM
+// Last Modified: August 24, 2026. at 11:19 PM
 
+import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class ReuseableMethods {
             try {
                 System.out.print("Answer: ");
                 Answer = input.nextInt();
-                input.nextLine();
+                input.nextLine(); // Refreshes buffer
                 if (Answer < start || Answer > end) {
                     throw new InputMismatchException();
                 }
@@ -24,6 +25,7 @@ public class ReuseableMethods {
                 ValidAnswer = true;
             } catch (InputMismatchException e) {
                 System.out.println("Please choose between "+start+" through "+end);
+                input.nextLine(); // Refreshes buffer
             }
         }
 
@@ -37,6 +39,16 @@ public class ReuseableMethods {
 
         return line + padding + line.toCharArray()[0];
     }
+    public static File getFile(File[] Folder, String fileName) {
+        for (File f:Folder) {
+            if (fileName.equals(f.getName())) {
+                return f;
+            }
+        }
+
+        return null;
+    }
+
 
     // ================================================== OTHER CLASSES ================================================== \\
 }

@@ -1,5 +1,5 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: August 24, 2026. at 12:10 PM
+// Last Modified: August 24, 2026. at  9:29 PM
 
 import Classess.Menu;
 
@@ -18,18 +18,18 @@ public class Main {
 
             boolean showingMenu = true;
             while (showingMenu) {
-                showingMenu = menu.MainMenu();
+                showingMenu = menu.MainMenu(); //... This runs multiple process
+                //... Runs menu.MainMenu()
+                //... Returns boolean after the method
             }
-            ApplicationRunning = menu.MainMenu(); //... This runs multiple process
-                    //... Runs menu.MainMenu()
-                    //... Returns boolean after the method
         }
     }
 
     // =========================== METHODS =========================== \\
 
     public static void enterUsername() {
-        System.out.print("Enter Username: "); menu = new Menu(input.nextLine());
+        System.out.print("Enter Username: ");
+        menu = new Menu(input.nextLine()); // Assign username
         System.out.println();
     }
 

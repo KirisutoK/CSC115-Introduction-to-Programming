@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: August 24, 2026. at 12:03 PM
+// Last Modified: August 24, 2026. at  9:32 PM
 
 import java.time.DateTimeException;
 import java.util.Scanner;
@@ -29,6 +29,8 @@ public class Menu {
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
     public boolean MainMenu() {
+
+
         // DISPLAY
         System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                      DATE AND TIME CALCULATOR 1.0                      ║");
@@ -69,13 +71,13 @@ public class Menu {
             case 5:
                 break;
             case 6:
-                return true; // This returns false because it means that user choose an execution where a method to go back? (Lowky confused with the logic here)
+                return false; // This returns `false` because it means that user choose an execution where a method to go back? (Lowky confused with the logic here)
             default:
                 System.out.println("[ERROR] Invalid Answer in MainMenu Method");
                 break;
 
         }
-        return false; // Only Case 6 of Switch(Answer) will return true
+        return true; // Only Case 6 of Switch(Answer) will return `false` since its an indication of "Stop" or "Running is False"
     }
 
 

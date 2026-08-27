@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 24, 2026. at 11:45 PM
+// Last Modified: August 26, 2026. at 11:36 PM
 
 import Misc.ReuseableMethods;
 
@@ -97,7 +97,7 @@ public class AgeMileStoneTracker {
         File[] LoadFiles = AgeMileStoneTrackerFolder.listFiles();
         // If there are no files, return false.
         if (LoadFiles == null || LoadFiles.length <= 0) { // the `OR` comparison is to prevent an IO Exception, null prevents if there is no folder created and the other `OR` is for the folder if it exists
-            System.out.println("[ERROR] There is no Saved Files in the Saved Files Folder for Age MileStone Tracker.");
+            System.out.println("[ERROR] There are currently no saved files in the `Age MileStone Tracker Saves Folder`.");
             return null;
         }
 
@@ -105,7 +105,7 @@ public class AgeMileStoneTracker {
         BasicFileAttributes metaData; // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
         LocalDateTime LDT;
         DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
-        System.out.println("+===[AGE MILESTONE TRACKER SAVES]================================+");
+        System.out.println("╒══════════[AGE MILESTONE TRACKER SAVES]════════════╕");
         for (File f:LoadFiles) {
             try {
                 //... METADATA
@@ -121,15 +121,16 @@ public class AgeMileStoneTracker {
                 String lastModified = LDT.format(DTF);
 
                 //... PRINTING
-                System.out.println("Name: "+f.getName().substring(0, f.getName().length()-4)); // The extra methods are meant to remove the `.txt`
-                System.out.println("Size: "+f.length());
-                System.out.println("Date Created: "+dateCreated);
-                System.out.println("Last Modified: "+lastModified);
-                System.out.println();
+                System.out.println(ReuseableMethods.lineAutoSpacing("║ Name: "+f.getName().substring(0, f.getName().length()-4), 53)); // The extra methods are meant to remove the `.txt`
+                System.out.println(ReuseableMethods.lineAutoSpacing("║ Size: "+f.length(), 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("║ Date Created: "+dateCreated, 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("║ Last Modified: "+lastModified,53));
+                System.out.println("╟───────────────────────────────────────────────────╢");
             } catch (IOException e) {
                 System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
             }
         }
+        System.out.println("╙───────────────────────────────────────────────────╜");
 
         // [GET THE ANSWERS] (STRING MATCH)
         File chosenLoadFile = null; // NOTE: `null` is just a placeholder, the value of this `variable` will eventually be reassigned
@@ -231,15 +232,13 @@ public class AgeMileStoneTracker {
                 // BUG: somehow the current file: `print` show something weird where sometimes it shows the `.txt` and sometimes not.
                 // Note: Current File: `FileName` should not show .txt
                 // [File Check]
-                File loadedFile = null;
-                while (loadedFile == null) { // this will forever run until it is no longer a null
-                    loadedFile = loadFile();
+                File loadedFile = loadFile();
+                if (loadedFile == null) {
+                    break;
                 }
 
                 // [File Menu]
                 FileMenuRunningLoop(loadedFile.getName());
-
-
                 break;
             case 3:
 
@@ -248,7 +247,7 @@ public class AgeMileStoneTracker {
                 return false; // false means it stopped running
         }
 
-        return true; // true means its still running
+        return true; // true means it's still running
     }
     private boolean AMST_FileMenu(String FileName) {
         // [DISPLAY]
@@ -293,10 +292,10 @@ public class AgeMileStoneTracker {
         return true; // `true` means that this method will keep running
     }
 
-
-
     //===========REUSABLE METHODS===========\\ NOTE: THIS ARE THE SPECIFIC METHODS THAT ARE REPEATEDLY USED ALL OVER THE PROGRAM
     private void FileMenuRunningLoop(String fileName) {
+
+
         boolean FileMenuRunning = true;
         while (FileMenuRunning) {
             FileMenuRunning = AMST_FileMenu(fileName);

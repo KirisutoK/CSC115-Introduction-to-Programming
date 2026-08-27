@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 27, 2026. at  1:27 AM
+// Last Modified: August 27, 2026. at 10:16 AM
 
 import Misc.ReuseableMethods;
 
@@ -12,8 +12,6 @@ import java.io.ObjectOutputStream;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
-import java.nio.file.*;
-import java.nio.file.attribute.*;
 
 public class AgeMileStoneTracker {
     //=======VARIABLES=======//
@@ -27,6 +25,12 @@ public class AgeMileStoneTracker {
     // [DYNAMIC VARIABLE]
     AgeMileStoneTrackerData CurrentAMST_Data; // This will be the current selected object or data
     String CurrentFileName; // This will be the holder or container of that selected object or data
+
+    // [SECURITY]
+    private final int minimumPassword = 5; // must have at least 5 characters
+    private final int maximumPassword = 20; // must have at least 20 characters
+    private final int specialCharactersPassword = 1; // must have at least 2 special characters
+    private final int numbersPassword = 1; // must have at least 1 int characters
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
     AgeMileStoneTracker(String Username, int month, int day, int year) {
@@ -99,14 +103,24 @@ public class AgeMileStoneTracker {
         }
 
         //... UNDER `AgeMileStoneTracker`, Check if it already exists in the list.
-        //... a. Return false if it exists already.
-        //... b. Create the file and return true.
         File SaveFile = new File(AgeMileStoneTrackerFolder, FileName+".AMST_Data"); // NOTE: `.AMST_Data` append so that every file will be a `.AMST_Data` file
         if (!SaveFile.exists() || SaveFile.isDirectory()) { // if the SaveFile does not exist or is currently a directory then.
+            //... b. Create the password for the file.
+            String Password = " "; // `" "` is just a placeholder
+            boolean ValidPassword = false;
+            while (!ValidPassword) {
+                System.out.print("Enter a password for the created file: ");
+                Password = input.nextLine();
+                System.out.println();
+                ValidPassword = ReuseableMethods.passwordValidation(Password, minimumPassword, maximumPassword, specialCharactersPassword, numbersPassword);
+            }
+
+            //... c. Create the file and return true.
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SaveFile))) { // NOTE: WE WILL BE USING `.AMST_Data` for the file name of our datas
-                CurrentAMST_Data = new AgeMileStoneTrackerData(Username, getAge(), getBirthday(), getNextBirthday(), String.valueOf(getTotalDaysAlive()));
-                oos.writeObject(CurrentAMST_Data);
-                CurrentFileName = FileName;
+                CurrentAMST_Data = new AgeMileStoneTrackerData(Username, Password, getAge(), getBirthday(), getNextBirthday(), String.valueOf(getTotalDaysAlive()));
+                oos.writeObject(CurrentAMST_Data); // grab the file and put the object in that file
+                CurrentFileName = FileName; // changes the variable value
+                CurrentAMST_Data.logIn(Password); // this auto logIn's the current selected object as as it is created
                 System.out.println(FileName+" has been created!");
                 return true; // true means that it has succesfully been created!
             } catch (IOException e) {
@@ -116,6 +130,7 @@ public class AgeMileStoneTracker {
             System.out.println(FileName+" already exists! please try another name.");
         }
 
+        //... a. Return false if it exists already.
         return false; // false means that it did not work or something lmao
     }
 
@@ -138,7 +153,7 @@ public class AgeMileStoneTracker {
         System.out.println();
 
         // [PROCESSING INPUTS]
-        int Answer = ReuseableMethods.getAnswer(1, 4);
+        int Answer = ReuseableMethods.getAnswer(1, 5);
         System.out.println();
 
         // [PROCESSING OUTPUTS]
@@ -150,6 +165,8 @@ public class AgeMileStoneTracker {
                     String FileName = input.nextLine();
                     ValidName = createFile(FileName);
                 }
+
+                AMST_FileMenu();
                 break;
             case 2:
 
@@ -159,14 +176,17 @@ public class AgeMileStoneTracker {
                 break;
             case 4:
 
-                break;
+                return false;
             case 5:
+                if (CurrentAMST_Data != null) {
+                    CurrentAMST_Data.logOut(); // logOut when leaving the FileMenu
+                }
                 return false; // false means it stopped running
         }
 
         return true; // true means it's still running
     }
-    private boolean AMST_FileMenu() { // NOTE: Still thinking of how to handle the .ser
+    private boolean AMST_FileMenu() {
         // [DISPLAY]
         System.out.println("╔═════════════════════════════════════════════════════════════════╗");
         System.out.println("║                AGE MILESTONE TRACKER (FILE MENU)                ║");
@@ -177,8 +197,7 @@ public class AgeMileStoneTracker {
         System.out.println("║ 1. View MileStones                                              ║");
         System.out.println("║ 2. Add MileStones                                               ║");
         System.out.println("║ 3. Remove Milestones                                            ║");
-        System.out.println("║ 4. Next MileStones                                              ║");
-        System.out.println("║ 5. Go Back (WIP)                                                ║");
+        System.out.println("║ 4. Go Back                                                      ║");
         System.out.println("╚═════════════════════════════════════════════════════════════════╝");
         System.out.println();
 
@@ -192,23 +211,19 @@ public class AgeMileStoneTracker {
                 // PRINTS OUT ALL THE MILESTONES (CHRONOLOGICALLY SORTED)
                 break;
             case 2:
-                // GRABS THE CURRENT TABLE
-                // ADD THE NEW DATA TO THE TABLE
-                // SORT OUT THE NEW TABLE
-                // REFLECT THE NEW TABLE INTO THE TEXT FILE AND UPDATE IT
+
                 break;
             case 3:
 
                 break;
             case 4:
-                break;
-            case 5:
                 return false; // `false` means that this method will now stop running
         }
         return true; // `true` means that this method will keep running
     }
 
     //===========REUSABLE METHODS===========\\ NOTE: THIS ARE THE SPECIFIC METHODS THAT ARE REPEATEDLY USED ALL OVER THE PROGRAM
+
 
     // ================================================== OTHER CLASSES ================================================== \\
 }
@@ -217,6 +232,4 @@ public class AgeMileStoneTracker {
 // Given a birthdate, calculates age, next birthday, and upcoming life milestones (e.g. 10,000th day alive, retirement age, etc.)
 // with countdowns to each. Reusable in any profile or personal dashboard feature.
 //
-// INITIAL IDEAS: 1.1
-// Use A txt file to add, remove, modify datas for better serialization, user interface, and readable code.
 //

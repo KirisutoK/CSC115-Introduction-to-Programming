@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: August 27, 2026. at  1:23 AM
+// Last Modified: August 27, 2026. at 10:16 AM
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,22 +11,28 @@ public class AgeMileStoneTrackerData implements Serializable {
     // [Class Data]
     private static final long serialVersionUID = 1L; // this is for serialization versions of the class
 
+    // [Security]
+    private String Password; // TODO: WE NEED TO ENCRYPT THIS! in the object file, it shows the password. <============== THIS IS WHERE YOU LEFT OFF!!!!!!!
+    private boolean passwordPassed = false;
+
     // [Basic Data]
     private String Username;
     private int Age;
     private String Birthday;
-    private String NextBrithday;
+    private String NextBirthday;
     private String TotalDaysAlive;
 
     // [Milestones Data]
     private HashMap<Integer, String> AgeBasedMilestone = new HashMap<>(); // Age, Message
     private boolean[] DayBasedMileStone = new boolean[44562]; // Maximum limit a human can live
+
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
-    AgeMileStoneTrackerData(String Username, int Age, String Birthday, String NextBirthday, String TotalDaysAlive) {
+    AgeMileStoneTrackerData(String Username, String Password, int Age, String Birthday, String NextBirthday, String TotalDaysAlive) {
         this.Username = Username;
+        this.Password = Password;
         this.Age = Age;
         this.Birthday = Birthday;
-        this.NextBrithday = NextBirthday;
+        this.NextBirthday = NextBirthday;
         this.TotalDaysAlive = TotalDaysAlive;
     }
 
@@ -34,21 +40,21 @@ public class AgeMileStoneTrackerData implements Serializable {
 
     // [Basic Getters]
     public String getTotalDaysAlive() {
-        return TotalDaysAlive;
+        return (passwordPassed) ? TotalDaysAlive: "[ERROR] User is not logged in!";
     }
-    public String getNextBrithday() {
-        return NextBrithday;
+    public String getNextBirthday() {
+        return (passwordPassed) ? NextBirthday: "[ERROR] User is not logged in!";
     }
     public String getBirthday() {
-        return Birthday;
+        return (passwordPassed) ? Birthday: "[ERROR] User is not logged in!";
     }
     public int getAge() {
-        return Age;
+        System.out.println("[ERROR] User is not logged in!");
+        return (passwordPassed) ? Age: 0;
     }
     public String getUsername() {
-        return Username;
+        return (passwordPassed) ? Username: "[ERROR] User is not logged in!";
     }
-    public
 
     // [Milestone Getters]
     public boolean[] getDayBasedMileStone() {
@@ -59,17 +65,39 @@ public class AgeMileStoneTrackerData implements Serializable {
     }
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
-    // NOTE: Actually thinking of a way on how to modify this data through the data handler
-    public void addAgeMilestone() {
+
+    // [SECURITY]
+    public boolean logIn(String input) {
+        if (Password.equals(input)) {
+            passwordPassed = true;
+            return true;
+        }
+
+        System.out.println("[ERROR] Invalid Password");
+        return false;
     }
-    public void removeAgeMilestone() {
+    public void logOut() {
+        passwordPassed = false;
     }
-    public void editAgeMileStone() {
-    }
+    // Note: a password must have 2 special characters, number(s), a minimum of 5 characters and maximum of 20 characters,
 
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
+    public void displayAMST() {
+
+    } //... WIP
 
     
     // ================================================== OTHER CLASSES ================================================== \\
 }
+
+// TODO: WE NEED TO ENCRYPT THIS! in the object file, it shows the password.
+
+// TODO: Actually thinking of a way on how to modify this data through the data handler
+// [MODIFIERS]
+//public void addAgeMilestone() {
+//}
+//public void removeAgeMilestone() {
+//}
+//public void editAgeMileStone() {
+//}

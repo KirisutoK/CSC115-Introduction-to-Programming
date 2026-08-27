@@ -1,5 +1,5 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: August 27, 2026. at 12:28 AM
+// Last Modified: August 27, 2026. at 10:10 AM
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -38,6 +38,40 @@ public class ReuseableMethods {
 
         return line + padding + line.toCharArray()[0];
     }
+    public static boolean passwordValidation(String Password, int minimum, int maximum, int specialCharacters, int Numbers){
+
+        // Count how many Characters, how many special characters, and numbers
+        int CharacterCounts = 0;
+        int SpecialCaracterCounts = 0;
+        int NumberCharacterCounts = 0;
+        for (int i = 0; i < Password.length(); i++) {
+            CharacterCounts++;
+
+            // If the character is a special character
+            if (!(Character.isLetterOrDigit(Password.charAt(i)) || Character.isWhitespace(Password.charAt(i)))) {
+                SpecialCaracterCounts++;
+            }
+
+            // If the character is a number
+            if (Character.isDigit(Password.charAt(i))) {
+                NumberCharacterCounts++;
+            }
+        }
+
+        // Do Checks
+        if (!((CharacterCounts >= minimum && CharacterCounts <= maximum) && SpecialCaracterCounts >= specialCharacters && NumberCharacterCounts >= Numbers)) {
+            System.out.println("[ERROR] Invalid Password! must have:");
+            System.out.println(minimum+" minimum characters,");
+            System.out.println(maximum+" maximum characters,");
+            System.out.println(specialCharacters+" special characters minimum,");
+            System.out.println(Numbers+" number characters minimum.");
+            return false;
+        }
+
+
+        return true;
+    }
+
 
     // ================================================== OTHER CLASSES ================================================== \\
 }

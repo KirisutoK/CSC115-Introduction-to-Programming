@@ -1,5 +1,5 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: August 24, 2026. at  9:29 PM
+// Last Modified: August 27, 2026. at 10:36 AM
 
 import Classess.Menu;
 
@@ -35,7 +35,12 @@ public class Main {
 
 }
 
-//! YOU LEFT OFF  AT FIGURING OUT HOW TO MAKE THE USER GO BACK TO WHERE THE USER HAD WENT. INITIAL IDEA OF THIS IS USING A WHILE LOOP FOR THOSE METHODS.
-
 // INITIAL IDEA 1.2:
 // Add an exception if a user decides to exit the application because our application is running in an infinite while lopp.
+// INITIAL IDEA 1.3:
+// Add AES Encryption, Hashing Password
+// I am currently using a raw password string and users are able to see it throught the object file.
+// This whole cryptography thing will be a whole entire different thing so I am planning to learn it after i finish this project.
+// Add AES Encryption, Hashing Password
+// I am currently using a raw password string and users are able to see it throught the object file.
+// This whole cryptography thing will be a whole entire different thing so I am planning to learn it after i finish this project.

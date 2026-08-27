@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: August 27, 2026. at 10:21 AM
+// Last Modified: August 27, 2026. at  1:46 PM
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ public class AgeMileStoneTrackerData implements Serializable {
     private static final long serialVersionUID = 1L; // this is for serialization versions of the class
 
     // [Security]
-    private String Password; // TODO: WE NEED TO ENCRYPT THIS! in the object file, it shows the password. <============== THIS IS WHERE YOU LEFT OFF!!!!!!!
+    private String Password; // TODO: WE NEED TO ENCRYPT THIS! in the object file, it shows the password. (DO THIS AFTER LEARNING HOW TO ENCRYPT AND HASHING [Cryptography Lessons: Not OOP])
     private boolean passwordPassed = false;
 
     // [Basic Data]

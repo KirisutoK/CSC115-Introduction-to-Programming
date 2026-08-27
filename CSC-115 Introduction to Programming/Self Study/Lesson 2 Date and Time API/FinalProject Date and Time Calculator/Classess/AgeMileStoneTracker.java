@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 27, 2026. at 10:36 AM
+// Last Modified: August 27, 2026. at  2:05 PM
 
 import Misc.ReuseableMethods;
 
@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
@@ -133,6 +136,62 @@ public class AgeMileStoneTracker {
         //... a. Return false if it exists already.
         return false; // false means that it did not work or something lmao
     }
+    public boolean loadFile() {
+        //... CHECK THE DIRECTORY OF `Saves`
+        File SavesFolder = new File("Saves");
+        if (!SavesFolder.exists() || SavesFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then.
+            SavesFolder.mkdir();
+        }
+
+        //... UNDER DIRECTORY OF `Saves`, CREATE ANOTHER DIRECTORY CALLED `AgeMileStoneTracker`
+        File AgeMileStoneTrackerFolder = new File(SavesFolder, "AgeMileStoneTracker");
+        if (!AgeMileStoneTrackerFolder.exists() || AgeMileStoneTrackerFolder.isFile()) { // if the path does not exists or there is an existing file called "Saves" then
+            AgeMileStoneTrackerFolder.mkdir();
+        }
+
+        //... UNDER `AgeMileStoneTracker`.
+        File[] SaveFiles = AgeMileStoneTrackerFolder.listFiles();
+        //... a. If it has no contents or files in the folder
+        if (SaveFiles.length <= 0) {
+            return false;
+        }
+        //... b. displaying the existing saved files
+        BasicFileAttributes metaData; // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
+        LocalDateTime LDT;
+        DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
+        System.out.println("╒══════════[AGE MILESTONE TRACKER SAVES]════════════╕");
+        for (File f:SaveFiles) {
+            try {
+                //... METADATA
+                metaData = Files.readAttributes(f.toPath(), BasicFileAttributes.class); // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
+                // NOTE: ^ is a standard class similar to `Integer.class` or `String.class`.
+                // LESSON LEARNED: NIO stands for New Input Output, its the advanced class for IO
+                // LESSON LEARNED: BasicFileAttirbutes.class can read an attribute of a file.
+
+                //... FORMATTING THE METADATA TO BE READABLE (METADATAS CONSIST OF LONG VALUES)
+                LDT = LocalDateTime.ofInstant(metaData.creationTime().toInstant(), ZoneId.systemDefault());
+                String dateCreated = LDT.format(DTF);
+                LDT = LocalDateTime.ofInstant(metaData.lastModifiedTime().toInstant(), ZoneId.systemDefault());
+                String lastModified = LDT.format(DTF);
+
+                //... PRINTING
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: " + f.getName().substring(0, f.getName().length() - 10), 53)); // The extra methods are meant to remove the `.txt`
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: " + f.length(), 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: " + dateCreated, 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: " + lastModified, 53));
+                System.out.println("╞═══════════════════════════════════════════════════╡");
+            } catch (IOException e) {
+                System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
+            }
+        }
+        System.out.println("╘═══════════════════════════════════════════════════╛");
+        System.out.println();
+
+        //... c. Grab input
+        //! <====================== YOU LEFT HERE!!!!!!!!!!!!
+
+        return true;
+    }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
     public boolean AMST_Menu() {
@@ -168,7 +227,11 @@ public class AgeMileStoneTracker {
 
                 AMST_FileMenu();
                 break;
-            case 2:
+            case 2: //! <===================================== YOU LEFT ON THIS METHOD, THINKING ABOUT HOW TO FORMAT THE SIZE INTO EITHER `KB` OR `MB`
+                boolean ValidLoad = false;
+                while (!ValidLoad) {
+                    ValidLoad = loadFile();
+                }
 
                 break;
             case 3:

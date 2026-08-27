@@ -1,14 +1,15 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 26, 2026. at 11:36 PM
+// Last Modified: August 27, 2026. at  1:27 AM
 
 import Misc.ReuseableMethods;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 import java.nio.file.*;
@@ -22,6 +23,10 @@ public class AgeMileStoneTracker {
 
     // [MISC]
     Scanner input = new Scanner(System.in);
+
+    // [DYNAMIC VARIABLE]
+    AgeMileStoneTrackerData CurrentAMST_Data; // This will be the current selected object or data
+    String CurrentFileName; // This will be the holder or container of that selected object or data
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
     AgeMileStoneTracker(String Username, int month, int day, int year) {
@@ -80,80 +85,7 @@ public class AgeMileStoneTracker {
     }
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
-    private File loadFile() {
-        // [CHECK THE DIRECTORY OF `Saves`]
-        File SavesFolder = new File("Saves");
-        if (!SavesFolder.exists() || SavesFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then.
-            SavesFolder.mkdir();
-        }
-
-        // [UNDER DIRECTORY OF `Saves`, CREATE ANOTHER DIRECTORY CALLED `AgeMileStoneTracker`]
-        File AgeMileStoneTrackerFolder = new File(SavesFolder, "AgeMileStoneTracker");
-        if (!AgeMileStoneTrackerFolder.exists() || AgeMileStoneTrackerFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then
-            AgeMileStoneTrackerFolder.mkdir();
-        }
-
-        // [UNDER `AgeMileStoneTracker`, grab all the files]
-        File[] LoadFiles = AgeMileStoneTrackerFolder.listFiles();
-        // If there are no files, return false.
-        if (LoadFiles == null || LoadFiles.length <= 0) { // the `OR` comparison is to prevent an IO Exception, null prevents if there is no folder created and the other `OR` is for the folder if it exists
-            System.out.println("[ERROR] There are currently no saved files in the `Age MileStone Tracker Saves Folder`.");
-            return null;
-        }
-
-        // [DISPLAY ALL THE FILES]
-        BasicFileAttributes metaData; // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
-        LocalDateTime LDT;
-        DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
-        System.out.println("╒══════════[AGE MILESTONE TRACKER SAVES]════════════╕");
-        for (File f:LoadFiles) {
-            try {
-                //... METADATA
-                metaData = Files.readAttributes(f.toPath(), BasicFileAttributes.class); // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
-                                                            // NOTE: ^ is a standard class similar to `Integer.class` or `String.class`.
-                            // LESSON LEARNED: NIO stands for New Input Output, its the advanced class for IO
-                            // LESSON LEARNED: BasicFileAttirbutes.class can read an attribute of a file.
-
-                //... FORMATTING THE METADATA TO BE READABLE (METADATAS CONSIST OF LONG VALUES)
-                LDT = LocalDateTime.ofInstant(metaData.creationTime().toInstant(), ZoneId.systemDefault());
-                String dateCreated = LDT.format(DTF);
-                LDT = LocalDateTime.ofInstant(metaData.lastModifiedTime().toInstant(), ZoneId.systemDefault());
-                String lastModified = LDT.format(DTF);
-
-                //... PRINTING
-                System.out.println(ReuseableMethods.lineAutoSpacing("║ Name: "+f.getName().substring(0, f.getName().length()-4), 53)); // The extra methods are meant to remove the `.txt`
-                System.out.println(ReuseableMethods.lineAutoSpacing("║ Size: "+f.length(), 53));
-                System.out.println(ReuseableMethods.lineAutoSpacing("║ Date Created: "+dateCreated, 53));
-                System.out.println(ReuseableMethods.lineAutoSpacing("║ Last Modified: "+lastModified,53));
-                System.out.println("╟───────────────────────────────────────────────────╢");
-            } catch (IOException e) {
-                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
-            }
-        }
-        System.out.println("╙───────────────────────────────────────────────────╜");
-
-        // [GET THE ANSWERS] (STRING MATCH)
-        File chosenLoadFile = null; // NOTE: `null` is just a placeholder, the value of this `variable` will eventually be reassigned
-        boolean validLoadFileName = false;
-        while (!validLoadFileName) {
-            System.out.print("Choose File (Name): ");
-            String chosenLoadFileName = input.nextLine()+".txt";
-
-            chosenLoadFile = ReuseableMethods.getFile(LoadFiles, chosenLoadFileName);
-
-            if (chosenLoadFile == null) {
-                System.out.println(chosenLoadFileName+" does not exist in the saves folder of `AgeMileStoneTracker`!");
-                System.out.println();
-            } else {
-                System.out.println(chosenLoadFileName+" has been loaded!");
-                validLoadFileName = true;
-            }
-
-        }
-
-        return chosenLoadFile;
-    }
-    private boolean createFile(String createFileName) {
+    public boolean createFile(String FileName) {
         //... CHECK THE DIRECTORY OF `Saves`
         File SavesFolder = new File("Saves");
         if (!SavesFolder.exists() || SavesFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then.
@@ -162,27 +94,29 @@ public class AgeMileStoneTracker {
 
         //... UNDER DIRECTORY OF `Saves`, CREATE ANOTHER DIRECTORY CALLED `AgeMileStoneTracker`
         File AgeMileStoneTrackerFolder = new File(SavesFolder, "AgeMileStoneTracker");
-        if (!AgeMileStoneTrackerFolder.exists() || AgeMileStoneTrackerFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then
+        if (!AgeMileStoneTrackerFolder.exists() || AgeMileStoneTrackerFolder.isFile()) { // if the path does not exists or there is an existing file called "Saves" then
             AgeMileStoneTrackerFolder.mkdir();
         }
 
         //... UNDER `AgeMileStoneTracker`, Check if it already exists in the list.
-            //... a. Return false if it exists already.
-            //... b. Create the file and return true.
-        File SaveFile = new File(AgeMileStoneTrackerFolder, createFileName+".txt"); // NOTE: .txt append so that every file will be a `.txt` file
+        //... a. Return false if it exists already.
+        //... b. Create the file and return true.
+        File SaveFile = new File(AgeMileStoneTrackerFolder, FileName+".AMST_Data"); // NOTE: `.AMST_Data` append so that every file will be a `.AMST_Data` file
         if (!SaveFile.exists() || SaveFile.isDirectory()) { // if the SaveFile does not exist or is currently a directory then.
-            try {
-                SaveFile.createNewFile();
-                System.out.println(createFileName+" has been created!");
-                return true;
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SaveFile))) { // NOTE: WE WILL BE USING `.AMST_Data` for the file name of our datas
+                CurrentAMST_Data = new AgeMileStoneTrackerData(Username, getAge(), getBirthday(), getNextBirthday(), String.valueOf(getTotalDaysAlive()));
+                oos.writeObject(CurrentAMST_Data);
+                CurrentFileName = FileName;
+                System.out.println(FileName+" has been created!");
+                return true; // true means that it has succesfully been created!
             } catch (IOException e) {
-                System.out.println("[ERROR: "+e+"] "+e.getMessage());
+                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
             }
         } else {
-            System.out.println(createFileName+" already exist! please try another name.");
+            System.out.println(FileName+" already exists! please try another name.");
         }
 
-        return false;
+        return false; // false means that it did not work or something lmao
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
@@ -194,13 +128,12 @@ public class AgeMileStoneTracker {
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+Username, 67));
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: "+getAge(), 67));
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Birthdate: "+getBirthday(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Next Birthday: "+getNextBirthday(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Total Days Alive: "+getTotalDaysAlive(), 67));
-        System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢ ");
+        System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢");
         System.out.println("║ 1. Create File                                                  ║");
         System.out.println("║ 2. Load File                                                    ║");
-        System.out.println("║ 3. Change Birthday                                              ║");
-        System.out.println("║ 4. Go Back                                                      ║");
+        System.out.println("║ 3. Delete File                                                  ║");
+        System.out.println("║ 4. Change Birthday                                              ║");
+        System.out.println("║ 5. Go Back                                                      ║");
         System.out.println("╚═════════════════════════════════════════════════════════════════╝");
         System.out.println();
 
@@ -211,52 +144,35 @@ public class AgeMileStoneTracker {
         // [PROCESSING OUTPUTS]
         switch (Answer) {
             case 1:
-                // While loop for name checks
                 boolean ValidName = false;
-                String FileName = "";
                 while (!ValidName) {
-                    System.out.print("File Name: ");
-                    FileName = input.nextLine();
-                    ValidName = createFile(FileName); // NOTE: This runs multiple process
-                        //... RUNS CREATE FILE
-                        //... CHECK IF FILE ALREADY EXIST
-                        //... RETURNS BOOLEAN IF THE FILE HAS BEEN CREATED OR NOT
+                    System.out.print("Please enter file name: ");
+                    String FileName = input.nextLine();
+                    ValidName = createFile(FileName);
                 }
-                System.out.println();
-
-                // While Loop to enable going back in forth (Navigation Feature)
-                FileMenuRunningLoop(FileName);
-
                 break;
-            case 2: //! <================================== LEFT HERE ON THIS, WE ADDED LoadFile feature.
-                // BUG: somehow the current file: `print` show something weird where sometimes it shows the `.txt` and sometimes not.
-                // Note: Current File: `FileName` should not show .txt
-                // [File Check]
-                File loadedFile = loadFile();
-                if (loadedFile == null) {
-                    break;
-                }
+            case 2:
 
-                // [File Menu]
-                FileMenuRunningLoop(loadedFile.getName());
                 break;
             case 3:
 
                 break;
             case 4:
+
+                break;
+            case 5:
                 return false; // false means it stopped running
         }
 
         return true; // true means it's still running
     }
-    private boolean AMST_FileMenu(String FileName) {
+    private boolean AMST_FileMenu() { // NOTE: Still thinking of how to handle the .ser
         // [DISPLAY]
         System.out.println("╔═════════════════════════════════════════════════════════════════╗");
         System.out.println("║                AGE MILESTONE TRACKER (FILE MENU)                ║");
         System.out.println("╠═════════════════════════════════════════════════════════════════╣");
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+Username, 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: "+FileName, 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Next Milestone: IN PROGRESS", 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+CurrentAMST_Data.getUsername(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: "+CurrentFileName, 67));
         System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢ ");
         System.out.println("║ 1. View MileStones                                              ║");
         System.out.println("║ 2. Add MileStones                                               ║");
@@ -293,17 +209,6 @@ public class AgeMileStoneTracker {
     }
 
     //===========REUSABLE METHODS===========\\ NOTE: THIS ARE THE SPECIFIC METHODS THAT ARE REPEATEDLY USED ALL OVER THE PROGRAM
-    private void FileMenuRunningLoop(String fileName) {
-
-
-        boolean FileMenuRunning = true;
-        while (FileMenuRunning) {
-            FileMenuRunning = AMST_FileMenu(fileName);
-            //... RUNS THE FILE MENU METHOD
-            //... RETURNS BOOLEAN
-        }
-    }
-
 
     // ================================================== OTHER CLASSES ================================================== \\
 }

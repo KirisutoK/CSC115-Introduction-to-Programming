@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: August 24, 2026. at  9:32 PM
+// Last Modified: August 27, 2026. at 10:08 PM
 
 import java.time.DateTimeException;
 import java.util.Scanner;
@@ -10,7 +10,9 @@ import Misc.ReuseableMethods;
 
 public class Menu {
     //=======VARIABLES=======//
+    // [USER DATA]
     private static String Username;
+    // TODO: I WILL BE MOVING THE BIRTHDAY VARIABLES INTO THE MENU IN ORDER FOR IT TO BE REUSABLE FOR EACH FEATURE.
 
     // [CLASSES OR APPLICATIONS]
     private static AgeMileStoneTracker AMST;
@@ -111,9 +113,6 @@ public class Menu {
                 System.out.println();
             }
         }
-
-        // Note: We had a return here before (returned ValidInput)
-        // Note: I know that this will always return true, it's just that it's for readability.
     }
     
 

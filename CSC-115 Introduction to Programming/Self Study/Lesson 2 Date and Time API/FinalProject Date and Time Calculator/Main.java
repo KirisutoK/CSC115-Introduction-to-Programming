@@ -1,5 +1,5 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: August 27, 2026. at 10:36 AM
+// Last Modified: August 27, 2026. at 10:08 PM
 
 import Classess.Menu;
 
@@ -33,6 +33,9 @@ public class Main {
         System.out.println();
     }
 
+    public static void enterBirthday() {
+        //! <========================================== YOU LEFT HERE!!!!!!!!!! THINKING OF MOVING THE BIRTHDAY INTO THE MENU CLASS INSTEAD OF JUST INITIALIZATING IT UNDER AMST.
+    }
 }
 
 // INITIAL IDEA 1.2:

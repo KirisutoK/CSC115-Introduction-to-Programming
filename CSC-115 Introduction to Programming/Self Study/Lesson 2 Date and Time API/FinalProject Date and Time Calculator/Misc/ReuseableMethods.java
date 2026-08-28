@@ -1,6 +1,7 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: August 27, 2026. at 10:10 AM
+// Last Modified: August 27, 2026. at  9:31 PM
 
+import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -70,6 +71,9 @@ public class ReuseableMethods {
 
 
         return true;
+    }
+    public static String fileNameOnly(File file, int TypeWidth) {
+        return file.getName().substring(0, file.getName().length() - TypeWidth);
     }
 
 

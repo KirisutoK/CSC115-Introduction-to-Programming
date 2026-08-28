@@ -1,14 +1,11 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 27, 2026. at  2:05 PM
+// Last Modified: August 27, 2026. at 10:08 PM
 
 import Misc.ReuseableMethods;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.*;
@@ -26,8 +23,8 @@ public class AgeMileStoneTracker {
     Scanner input = new Scanner(System.in);
 
     // [DYNAMIC VARIABLE]
-    AgeMileStoneTrackerData CurrentAMST_Data; // This will be the current selected object or data
-    String CurrentFileName; // This will be the holder or container of that selected object or data
+    AgeMileStoneTrackerData CurrentAMST_Data; // This will be the current selected object or data (Object)
+    File CurrentFile; // This will be the holder or container of that selected object or data (File)
 
     // [SECURITY]
     private final int minimumPassword = 5; // must have at least 5 characters
@@ -122,10 +119,12 @@ public class AgeMileStoneTracker {
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SaveFile))) { // NOTE: WE WILL BE USING `.AMST_Data` for the file name of our datas
                 CurrentAMST_Data = new AgeMileStoneTrackerData(Username, Password, getAge(), getBirthday(), getNextBirthday(), String.valueOf(getTotalDaysAlive()));
                 oos.writeObject(CurrentAMST_Data); // grab the file and put the object in that file
-                CurrentFileName = FileName; // changes the variable value
-                CurrentAMST_Data.logIn(Password); // this auto logIn's the current selected object as as it is created
+                CurrentFile = SaveFile;
+                CurrentAMST_Data.logIn(Password); // this auto logIn's the current selected object as it is created
+
                 System.out.println(FileName+" has been created!");
-                return true; // true means that it has succesfully been created!
+                System.out.println();
+                return true; // true means that it has successfully been created!
             } catch (IOException e) {
                 System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
             }
@@ -153,20 +152,23 @@ public class AgeMileStoneTracker {
         File[] SaveFiles = AgeMileStoneTrackerFolder.listFiles();
         //... a. If it has no contents or files in the folder
         if (SaveFiles.length <= 0) {
-            return false;
+            System.out.println("[ERROR] There are currently no saved files in the Age MileStone Tracker Folder");
+            System.out.println();
+            return false; // false means that it did not load successfully
         }
         //... b. displaying the existing saved files
         BasicFileAttributes metaData; // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
         LocalDateTime LDT;
-        DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
+        DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
+
         System.out.println("╒══════════[AGE MILESTONE TRACKER SAVES]════════════╕");
         for (File f:SaveFiles) {
             try {
                 //... METADATA
                 metaData = Files.readAttributes(f.toPath(), BasicFileAttributes.class); // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
-                // NOTE: ^ is a standard class similar to `Integer.class` or `String.class`.
-                // LESSON LEARNED: NIO stands for New Input Output, its the advanced class for IO
-                // LESSON LEARNED: BasicFileAttirbutes.class can read an attribute of a file.
+                                                        // NOTE: ^ is a standard class similar to `Integer.class` or `String.class`.
+                                                        // LESSON LEARNED: NIO stands for New Input Output, its the advanced class for IO
+                                                        // LESSON LEARNED: BasicFileAttirbutes.class can read an attribute of a file.
 
                 //... FORMATTING THE METADATA TO BE READABLE (METADATAS CONSIST OF LONG VALUES)
                 LDT = LocalDateTime.ofInstant(metaData.creationTime().toInstant(), ZoneId.systemDefault());
@@ -175,10 +177,10 @@ public class AgeMileStoneTracker {
                 String lastModified = LDT.format(DTF);
 
                 //... PRINTING
-                System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: " + f.getName().substring(0, f.getName().length() - 10), 53)); // The extra methods are meant to remove the `.txt`
-                System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: " + f.length(), 53));
-                System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: " + dateCreated, 53));
-                System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: " + lastModified, 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: "+ReuseableMethods.fileNameOnly(f, 10), 53)); // The extra methods are meant to remove the `.txt`
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: "+f.length(), 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: "+dateCreated, 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: "+lastModified, 53));
                 System.out.println("╞═══════════════════════════════════════════════════╡");
             } catch (IOException e) {
                 System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
@@ -188,9 +190,50 @@ public class AgeMileStoneTracker {
         System.out.println();
 
         //... c. Grab input
-        //! <====================== YOU LEFT HERE!!!!!!!!!!!!
+        boolean ValidChosenFile = false;
+        while (!ValidChosenFile) {
+            System.out.print("Choose which save file would you like to load: ");
+            File ChosenFile = new File(AgeMileStoneTrackerFolder, input.nextLine()+".AMST_Data");
 
-        return true;
+            //... d. Process output
+            for (File f:SaveFiles) {
+                if (f.getName().equals(ChosenFile.getName())) {
+                    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ChosenFile))) {
+
+                        //... e. Must log-in in order for the data to load
+                        AgeMileStoneTrackerData Temp = (AgeMileStoneTrackerData) ois.readObject();
+                        boolean ValidPassword = false;
+                        while (!ValidPassword) {
+                            System.out.print("Enter Password: ");
+                            String UserInputPassword = input.nextLine();
+                            ValidPassword = Temp.logIn(UserInputPassword);
+
+                            if (UserInputPassword.equals("e")) { // NOTE: Lowky dont know how to deal with this, initially planning to go back to selecting files but dont know how
+                                return false;
+                            }
+                        }
+
+                        if (ValidPassword) {
+                            CurrentAMST_Data = Temp;
+                            CurrentFile = ChosenFile;
+
+                            ValidChosenFile = true;
+                            System.out.println(ReuseableMethods.fileNameOnly(f, 10)+" has successfully loaded!");
+                            System.out.println();
+
+                            return true;
+                        }
+                    } catch (IOException e) {
+                        System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+                    }
+                }
+            }
+            System.out.println("[ERROR] "+ReuseableMethods.fileNameOnly(ChosenFile, 10)+" does not exists, please try another save file. ");
+        }
+
+        return false; // false means that it did not load successfully
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
@@ -206,7 +249,7 @@ public class AgeMileStoneTracker {
         System.out.println("║ 1. Create File                                                  ║");
         System.out.println("║ 2. Load File                                                    ║");
         System.out.println("║ 3. Delete File                                                  ║");
-        System.out.println("║ 4. Change Birthday                                              ║");
+        System.out.println("║ 4. View File                                                    ║");
         System.out.println("║ 5. Go Back                                                      ║");
         System.out.println("╚═════════════════════════════════════════════════════════════════╝");
         System.out.println();
@@ -228,18 +271,19 @@ public class AgeMileStoneTracker {
                 AMST_FileMenu();
                 break;
             case 2: //! <===================================== YOU LEFT ON THIS METHOD, THINKING ABOUT HOW TO FORMAT THE SIZE INTO EITHER `KB` OR `MB`
-                boolean ValidLoad = false;
-                while (!ValidLoad) {
-                    ValidLoad = loadFile();
+                if (!loadFile()) { // if load file returns false (did not load successfully, go back to the AMST_Menu
+                    break;
                 }
 
+                AMST_FileMenu();
                 break;
             case 3:
 
                 break;
             case 4:
 
-                return false;
+                // NOTE: CurrentAMST_Data and CurrentFile must not be null and should be logged in order for this to call AMST_FileMenu();
+                break;
             case 5:
                 if (CurrentAMST_Data != null) {
                     CurrentAMST_Data.logOut(); // logOut when leaving the FileMenu
@@ -255,7 +299,7 @@ public class AgeMileStoneTracker {
         System.out.println("║                AGE MILESTONE TRACKER (FILE MENU)                ║");
         System.out.println("╠═════════════════════════════════════════════════════════════════╣");
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+CurrentAMST_Data.getUsername(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: "+CurrentFileName, 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: "+ReuseableMethods.fileNameOnly(CurrentFile, 10), 67));
         System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢ ");
         System.out.println("║ 1. View MileStones                                              ║");
         System.out.println("║ 2. Add MileStones                                               ║");

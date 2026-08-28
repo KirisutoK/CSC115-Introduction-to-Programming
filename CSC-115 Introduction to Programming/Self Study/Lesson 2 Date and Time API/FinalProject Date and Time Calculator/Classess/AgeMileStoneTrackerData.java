@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: August 27, 2026. at  1:46 PM
+// Last Modified: August 27, 2026. at  9:51 PM
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -74,6 +74,7 @@ public class AgeMileStoneTrackerData implements Serializable {
         }
 
         System.out.println("[ERROR] Invalid Password");
+        System.out.println("[NOTE] Input \"e\" to exit.");
         return false;
     }
     public void logOut() {

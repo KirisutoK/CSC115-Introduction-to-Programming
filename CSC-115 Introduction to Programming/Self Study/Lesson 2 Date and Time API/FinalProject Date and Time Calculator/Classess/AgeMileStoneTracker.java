@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 27, 2026. at 10:08 PM
+// Last Modified: August 28, 2026. at 12:07 PM
 
 import Misc.ReuseableMethods;
 
@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class AgeMileStoneTracker {
     //=======VARIABLES=======//
     private String Username;
-    private LocalDate BirthdateLD;
+    private LocalDate UserBirthday;
     private LocalDate TodayLD;
 
     // [MISC]
@@ -33,17 +33,16 @@ public class AgeMileStoneTracker {
     private final int numbersPassword = 1; // must have at least 1 int characters
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
-    AgeMileStoneTracker(String Username, int month, int day, int year) {
+    AgeMileStoneTracker(String Username, LocalDate UserBirthday) {
         this.Username = Username;
 
         try {
             TodayLD = LocalDate.now();
 
             // Birthday Check: If Year is greater than `Today's Year`.
-            if (year > TodayLD.getYear()) {
+            if (UserBirthday.getYear() > TodayLD.getYear()) {
                 throw new DateTimeException("Year can not be greater than Today's year, This feature is currently in development. Thank you!");
             }
-            BirthdateLD = LocalDate.of(year, month, day);
         } catch (DateTimeException e) {
             throw new DateTimeException(e.getMessage());
         }
@@ -51,15 +50,15 @@ public class AgeMileStoneTracker {
     
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
     private int getAge() {
-        Period p = Period.between(BirthdateLD, TodayLD);
+        Period p = Period.between(UserBirthday, TodayLD);
 
         return p.getYears();
     }
     private long getTotalDaysAlive() {
-        return ChronoUnit.DAYS.between(BirthdateLD, TodayLD);
+        return ChronoUnit.DAYS.between(UserBirthday, TodayLD);
     }
     private String getNextBirthday() {
-        LocalDate nextBirthday = LocalDate.of(TodayLD.getYear(), BirthdateLD.getMonth(), BirthdateLD.getDayOfMonth());
+        LocalDate nextBirthday = LocalDate.of(TodayLD.getYear(), UserBirthday.getMonth(), UserBirthday.getDayOfMonth());
 
         while (nextBirthday.isBefore(TodayLD)) { // while its next birthday is before today
             nextBirthday = nextBirthday.plusYears(1);
@@ -85,7 +84,7 @@ public class AgeMileStoneTracker {
         // NOTE: Lowky this is pretty hard to read but using ternaries are just so satisfying.
     }
     private String getBirthday() {
-        return BirthdateLD.getMonth()+" "+BirthdateLD.getDayOfMonth()+", "+BirthdateLD.getYear();
+        return UserBirthday.getMonth()+" "+ UserBirthday.getDayOfMonth()+", "+ UserBirthday.getYear();
     }
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE

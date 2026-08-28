@@ -1,8 +1,11 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: August 27, 2026. at 10:08 PM
+// Last Modified: August 28, 2026. at 12:07 PM
 
+import Classess.AgeMileStoneTracker;
 import Classess.Menu;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
@@ -34,7 +37,34 @@ public class Main {
     }
 
     public static void enterBirthday() {
-        //! <========================================== YOU LEFT HERE!!!!!!!!!! THINKING OF MOVING THE BIRTHDAY INTO THE MENU CLASS INSTEAD OF JUST INITIALIZATING IT UNDER AMST.
+        // PROCESS DATE INPUT
+        boolean ValidInput = false;
+        while (!ValidInput) {
+            try {
+                System.out.println("Please enter your Birthday: ");
+                System.out.println("(Month DayOfMonth Year) => ex: 12/05/2006");
+                System.out.print("Answer: ");
+                String Birthday = input.nextLine();
+
+                // LETS SPLIT THEM LINES AND CONVERT IT INTO INTEGERS THEN PASS IT ON
+                String[] Lines = Birthday.split("/");
+
+                // ADD THE CONVERTED LINES INTO THE CONSTRUCTOR
+                menu.setBirthday(LocalDate.of(Integer.parseInt(Lines[2]), Integer.parseInt(Lines[0]), Integer.parseInt(Lines[1])));
+
+                ValidInput = true;
+            } catch (DateTimeException e) {
+                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] Please follow the Date Format which is `MM/DD/YY` or `Month/DayOfMonth/Year`.");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] You are missing the required numbers, please enter your Birthday, separating with `/`.");
+            } catch (Exception e) {
+                System.out.println("[UNEXPECTED ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+            } finally {
+                System.out.println();
+            }
+        }
     }
 }
 

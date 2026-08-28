@@ -1,9 +1,10 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: August 27, 2026. at 10:08 PM
+// Last Modified: August 28, 2026. at 12:07 PM
 
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import Misc.ReuseableMethods;
@@ -12,6 +13,7 @@ public class Menu {
     //=======VARIABLES=======//
     // [USER DATA]
     private static String Username;
+    private static LocalDate UserBirthday;
     // TODO: I WILL BE MOVING THE BIRTHDAY VARIABLES INTO THE MENU IN ORDER FOR IT TO BE REUSABLE FOR EACH FEATURE.
 
     // [CLASSES OR APPLICATIONS]
@@ -27,6 +29,11 @@ public class Menu {
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
     public Menu(String Username) {
         this.Username = Username;
+    }
+
+    //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
+    public void setBirthday(LocalDate UserBirthday) {
+        this.UserBirthday = UserBirthday;
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
@@ -54,7 +61,7 @@ public class Menu {
         // PROCESSING OUTPUTS
         switch (Answer) {
             case 1:
-                startAgeMileStoneTracker();
+                AMST = new AgeMileStoneTracker(Username, UserBirthday); //! <================= YOU LEFT HERE, NEED TO CHECK IF THE CHANGES OF MOVING THE BIRTHDAY VARIABLE INTO MENU IS OKAY OR NOT
 
                 boolean FeatureRunning = true;
                 while (FeatureRunning) {
@@ -84,36 +91,6 @@ public class Menu {
 
 
     // [AgeMileStoneTracker Methods]
-    public static void startAgeMileStoneTracker() {
-        // PROCESS DATE INPUT
-        boolean ValidInput = false;
-        while (!ValidInput) {
-            try {
-                System.out.println("Please enter your Birthday: ");
-                System.out.println("(Month DayOfMonth Year) => ex: 12/05/2006");
-                System.out.print("Answer: ");
-                String Birthday = input.nextLine();
-
-                // LETS SPLIT THEM LINES AND CONVERT IT INTO INTEGERS THEN PASS IT ON
-                String[] Lines = Birthday.split("/");
-
-                // ADD THE CONVERTED LINES INTO THE CONSTRUCTOR
-                AMST = new AgeMileStoneTracker(Username, Integer.parseInt(Lines[0]), Integer.parseInt(Lines[1]), Integer.parseInt(Lines[2]));
-
-                ValidInput = true;
-            } catch (DateTimeException e) {
-                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
-            } catch (NumberFormatException e) {
-                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] Please follow the Date Format which is `MM/DD/YY` or `Month/DayOfMonth/Year`.");
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] You are missing the required numbers, please enter your Birthday, separating with `/`.");
-            } catch (Exception e) {
-                System.out.println("[UNEXPECTED ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
-            } finally {
-                System.out.println();
-            }
-        }
-    }
     
 
 

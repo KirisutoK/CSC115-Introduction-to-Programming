@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 29, 2026. at  3:18 AM
+// Last Modified: August 29, 2026. at  1:26 PM
 
 import Misc.ReuseableMethods;
 
@@ -46,7 +46,7 @@ public class AgeMileStoneTracker {
             throw new DateTimeException(e.getMessage());
         }
     }
-    
+
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
     private int getAge() {
         Period p = Period.between(UserBirthday, TodayLD);
@@ -66,24 +66,24 @@ public class AgeMileStoneTracker {
         Period p = Period.between(TodayLD, nextBirthday);
 
         // NAMING CONVENTIONS WITH `S`
-        String Year = String.valueOf(p.getYears()+((p.getYears() >= 2) ? " Years": " Year"));
-        String Month = String.valueOf(p.getMonths()+((p.getMonths() >= 2) ? " Months": " Month"));
-        String DayOfMonth = String.valueOf(p.getDays()+((p.getDays() >= 2) ? " Days": " Day"));
+        String Year = String.valueOf(p.getYears() + ((p.getYears() >= 2) ? " Years" : " Year"));
+        String Month = String.valueOf(p.getMonths() + ((p.getMonths() >= 2) ? " Months" : " Month"));
+        String DayOfMonth = String.valueOf(p.getDays() + ((p.getDays() >= 2) ? " Days" : " Day"));
 
         // CUTTING STRINGS BASED ON DATE
         if (p.getYears() == 0 && p.getMonths() == 0 && p.getDays() == 0) {
             return "TODAY (HAPPY BIRTHDAY!)";
         } else if (p.getYears() == 0 && p.getMonths() == 0) {
-            return DayOfMonth+".";
+            return DayOfMonth + ".";
         } else if (p.getYears() == 0) {
-            return Month+", "+DayOfMonth+".";
+            return Month + ", " + DayOfMonth + ".";
         }
 
-        return p.getYears()+((p.getYears()>1) ? " Years," : " Year, " )+p.getMonths()+((p.getMonths()>1) ? " Months," : " Month,")+p.getDays()+((p.getDays()>1) ? " Days Remaining" : "Day Remaining");
+        return p.getYears() + ((p.getYears() > 1) ? " Years," : " Year, ") + p.getMonths() + ((p.getMonths() > 1) ? " Months," : " Month,") + p.getDays() + ((p.getDays() > 1) ? " Days Remaining" : "Day Remaining");
         // NOTE: Lowky this is pretty hard to read but using ternaries are just so satisfying.
     }
     private String getBirthday() {
-        return UserBirthday.getMonth()+" "+ UserBirthday.getDayOfMonth()+", "+ UserBirthday.getYear();
+        return UserBirthday.getMonth() + " " + UserBirthday.getDayOfMonth() + ", " + UserBirthday.getYear();
     }
 
     // [FILES/DATA]
@@ -110,7 +110,7 @@ public class AgeMileStoneTracker {
         }
 
         //... UNDER `AgeMileStoneTracker`, Check if it already exists in the list.
-        File SaveFile = new File(AgeMileStoneTrackerFolder, FileName+".AMST_Data"); // NOTE: `.AMST_Data` append so that every file will be a `.AMST_Data` file
+        File SaveFile = new File(AgeMileStoneTrackerFolder, FileName + ".AMST_Data"); // NOTE: `.AMST_Data` append so that every file will be a `.AMST_Data` file
         if (!SaveFile.exists() || SaveFile.isDirectory()) { // if the SaveFile does not exist or is currently a directory then.
             //... b. Create the password for the file.
             String Password = " "; // `" "` is just a placeholder
@@ -129,66 +129,47 @@ public class AgeMileStoneTracker {
                 CurrentFile = SaveFile;
                 CurrentAMST_Data.logIn(Password); // this auto logIn's the current selected object as it is created
 
-                System.out.println(FileName+" has been created!");
+                System.out.println(FileName + " has been created!");
                 System.out.println();
                 return true; // true means that it has successfully been created!
             } catch (IOException e) {
-                System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+                System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
             }
         } else {
-            System.out.println(FileName+" already exists! please try another name.");
+            System.out.println(FileName + " already exists! please try another name.");
         }
 
         //... a. Return false if it exists already.
         return false; // false means that it did not work or something lmao
     }
     public boolean loadFile() {
-        //... CHECK THE DIRECTORY OF `Saves`
-        File SavesFolder = new File("Saves");
-        if (!SavesFolder.exists() || SavesFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then.
-            SavesFolder.mkdir();
+        //... a. Print existing Saved Files
+        File[] SavedFiles = ReuseableMethods.getSaveFiles("AgeMileStoneTracker");
+        if (SavedFiles == null) {
+            return false;
         }
+        ReuseableMethods.printSavedFiles(SavedFiles, CurrentFile);
 
-        //... UNDER DIRECTORY OF `Saves`, CREATE ANOTHER DIRECTORY CALLED `AgeMileStoneTracker`
-        File AgeMileStoneTrackerFolder = new File(SavesFolder, "AgeMileStoneTracker");
-        if (!AgeMileStoneTrackerFolder.exists() || AgeMileStoneTrackerFolder.isFile()) { // if the path does not exists or there is an existing file called "Saves" then
-            AgeMileStoneTrackerFolder.mkdir();
-        }
-
-        //... UNDER `AgeMileStoneTracker`.
-        File[] SaveFiles = AgeMileStoneTrackerFolder.listFiles();
-        //... a. If it has no contents or files in the folder
-        if (SaveFiles.length <= 0) {
-            System.out.println("[ERROR] There are currently no saved files in the Age MileStone Tracker Folder");
-            System.out.println();
-            return false; // false means that it did not load successfully
-        }
-        //... b. displaying the existing saved files
-        System.out.println("╒══════════[AGE MILESTONE TRACKER SAVES]════════════╕");
-        for (File f:SaveFiles) {
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: "+ReuseableMethods.fileNameOnly(f, 10), 53)); // The extra methods are meant to remove the `.txt`
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: "+f.length(), 53));
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: "+ReuseableMethods.getDateCreated(f), 53));
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: "+ReuseableMethods.getLastModified(f), 53));
-            System.out.println("╞═══════════════════════════════════════════════════╡");
-        }
-        System.out.println("│[NOTE] Input \"e\" to exit.                          │");
-        System.out.println("╘═══════════════════════════════════════════════════╛");
-        System.out.println();
-
-        //... c. Grab input
+        //... b. Grab input
         boolean ValidChosenFile = false;
         while (!ValidChosenFile) {
             System.out.print("Choose which save file would you like to load: ");
             String UserAnswerFileName = input.nextLine();
-            File ChosenFile = new File(AgeMileStoneTrackerFolder, UserAnswerFileName+".AMST_Data");
+            File ChosenFile = new File(SavedFiles[0].getParentFile(), UserAnswerFileName + ".AMST_Data");
 
-            //... d. Process output
-            for (File f:SaveFiles) {
+            //... c. Process output
+            for (File f : SavedFiles) {
+                if (CurrentFile != null) { // If its not null
+                    if (f.getName().equals(ChosenFile.getName()) && ChosenFile.getName().equals(CurrentFile.getName())) {
+                        System.out.println(ReuseableMethods.fileNameOnly(ChosenFile, 10) + " has already been loaded (Current File).");
+                        return false; // false means that this method will keep running (there is a while loop for this method)
+                    }
+                }
+
                 if (f.getName().equals(ChosenFile.getName())) {
                     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ChosenFile))) {
 
-                        //... e. Must log-in in order for the data to load
+                        //... d. Must log-in in order for the data to load
                         AgeMileStoneTrackerData Temp = (AgeMileStoneTrackerData) ois.readObject();
                         boolean ValidPassword = false;
                         while (!ValidPassword) {
@@ -197,24 +178,23 @@ public class AgeMileStoneTracker {
                             ValidPassword = Temp.logIn(UserInputPassword);
 
                             if (UserInputPassword.equals("e")) { // NOTE: Lowky dont know how to deal with this, initially planning to go back to selecting files but dont know how
-                                return false;
+                                return false; // false means that this method will keep running (there is a while loop for this method)
                             }
                         }
 
-                        if (ValidPassword) {
-                            CurrentAMST_Data = Temp;
-                            CurrentFile = ChosenFile;
+                        CurrentAMST_Data.logOut();
+                        CurrentAMST_Data = Temp;
+                        CurrentFile = ChosenFile;
 
-                            ValidChosenFile = true;
-                            System.out.println(ReuseableMethods.fileNameOnly(f, 10)+" has successfully loaded!");
-                            System.out.println();
+                        ValidChosenFile = true;
+                        System.out.println(ReuseableMethods.fileNameOnly(f, 10) + " has successfully loaded!");
+                        System.out.println();
 
-                            return true;
-                        }
+                        return true; // true means that this method will now stop running (there is a while loop for this method)
                     } catch (IOException e) {
-                        System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+                        System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
                     } catch (ClassNotFoundException e) {
-                        System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
+                        System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
                     }
                 }
             }
@@ -223,72 +203,63 @@ public class AgeMileStoneTracker {
                 System.out.println();
                 return false;
             }
-            System.out.println("[ERROR] "+ReuseableMethods.fileNameOnly(ChosenFile, 10)+" does not exists, please try another save file. ");
+            System.out.println("[ERROR] " + ReuseableMethods.fileNameOnly(ChosenFile, 10) + " does not exists, please try another save file. ");
             System.out.println();
         }
 
-        return false; // false means that it did not load successfully
+        return false; // false means that this method will keep running (there is a while loop for this method)
     }
-    public boolean deleteFile() { //! <===================== DELETE FILES WILL NEED TO GO THROUGH THE DELETECONFIRMATION PROCESS BEFORE DELETION RUNS
-        //... CHECK THE DIRECTORY OF `Saves`
-        File SavesFolder = new File("Saves");
-        if (!SavesFolder.exists() || SavesFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then.
-            SavesFolder.mkdir();
+    private void deleteSelectedFile() {
+        //... a. Print existing Saved Files
+        File[] SavedFiles = ReuseableMethods.getSaveFiles("AgeMileStoneTracker");
+        if (SavedFiles == null) {
+            return;
         }
+        ReuseableMethods.printSavedFiles(SavedFiles, CurrentFile);
 
-        //... UNDER DIRECTORY OF `Saves`, CREATE ANOTHER DIRECTORY CALLED `AgeMileStoneTracker`
-        File AgeMileStoneTrackerFolder = new File(SavesFolder, "AgeMileStoneTracker");
-        if (!AgeMileStoneTrackerFolder.exists() || AgeMileStoneTrackerFolder.isFile()) { // if the path does not exists or there is an existing file called "Saves" then
-            AgeMileStoneTrackerFolder.mkdir();
-        }
-
-        //... UNDER `AgeMileStoneTracker`.
-        File[] SaveFiles = AgeMileStoneTrackerFolder.listFiles();
-        //... a. If it has no contents or files in the folder
-        if (SaveFiles.length <= 0) {
-            System.out.println("[ERROR] There are currently no saved files in the Age MileStone Tracker Folder");
-            System.out.println();
-            return false; // false means that it did not load successfully
-        }
-        //... b. displaying the existing saved files
-        System.out.println("╒══════════[AGE MILESTONE TRACKER SAVES]════════════╕");
-        for (File f:SaveFiles) {
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: "+ReuseableMethods.fileNameOnly(f, 10), 53)); // The extra methods are meant to remove the `.txt`
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: "+f.length(), 53));
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: "+ReuseableMethods.getDateCreated(f), 53));
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: "+ReuseableMethods.getLastModified(f), 53));
-            System.out.println("╞═══════════════════════════════════════════════════╡");
-        }
-        System.out.println("│[NOTE] Input \"e\" to exit.                          │");
-        System.out.println("╘═══════════════════════════════════════════════════╛");
-        System.out.println();
-
-        //... c. Grab input
+        //... b. Grab input
         boolean ValidChosenFile = false;
         while (!ValidChosenFile) {
-            System.out.print("Choose which save file would you like to load: ");
+            System.out.print("Choose which save file would you like to delete: ");
             String UserAnswerFileName = input.nextLine();
-            File ChosenFile = new File(AgeMileStoneTrackerFolder, UserAnswerFileName+".AMST_Data");
+            File ChosenFile = new File(SavedFiles[0].getParentFile(), UserAnswerFileName + ".AMST_Data");
+            System.out.println();
 
-            //... d. Process output
-            for (File f:SaveFiles) {
-                if (f.getName().equals(ChosenFile.getName())) {
-                    System.out.println(ReuseableMethods.fileNameOnly(f, 10)+" has been successfully deleted!");
-                    System.out.println();
-                    f.delete();
-                    return true;
-                }
-            }
-
+            //... c. Process output
             if (UserAnswerFileName.equals("e")) {
                 System.out.println();
-                return false;
+                return;
             }
-            System.out.println("[ERROR] "+ReuseableMethods.fileNameOnly(ChosenFile, 10)+" does not exists, please try another save file. ");
+
+            for (File f : SavedFiles) {
+                if (f.getName().equals(ChosenFile.getName())) {
+                    if (ChosenFile.getName().equals(CurrentFile.getName())) {
+                        if (ReuseableMethods.Confirmation("Delete Current File")) { // if it returned true
+                            deleteCurrentFile();
+                        }
+                    } else {
+                        if (ReuseableMethods.Confirmation("Delete Selected File (" + ReuseableMethods.fileNameOnly(f, 10) + ")")) { // if it returned true
+                            System.out.println(ReuseableMethods.fileNameOnly(f, 10) + " has been successfully deleted!");
+                            System.out.println();
+                            f.delete();
+                        }
+                    }
+                    return;
+                }
+            }
+            System.out.println("[ERROR] " + ReuseableMethods.fileNameOnly(ChosenFile, 10) + " does not exists, please try another save file. ");
             System.out.println();
         }
+    }
+    private void deleteCurrentFile() {
+        String CurrentFileName = ReuseableMethods.fileNameOnly(CurrentFile, 10);
 
-        return false;
+        CurrentFile.delete();
+        CurrentFile = null;
+        CurrentAMST_Data = null;
+
+        System.out.println(CurrentFileName + " has been successfully deleted!");
+        System.out.println();
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
@@ -297,10 +268,10 @@ public class AgeMileStoneTracker {
         System.out.println("╔═════════════════════════════════════════════════════════════════╗");
         System.out.println("║               AGE MILESTONE TRACKER [Main Menu]                 ║");
         System.out.println("╠═════════════════════════════════════════════════════════════════╣");
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+Username, 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: "+getAge(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Birthdate: "+getBirthday(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: "+getCurrentFileNameOnly(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: " + Username, 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: " + getAge(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Birthdate: " + getBirthday(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: " + getCurrentFileNameOnly(), 67));
         System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢");
         System.out.println("║ 1. Create File                                                  ║");
         System.out.println("║ 2. Load File                                                    ║");
@@ -341,6 +312,9 @@ public class AgeMileStoneTracker {
                 }
                 break;
             case 4:
+                if (ReuseableMethods.getSaveFiles("AgeMileStoneTracker") != null) {
+                    deleteFileConfirmation();
+                }
 
                 break;
             case 5:
@@ -357,11 +331,11 @@ public class AgeMileStoneTracker {
         System.out.println("╔═════════════════════════════════════════════════════════════════╗");
         System.out.println("║                AGE MILESTONE TRACKER [FILE MENU]                ║");
         System.out.println("╠═════════════════════════════════════════════════════════════════╣");
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+CurrentAMST_Data.getUsername(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: "+ReuseableMethods.fileNameOnly(CurrentFile, 10), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ File Size: "+CurrentFile.length(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Date Created: "+ReuseableMethods.getDateCreated(CurrentFile), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Last Modified: "+ReuseableMethods.getLastModified(CurrentFile), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: " + CurrentAMST_Data.getUsername(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: " + ReuseableMethods.fileNameOnly(CurrentFile, 10), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ File Size: " + CurrentFile.length(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Date Created: " + ReuseableMethods.getDateCreated(CurrentFile), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Last Modified: " + ReuseableMethods.getLastModified(CurrentFile), 67));
         System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢ ");
         System.out.println("║ 1. View MileStones                                              ║");
         System.out.println("║ 2. Add MileStones                                               ║");
@@ -391,18 +365,43 @@ public class AgeMileStoneTracker {
         return true; // `true` means that this method will keep running
     }
 
-    public boolean deleteFileConfirmation() { //! <=============================== CURRENTLY WORKING ON THIS!!!!!!!!!! (THIS IS WHERE YOU LEFT ATTT!!!!!!!!!!!!!!!!!!!)
+    public void deleteFileConfirmation() {
         // DISPLAY
-        System.out.println("╔═════════════════════════════════════════════════════════════════╗");
-        System.out.println("║ Pease specify which type of delete method would you like to run ║");
-        System.out.println("╟─────────────────────────────────────────────────────────────────╢");
-        System.out.println("║ 1. Delete Current File                                          ║");
-        System.out.println("║ 2. Delete All Saved File                                        ║");
-        System.out.println("║ 3. Delete Selected File                                         ║");
-        System.out.println("╚═════════════════════════════════════════════════════════════════╝");
+        System.out.println("╔═══════════════════════════════════════════════════════════════════╗");
+        System.out.println("║ Please specify which type of delete method would you like to run? ║");
+        System.out.println("╟───────────────────────────────────────────────────────────────────╢");
+        System.out.println("║ 1. Delete Current File                                            ║");
+        System.out.println("║ 2. Delete Selected File                                           ║");
+        System.out.println("║ 3. Delete All Saved Files                                         ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
         System.out.println();
 
-        return false;
+        // PROCESSING INPUT
+        int Answer = ReuseableMethods.getAnswer(1, 3);
+
+        // PROCESSING OUTPUT
+        switch (Answer) {
+            case 1:
+                if ((CurrentAMST_Data != null && CurrentFile != null) && ReuseableMethods.Confirmation("Delete Current File")) {
+                    deleteCurrentFile();
+                }
+                break;
+            case 2:
+                deleteSelectedFile();
+                break;
+            case 3:
+                System.out.println("Note: `Delete All Saved File` will not delete your current File.");
+                if (ReuseableMethods.Confirmation("Delete All Saved File")) {
+                    for (File f : ReuseableMethods.getSaveFiles("AgeMileStoneTracker")) {
+                        if (!(f.getName().equals(CurrentFile.getName()))) {
+                            f.delete();
+                        }
+                    }
+                }
+                System.out.println("Delete All Saved File has successfully completed!");
+                System.out.println();
+                break;
+        }
     }
     //===========REUSABLE METHODS===========\\ NOTE: THIS ARE THE SPECIFIC METHODS THAT ARE REPEATEDLY USED ALL OVER THE PROGRAM
 
@@ -415,3 +414,5 @@ public class AgeMileStoneTracker {
 // with countdowns to each. Reusable in any profile or personal dashboard feature.
 //
 //
+
+// TODO: CHECK BUG FIXES FOR CLAUDE!

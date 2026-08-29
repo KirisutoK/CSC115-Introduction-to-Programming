@@ -1,5 +1,5 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: August 29, 2026. at  2:30 AM
+// Last Modified: August 29, 2026. at 12:08 PM
 
 import java.io.File;
 import java.io.IOException;
@@ -83,6 +83,73 @@ public class ReuseableMethods {
     public static String fileNameOnly(File file, int TypeWidth) {
         return file.getName().substring(0, file.getName().length() - TypeWidth);
     }
+    public static boolean Confirmation(String process) {
+        // DISPLAY
+        System.out.println("╔═══════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Are you sure you would like to confirm \""+process+"\"?", 85));
+        System.out.println("╟───────────────────────────────────────────────────────────────────────────────────╢");
+        System.out.println("║ 1. Yes                                     2. No                                  ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════════════════════════════╝");
+        System.out.println();
+
+        // PROCESSING INPUT
+        int Answer = ReuseableMethods.getAnswer(1, 2);
+
+        // PROCESSING OUTPUT
+        return Answer == 1; // if it's 1, return true, else false
+    }
+
+    // [FILE MANAGEMENT]
+    public static void printSavedFiles(File[] savedFiles, File currentFile) {
+        // Check if its null
+        if (savedFiles == null) {
+            System.out.println("[ERROR] Saved Files is empty!");
+            System.out.println("[METHOD] printSavedFiles(File[] savedFiles)");
+            System.out.println();
+            return;
+        }
+
+        // Print
+        System.out.println("╒══════════[AGE MILESTONE TRACKER SAVES]════════════╕");
+        for (File f:savedFiles) {
+            if (currentFile != null) {
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: "+ReuseableMethods.fileNameOnly(f, 10)+((f.getName().equals(currentFile.getName())) ? " (CURRENT FILE)":""), 53)); // The extra methods are meant to remove the `.txt
+            } else {
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: "+ReuseableMethods.fileNameOnly(f, 10), 53)); // The extra methods are meant to remove the `.txt`
+            }
+            System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: "+f.length(), 53));
+            System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: "+ReuseableMethods.getDateCreated(f), 53));
+            System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: "+ReuseableMethods.getLastModified(f), 53));
+            System.out.println("╞═══════════════════════════════════════════════════╡");
+        }
+        System.out.println("│[NOTE] Input \"e\" to exit.                          │");
+        System.out.println("╘═══════════════════════════════════════════════════╛");
+        System.out.println();
+    }
+    public static File[] getSaveFiles(String ApplicationSavesFolderName) {
+        //... CHECK THE DIRECTORY OF `Saves`
+        File SavesFolder = new File("Saves");
+        if (!SavesFolder.exists() || SavesFolder.isFile()) { // if the path does not exist or there is an existing file called "Saves" then.
+            SavesFolder.mkdir();
+        }
+
+        //... UNDER DIRECTORY OF `Saves`, CREATE ANOTHER DIRECTORY CALLED `AgeMileStoneTracker`
+        File ApplicationSavesFolder = new File(SavesFolder, ApplicationSavesFolderName);
+        if (!ApplicationSavesFolder.exists() || ApplicationSavesFolder.isFile()) { // if the path does not exists or there is an existing file called "Saves" then
+            ApplicationSavesFolder.mkdir();
+        }
+
+        //... UNDER `AgeMileStoneTracker`.
+        File[] SaveFiles = ApplicationSavesFolder.listFiles();
+        //... If it has no contents or files in the folder
+        if (SaveFiles.length <= 0) {
+            System.out.println("[ERROR] There are currently no saved files in the Age MileStone Tracker Folder");
+            System.out.println();
+            return null; // false means that it did not load successfully
+        }
+
+        return SaveFiles;
+    }
 
     // [BIRTHDAYS]
     public static String toStringBirthday(LocalDate Birthday) {
@@ -109,7 +176,6 @@ public class ReuseableMethods {
 
         return null;
     }
-
     public static String getLastModified(File f) {
         DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
 
@@ -129,6 +195,7 @@ public class ReuseableMethods {
 
         return null;
     }
+
 
 
     // ================================================== OTHER CLASSES ================================================== \\

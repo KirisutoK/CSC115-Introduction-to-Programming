@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: August 29, 2026. at  2:43 AM
+// Last Modified: August 29, 2026. at  1:21 PM
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -46,9 +46,9 @@ public class Menu {
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+Username, 74));
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Birthday: "+ReuseableMethods.toStringBirthday(UserBirthday), 74));
         System.out.println("╟──[APPLICATIONS]────────────────────────────────────────────────────────╢");
-        System.out.println("║ 1. Age MileStone Tracker             4. Subscription Tracker           ║");
-        System.out.println("║ 2. Day Planner                       5. Work Hours Tracker             ║");
-        System.out.println("║ 3. Multi-TimeZone Tracker            6. Change Profile                 ║");
+        System.out.println("║ 1. Age MileStone Tracker             4. Subscription Tracker (WIP)     ║");
+        System.out.println("║ 2. Day Planner (WIP)                 5. Work Hours Tracker (WIP)       ║");
+        System.out.println("║ 3. Multi-TimeZone Tracker (WIP)      6. Change Profile                 ║");
         System.out.println("╚════════════════════════════════════════════════════════════════════════╝");
         System.out.println();
         
@@ -70,12 +70,20 @@ public class Menu {
 
                 break;
             case 2:
+                System.out.println("This application is still in progress.");
+                System.out.println();
                 break;
             case 3:
+                System.out.println("This application is still in progress.");
+                System.out.println();
                 break;
             case 4:
+                System.out.println("This application is still in progress.");
+                System.out.println();
                 break;
             case 5:
+                System.out.println("This application is still in progress.");
+                System.out.println();
                 break;
             case 6:
                 return false;

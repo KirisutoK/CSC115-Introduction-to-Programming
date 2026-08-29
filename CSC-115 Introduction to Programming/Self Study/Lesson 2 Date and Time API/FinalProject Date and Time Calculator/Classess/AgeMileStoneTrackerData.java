@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: August 29, 2026. at  2:03 AM
+// Last Modified: August 29, 2026. at  1:21 PM
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -35,8 +35,6 @@ public class AgeMileStoneTrackerData implements Serializable {
         this.Birthday = Birthday;
         this.NextBirthday = NextBirthday;
         this.TotalDaysAlive = TotalDaysAlive;
-
-        // GETTING THE METADATA
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES

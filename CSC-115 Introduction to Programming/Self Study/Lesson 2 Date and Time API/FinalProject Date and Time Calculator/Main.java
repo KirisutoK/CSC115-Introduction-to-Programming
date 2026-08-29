@@ -1,8 +1,8 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: August 28, 2026. at 12:07 PM
+// Last Modified: August 29, 2026. at  2:50 AM
 
-import Classess.AgeMileStoneTracker;
 import Classess.Menu;
+import Misc.ReuseableMethods;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -11,13 +11,27 @@ import java.util.Scanner;
 public class Main {
     // =========================== CLASS VARIABLES =========================== \\
     private static Scanner input = new Scanner(System.in);
+
+    // [OBJECTS]
     private static Menu menu;
+
+    // [USER CONDITIONS]
+    private static boolean LockUsername = false;
+    private static boolean LockBirthday = false;
 
     // =========================== MAIN =========================== \\
     public static void main(String[] args) {
         boolean ApplicationRunning = true;
         while (ApplicationRunning) {
-            enterUsername();
+            if (!LockUsername) {
+                enterUsername();
+                LockUsername = true;
+            }
+            if (!LockBirthday) {
+                enterBirthday();
+                LockBirthday = true;
+            }
+
 
             boolean showingMenu = true;
             while (showingMenu) {
@@ -25,17 +39,16 @@ public class Main {
                 //... Runs menu.MainMenu()
                 //... Returns boolean after the method
             }
+            changeProfileMenu(); // this will only run if the user decided to choose the only answer that returns `false` which is the `Change Profile case`.
         }
     }
 
     // =========================== METHODS =========================== \\
-
     public static void enterUsername() {
         System.out.print("Enter Username: ");
         menu = new Menu(input.nextLine()); // Assign username
         System.out.println();
     }
-
     public static void enterBirthday() {
         // PROCESS DATE INPUT
         boolean ValidInput = false;
@@ -65,6 +78,36 @@ public class Main {
                 System.out.println();
             }
         }
+    }
+    private static void changeProfileMenu() {
+        // DISPLAY
+        System.out.println("╔═══════════════════════════════════════════════════╗");
+        System.out.println("║ Which information would you like to change?       ║");
+        System.out.println("╟───────────────────────────────────────────────────╢");
+        System.out.println("║ 1. Username                                       ║");
+        System.out.println("║ 2. Birthday                                       ║");
+        System.out.println("║ 3. Username & Birthday                            ║");
+        System.out.println("╚═══════════════════════════════════════════════════╝");
+        System.out.println();
+
+        // PROCESSING INPUT
+        int Answer = ReuseableMethods.getAnswer(1, 3);
+
+        // PROCESSING OUTPUTS
+        switch (Answer) {
+            case 1:
+                LockUsername = false;
+                break;
+            case 2:
+                LockBirthday = false;
+                break;
+            case 3:
+                LockUsername = false;
+                LockBirthday = false;
+                break;
+
+        }
+
     }
 }
 

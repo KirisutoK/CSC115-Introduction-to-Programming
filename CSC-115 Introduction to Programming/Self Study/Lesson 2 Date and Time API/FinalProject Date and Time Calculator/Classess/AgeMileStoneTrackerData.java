@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: August 27, 2026. at  9:51 PM
+// Last Modified: August 29, 2026. at  2:03 AM
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ public class AgeMileStoneTrackerData implements Serializable {
     //=======VARIABLES=======//
     // [Class Data]
     private static final long serialVersionUID = 1L; // this is for serialization versions of the class
+
 
     // [Security]
     private String Password; // TODO: WE NEED TO ENCRYPT THIS! in the object file, it shows the password. (DO THIS AFTER LEARNING HOW TO ENCRYPT AND HASHING [Cryptography Lessons: Not OOP])
@@ -34,6 +35,8 @@ public class AgeMileStoneTrackerData implements Serializable {
         this.Birthday = Birthday;
         this.NextBirthday = NextBirthday;
         this.TotalDaysAlive = TotalDaysAlive;
+
+        // GETTING THE METADATA
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
@@ -74,17 +77,15 @@ public class AgeMileStoneTrackerData implements Serializable {
         }
 
         System.out.println("[ERROR] Invalid Password");
-        System.out.println("[NOTE] Input \"e\" to exit.");
+        System.out.println();
         return false;
     }
     public void logOut() {
         passwordPassed = false;
     }
-    // Note: a password must have 2 special characters, number(s), a minimum of 5 characters and maximum of 20 characters,
-
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
-    public void displayAMST() {
+    public void viewMileStones() {
 
     } //... WIP
 

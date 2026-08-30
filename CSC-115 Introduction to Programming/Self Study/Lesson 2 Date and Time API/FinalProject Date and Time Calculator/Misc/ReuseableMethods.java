@@ -1,9 +1,10 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: August 29, 2026. at 12:08 PM
+// Last Modified: August 30, 2026. at  8:50 AM
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -117,9 +118,14 @@ public class ReuseableMethods {
             } else {
                 System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: "+ReuseableMethods.fileNameOnly(f, 10), 53)); // The extra methods are meant to remove the `.txt`
             }
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: "+f.length(), 53));
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: "+ReuseableMethods.getDateCreated(f), 53));
-            System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: "+ReuseableMethods.getLastModified(f), 53));
+            try {
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: "+f.length(), 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: "+ReuseableMethods.getDateCreated(f), 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: "+ReuseableMethods.getLastModified(f), 53));
+            } catch (NoSuchFileException e) { // Note: I feel like we will never run into this because savedFiles are called every single time to double check so it's impossible to delete a file in nanoseconds while this method runs
+                System.out.println("[ERROR: NoSuchFileException] "+e.getMessage());
+            }
+
             System.out.println("╞═══════════════════════════════════════════════════╡");
         }
         System.out.println("│[NOTE] Input \"e\" to exit.                          │");
@@ -142,7 +148,7 @@ public class ReuseableMethods {
         //... UNDER `AgeMileStoneTracker`.
         File[] SaveFiles = ApplicationSavesFolder.listFiles();
         //... If it has no contents or files in the folder
-        if (SaveFiles.length <= 0) {
+        if (SaveFiles == null || SaveFiles.length < 1) {
             System.out.println("[ERROR] There are currently no saved files in the Age MileStone Tracker Folder");
             System.out.println();
             return null; // false means that it did not load successfully
@@ -157,7 +163,7 @@ public class ReuseableMethods {
     }
 
     // [METADATA]
-    public static String getDateCreated(File f) { // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
+    public static String getDateCreated(File f) throws NoSuchFileException { // NOTE: <================= THIS IS NEW AND WAS NOT PART OF THE LESSON (THANKS TO CLAUDE FOR HELPING ME OUT GET METADATA INFORMATION FROM A FILE)
         DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
 
         //... METADATA
@@ -170,13 +176,15 @@ public class ReuseableMethods {
             //... FORMATTING THE METADATA TO BE READABLE (METADATAS CONSIST OF LONG VALUES)
             LocalDateTime LDT = LocalDateTime.ofInstant(metaData.creationTime().toInstant(), ZoneId.systemDefault());
             return LDT.format(DTF);
+        } catch (NoSuchFileException e) {
+            throw new NoSuchFileException(e.getMessage());
         } catch (IOException e) {
             System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
         }
 
         return null;
     }
-    public static String getLastModified(File f) {
+    public static String getLastModified(File f) throws NoSuchFileException{
         DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
 
         //... METADATA
@@ -189,6 +197,8 @@ public class ReuseableMethods {
             //... FORMATTING THE METADATA TO BE READABLE (METADATAS CONSIST OF LONG VALUES)
             LocalDateTime LDT = LocalDateTime.ofInstant(metaData.lastModifiedTime().toInstant(), ZoneId.systemDefault());
             return LDT.format(DTF);
+        } catch (NoSuchFileException e) {
+            throw new NoSuchFileException(e.getMessage());
         } catch (IOException e) {
             System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
         }

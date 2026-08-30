@@ -1,11 +1,12 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 29, 2026. at  1:26 PM
+// Last Modified: August 30, 2026. at  8:51 AM
 
 import Misc.ReuseableMethods;
 
 import java.io.*;
+import java.nio.file.NoSuchFileException;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
@@ -37,7 +38,7 @@ public class AgeMileStoneTracker {
             TodayLD = LocalDate.now();
 
             // Birthday Check: If Year is greater than `Today's Year`.
-            if (UserBirthday.getYear() > TodayLD.getYear()) {
+            if (UserBirthday.getYear() > TodayLD.getYear()) { //! <================== YOU LEFT HERE FOR BUG CHECKS
                 throw new DateTimeException("Year can not be greater than Today's year, This feature is currently in development. Thank you!");
             }
 
@@ -161,10 +162,19 @@ public class AgeMileStoneTracker {
             for (File f : SavedFiles) {
                 if (CurrentFile != null) { // If its not null
                     if (f.getName().equals(ChosenFile.getName()) && ChosenFile.getName().equals(CurrentFile.getName())) {
-                        System.out.println(ReuseableMethods.fileNameOnly(ChosenFile, 10) + " has already been loaded (Current File).");
-                        return false; // false means that this method will keep running (there is a while loop for this method)
+                        if (!CurrentFile.exists()) {
+                            CurrentFile = null;
+                            CurrentAMST_Data = null;
+
+                            System.out.println("[ERROR] Current File has been either deleted or moved.");
+                        } else {
+                            System.out.println(ReuseableMethods.fileNameOnly(ChosenFile, 10) + " has already been loaded (Current File).");
+                            System.out.println();
+                        }
+
+                        return false; // false means that it did not successfully load
                     }
-                }
+                } 
 
                 if (f.getName().equals(ChosenFile.getName())) {
                     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ChosenFile))) {
@@ -178,11 +188,10 @@ public class AgeMileStoneTracker {
                             ValidPassword = Temp.logIn(UserInputPassword);
 
                             if (UserInputPassword.equals("e")) { // NOTE: Lowky dont know how to deal with this, initially planning to go back to selecting files but dont know how
-                                return false; // false means that this method will keep running (there is a while loop for this method)
+                                return false; // false means that it did not successfully load
                             }
                         }
-
-                        CurrentAMST_Data.logOut();
+                        
                         CurrentAMST_Data = Temp;
                         CurrentFile = ChosenFile;
 
@@ -190,7 +199,13 @@ public class AgeMileStoneTracker {
                         System.out.println(ReuseableMethods.fileNameOnly(f, 10) + " has successfully loaded!");
                         System.out.println();
 
-                        return true; // true means that this method will now stop running (there is a while loop for this method)
+                        return true; // true means that it has successfully loaded
+                    } catch (FileNotFoundException e) {
+                        System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
+                        SavedFiles = ReuseableMethods.getSaveFiles("AgeMileStoneTracker");
+                        if (SavedFiles == null) {
+                            return false; // false means that it did not successfully load
+                        }
                     } catch (IOException e) {
                         System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
                     } catch (ClassNotFoundException e) {
@@ -201,13 +216,13 @@ public class AgeMileStoneTracker {
 
             if (UserAnswerFileName.equals("e")) {
                 System.out.println();
-                return false;
+                return false; // false means that it did not successfully load
             }
             System.out.println("[ERROR] " + ReuseableMethods.fileNameOnly(ChosenFile, 10) + " does not exists, please try another save file. ");
             System.out.println();
         }
 
-        return false; // false means that this method will keep running (there is a while loop for this method)
+        return false; // false means that it did not successfully load
     }
     private void deleteSelectedFile() {
         //... a. Print existing Saved Files
@@ -328,24 +343,39 @@ public class AgeMileStoneTracker {
     }
     private boolean AMST_FileMenu() {
         // [DISPLAY]
-        System.out.println("╔═════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                AGE MILESTONE TRACKER [FILE MENU]                ║");
-        System.out.println("╠═════════════════════════════════════════════════════════════════╣");
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: " + CurrentAMST_Data.getUsername(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: " + ReuseableMethods.fileNameOnly(CurrentFile, 10), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ File Size: " + CurrentFile.length(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Date Created: " + ReuseableMethods.getDateCreated(CurrentFile), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Last Modified: " + ReuseableMethods.getLastModified(CurrentFile), 67));
-        System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢ ");
-        System.out.println("║ 1. View MileStones                                              ║");
-        System.out.println("║ 2. Add MileStones                                               ║");
-        System.out.println("║ 3. Remove Milestones                                            ║");
-        System.out.println("║ 4. Go Back                                                      ║");
-        System.out.println("╚═════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        try {
+            // Error Check
+            String DateCreation = ReuseableMethods.getDateCreated(CurrentFile); // Note: this method throws an error so having this to be in the first process and catch early will not run any print as long as it catches.
+            String LastModified = ReuseableMethods.getLastModified(CurrentFile); // Note: this method throws an error so having this to be in the first process and catch early will not run any print as long as it catches.
+
+            // Print
+            System.out.println("╔═════════════════════════════════════════════════════════════════╗");
+            System.out.println("║                AGE MILESTONE TRACKER [FILE MENU]                ║");
+            System.out.println("╠═════════════════════════════════════════════════════════════════╣");
+            System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: " + CurrentAMST_Data.getUsername(), 67));
+            System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: " + ReuseableMethods.fileNameOnly(CurrentFile, 10), 67));
+            System.out.println(ReuseableMethods.lineAutoSpacing("║ File Size: " + CurrentFile.length(), 67));
+            System.out.println(ReuseableMethods.lineAutoSpacing("║ Date Created: " + DateCreation, 67));
+            System.out.println(ReuseableMethods.lineAutoSpacing("║ Last Modified: " + LastModified, 67));
+            System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢ ");
+            System.out.println("║ 1. View MileStones                                              ║");
+            System.out.println("║ 2. Add MileStones                                               ║");
+            System.out.println("║ 3. Remove Milestones                                            ║");
+            System.out.println("║ 4. Go Back                                                      ║");
+            System.out.println("╚═════════════════════════════════════════════════════════════════╝");
+            System.out.println();
+        } catch (NoSuchFileException e) {
+            CurrentAMST_Data = null;
+            CurrentFile = null;
+
+            System.out.println("[ERROR] Current File has been either deleted or moved.");
+            System.out.println();
+
+            return false;
+        }
 
         // [PROCESSING INPUTS]
-        int Answer = ReuseableMethods.getAnswer(1, 5);
+        int Answer = ReuseableMethods.getAnswer(1, 4);
 
         // [PROCESSING OUTPUTS]
         switch (Answer) {
@@ -391,9 +421,14 @@ public class AgeMileStoneTracker {
                 break;
             case 3:
                 System.out.println("Note: `Delete All Saved File` will not delete your current File.");
-                if (ReuseableMethods.Confirmation("Delete All Saved File")) {
-                    for (File f : ReuseableMethods.getSaveFiles("AgeMileStoneTracker")) {
-                        if (!(f.getName().equals(CurrentFile.getName()))) {
+                File[] SavedFiles = ReuseableMethods.getSaveFiles("AgeMileStoneTracker");
+                if (SavedFiles != null && ReuseableMethods.Confirmation("Delete All Saved File")) {
+                    for (File f : SavedFiles) {
+                        if (CurrentFile != null) { // if it exist
+                            if (!(f.getName().equals(CurrentFile.getName()))) { // if the f is equal to the current file
+                                f.delete();
+                            }
+                        } else { // If there is no current file yet.
                             f.delete();
                         }
                     }

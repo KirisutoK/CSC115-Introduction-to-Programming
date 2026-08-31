@@ -1,5 +1,5 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: August 29, 2026. at  2:50 AM
+// Last Modified: August 31, 2026. at 10:59 AM
 
 import Classess.Menu;
 import Misc.ReuseableMethods;
@@ -63,9 +63,13 @@ public class Main {
                 String[] Lines = Birthday.split("/");
 
                 // ADD THE CONVERTED LINES INTO THE CONSTRUCTOR
-                menu.setBirthday(LocalDate.of(Integer.parseInt(Lines[2]), Integer.parseInt(Lines[0]), Integer.parseInt(Lines[1])));
-
-                ValidInput = true;
+                LocalDate UserBirthday = LocalDate.of(Integer.parseInt(Lines[2]), Integer.parseInt(Lines[0]), Integer.parseInt(Lines[1]));
+                if (!(UserBirthday.isAfter(LocalDate.now()))) {
+                    menu.setBirthday(UserBirthday);
+                    ValidInput = true;
+                } else {
+                    System.out.println("[ERROR] User Birthday must not be after today's date.");
+                }
             } catch (DateTimeException e) {
                 System.out.println("[ERROR: "+e.getClass().getSimpleName()+"] "+e.getMessage());
             } catch (NumberFormatException e) {

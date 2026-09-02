@@ -1,18 +1,17 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: August 29, 2026. at  1:21 PM
+// Last Modified: September 01, 2026. at  9:48 PM
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 import Misc.ReuseableMethods;
 
 public class Menu {
     //=======VARIABLES=======//
     // [USER DATA]
-    private static String Username;
-    private static LocalDate UserBirthday;
+    private String Username;
+    private LocalDate UserBirthday;
     // TODO: I WILL BE MOVING THE BIRTHDAY VARIABLES INTO THE MENU IN ORDER FOR IT TO BE REUSABLE FOR EACH FEATURE.
 
     // [CLASSES OR APPLICATIONS]
@@ -22,15 +21,10 @@ public class Menu {
     private static SubscriptionTracker ST;
     private static WorkHoursTracker WHT;
 
-    // [MISC]
-    static Scanner input = new Scanner(System.in);
-
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
     public Menu(String Username) {
         this.Username = Username;
     }
-
-
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
     public void setBirthday(LocalDate UserBirthday) {

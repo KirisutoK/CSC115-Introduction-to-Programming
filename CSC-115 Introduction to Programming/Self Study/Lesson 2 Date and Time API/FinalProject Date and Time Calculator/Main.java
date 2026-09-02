@@ -1,16 +1,14 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: August 31, 2026. at 10:59 AM
+// Last Modified: September 01, 2026. at  9:45 PM
 
 import Classess.Menu;
 import Misc.ReuseableMethods;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class Main {
     // =========================== CLASS VARIABLES =========================== \\
-    private static Scanner input = new Scanner(System.in);
 
     // [OBJECTS]
     private static Menu menu;
@@ -46,7 +44,7 @@ public class Main {
     // =========================== METHODS =========================== \\
     public static void enterUsername() {
         System.out.print("Enter Username: ");
-        menu = new Menu(input.nextLine()); // Assign username
+        menu = new Menu(ReuseableMethods.input.nextLine()); // Assign username
         System.out.println();
     }
     public static void enterBirthday() {
@@ -57,7 +55,7 @@ public class Main {
                 System.out.println("Please enter your Birthday: ");
                 System.out.println("(Month DayOfMonth Year) => ex: 12/05/2006");
                 System.out.print("Answer: ");
-                String Birthday = input.nextLine();
+                String Birthday = ReuseableMethods.input.nextLine();
 
                 // LETS SPLIT THEM LINES AND CONVERT IT INTO INTEGERS THEN PASS IT ON
                 String[] Lines = Birthday.split("/");

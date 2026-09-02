@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: August 31, 2026. at 10:57 AM
+// Last Modified: September 01, 2026. at  9:54 PM
 
 import Misc.ReuseableMethods;
 
@@ -9,7 +9,6 @@ import java.io.*;
 import java.nio.file.NoSuchFileException;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.util.Scanner;
 
 public class AgeMileStoneTracker {
     //=======VARIABLES=======//
@@ -18,7 +17,6 @@ public class AgeMileStoneTracker {
     private LocalDate TodayLD;
 
     // [MISC]
-    Scanner input = new Scanner(System.in);
 
     // [DYNAMIC VARIABLE]
     private AgeMileStoneTrackerData CurrentAMST_Data; // This will be the current selected object or data (Object)
@@ -107,7 +105,7 @@ public class AgeMileStoneTracker {
             boolean ValidPassword = false;
             while (!ValidPassword) {
                 System.out.print("Enter a password for the created file: ");
-                Password = input.nextLine();
+                Password = ReuseableMethods.input.nextLine();
                 System.out.println();
                 ValidPassword = ReuseableMethods.passwordValidation(Password, minimumPassword, maximumPassword, specialCharactersPassword, numbersPassword);
             }
@@ -144,7 +142,7 @@ public class AgeMileStoneTracker {
         boolean ValidChosenFile = false;
         while (!ValidChosenFile) {
             System.out.print("Choose which save file would you like to load: ");
-            String UserAnswerFileName = input.nextLine();
+            String UserAnswerFileName = ReuseableMethods.input.nextLine();
             File ChosenFile = new File(SavedFiles[0].getParentFile(), UserAnswerFileName + ".AMST_Data");
 
             //... c. Process output
@@ -173,7 +171,7 @@ public class AgeMileStoneTracker {
                         boolean ValidPassword = false;
                         while (!ValidPassword) {
                             System.out.print("Enter Password: ");
-                            String UserInputPassword = input.nextLine();
+                            String UserInputPassword = ReuseableMethods.input.nextLine();
                             ValidPassword = Temp.logIn(UserInputPassword);
 
                             if (UserInputPassword.equals("e")) { // NOTE: Lowky dont know how to deal with this, initially planning to go back to selecting files but dont know how
@@ -225,7 +223,7 @@ public class AgeMileStoneTracker {
         boolean ValidChosenFile = false;
         while (!ValidChosenFile) {
             System.out.print("Choose which save file would you like to delete: ");
-            String UserAnswerFileName = input.nextLine();
+            String UserAnswerFileName = ReuseableMethods.input.nextLine();
             File ChosenFile = new File(SavedFiles[0].getParentFile(), UserAnswerFileName + ".AMST_Data");
             System.out.println();
 
@@ -274,7 +272,6 @@ public class AgeMileStoneTracker {
         System.out.println("╠═════════════════════════════════════════════════════════════════╣");
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: " + Username, 67));
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: " + getAge(), 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Birthdate: " + getBirthday(), 67));
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: " + getCurrentFileNameOnly(), 67));
         System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢");
         System.out.println("║ 1. Create File                                                  ║");
@@ -294,7 +291,7 @@ public class AgeMileStoneTracker {
                 boolean ValidName = false;
                 while (!ValidName) {
                     System.out.print("Please enter file name: ");
-                    String FileName = input.nextLine();
+                    String FileName = ReuseableMethods.input.nextLine();
                     ValidName = createFile(FileName);
                 }
 
@@ -368,6 +365,7 @@ public class AgeMileStoneTracker {
 
         // [PROCESSING OUTPUTS]
         switch (Answer) {
+
             case 1:
 
                 // PRINTS OUT ALL THE MILESTONES (CHRONOLOGICALLY SORTED)
@@ -439,4 +437,4 @@ public class AgeMileStoneTracker {
 //
 //
 
-// TODO: CHECK BUG FIXES FOR CLAUDE!
+// TODO: YOU ARE CURRENTLY ADDING THE FEATURES FOR DATA MANAGEMENT SINCE YOU HAVE FINISIH WITH FILE MANAGEMENT

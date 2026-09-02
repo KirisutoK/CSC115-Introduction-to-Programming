@@ -1,5 +1,8 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: August 30, 2026. at  8:50 AM
+// Last Modified: September 01, 2026. at  9:53 PM
+
+import Classess.AgeMileStoneTracker;
+import com.sun.tools.javac.Main;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +18,8 @@ import java.util.Scanner;
 
 public class ReuseableMethods {
     //=======VARIABLES=======//
-    static Scanner input = new Scanner(System.in);
+    public static Scanner input = new Scanner(System.in);
+        // LESSON LEARNED: I learned that you can use an object anywhere in the project if it is a static public
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
     public static int getAnswer(int start, int end) {
@@ -102,7 +106,7 @@ public class ReuseableMethods {
 
     // [FILE MANAGEMENT]
     public static void printSavedFiles(File[] savedFiles, File currentFile) {
-        // Check if its null
+        // Check if it's null
         if (savedFiles == null) {
             System.out.println("[ERROR] Saved Files is empty!");
             System.out.println("[METHOD] printSavedFiles(File[] savedFiles)");
@@ -119,7 +123,7 @@ public class ReuseableMethods {
                 System.out.println(ReuseableMethods.lineAutoSpacing("│ Name: "+ReuseableMethods.fileNameOnly(f, 10), 53)); // The extra methods are meant to remove the `.txt`
             }
             try {
-                System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: "+f.length(), 53));
+                System.out.println(ReuseableMethods.lineAutoSpacing("│ Size: "+ReuseableMethods.formatFileSize(f.length()), 53));
                 System.out.println(ReuseableMethods.lineAutoSpacing("│ Date Created: "+ReuseableMethods.getDateCreated(f), 53));
                 System.out.println(ReuseableMethods.lineAutoSpacing("│ Last Modified: "+ReuseableMethods.getLastModified(f), 53));
             } catch (NoSuchFileException e) { // Note: I feel like we will never run into this because savedFiles are called every single time to double check so it's impossible to delete a file in nanoseconds while this method runs
@@ -155,6 +159,15 @@ public class ReuseableMethods {
         }
 
         return SaveFiles;
+    }
+    public static String formatFileSize(long FileSize) { // NOTE: This method and it's formula is created by Claude (made some tweaks to make it readable to me)
+        if (FileSize < 1024) {
+            return FileSize + " B";
+        } else if (FileSize < 1024 * 1024) {
+            return String.format("%.2f KB", FileSize / 1024.0);
+        } else {
+            return String.format("%.2f MB", FileSize / (1024.0 * 1024.0));
+        }
     }
 
     // [BIRTHDAYS]
@@ -205,7 +218,6 @@ public class ReuseableMethods {
 
         return null;
     }
-
 
 
     // ================================================== OTHER CLASSES ================================================== \\

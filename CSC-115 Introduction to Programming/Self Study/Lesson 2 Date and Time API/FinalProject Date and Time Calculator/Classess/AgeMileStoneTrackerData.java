@@ -1,17 +1,17 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: September 02, 2026. at  3:37 PM
+// Last Modified: September 02, 2026. at  3:45 PM
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashMap;
 
 public class AgeMileStoneTrackerData implements Serializable {
     //=======VARIABLES=======//
     // [Class Data]
     private static final long serialVersionUID = 1L; // this is for serialization versions of the class
-
 
     // [Security]
     private String Password; // TODO: WE NEED TO ENCRYPT THIS! in the object file, it shows the password. (DO THIS AFTER LEARNING HOW TO ENCRYPT AND HASHING [Cryptography Lessons: Not OOP])
@@ -21,6 +21,7 @@ public class AgeMileStoneTrackerData implements Serializable {
     private LocalDate Birthday;
     private String Username;
     private int Age;
+    private LocalDate Today;
 
     // [Milestones Data]
     private HashMap<Integer, String> AgeBasedMilestone = new HashMap<>(); // Age, Message
@@ -31,6 +32,8 @@ public class AgeMileStoneTrackerData implements Serializable {
         this.Username = Username;
         this.Password = Password;
         this.Birthday = Birthday;
+        this.Today = LocalDate.now();
+        this.Age = Period.between(Birthday, Today); //! why the heck is this an error?
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES

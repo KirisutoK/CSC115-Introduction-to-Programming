@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: September 02, 2026. at  3:37 PM
+// Last Modified: September 02, 2026. at  3:42 PM
 
 import Misc.ReuseableMethods;
 
@@ -14,7 +14,6 @@ public class AgeMileStoneTracker {
     //=======VARIABLES=======//
     private String Username;
     private LocalDate UserBirthday;
-    private LocalDate TodayLD;
 
     // [MISC]
 
@@ -31,7 +30,6 @@ public class AgeMileStoneTracker {
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
     AgeMileStoneTracker(String Username, LocalDate UserBirthday) {
         this.Username = Username;
-        this.TodayLD = LocalDate.now();
         this.UserBirthday = UserBirthday;
     }
 
@@ -260,7 +258,7 @@ public class AgeMileStoneTracker {
 
                 AMST_FileMenu();
                 break;
-            case 2: //! <===================================== YOU LEFT ON THIS METHOD, THINKING ABOUT HOW TO FORMAT THE SIZE INTO EITHER `KB` OR `MB`
+            case 2:
                 if (!loadFile()) { // if load file returns false (did not load successfully, go back to the AMST_Menu
                     break;
                 }

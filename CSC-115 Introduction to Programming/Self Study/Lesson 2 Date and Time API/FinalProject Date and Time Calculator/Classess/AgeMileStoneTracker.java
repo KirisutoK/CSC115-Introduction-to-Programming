@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: September 01, 2026. at  9:54 PM
+// Last Modified: September 02, 2026. at  3:37 PM
 
 import Misc.ReuseableMethods;
 
@@ -36,43 +36,6 @@ public class AgeMileStoneTracker {
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
-    private int getAge() {
-        Period p = Period.between(UserBirthday, TodayLD);
-
-        return p.getYears();
-    }
-    private long getTotalDaysAlive() {
-        return ChronoUnit.DAYS.between(UserBirthday, TodayLD);
-    }
-    private String getNextBirthday() {
-        LocalDate nextBirthday = LocalDate.of(TodayLD.getYear(), UserBirthday.getMonth(), UserBirthday.getDayOfMonth());
-
-        while (nextBirthday.isBefore(TodayLD)) { // while its next birthday is before today
-            nextBirthday = nextBirthday.plusYears(1);
-        }
-
-        Period p = Period.between(TodayLD, nextBirthday);
-
-        // NAMING CONVENTIONS WITH `S`
-        String Year = String.valueOf(p.getYears() + ((p.getYears() >= 2) ? " Years" : " Year"));
-        String Month = String.valueOf(p.getMonths() + ((p.getMonths() >= 2) ? " Months" : " Month"));
-        String DayOfMonth = String.valueOf(p.getDays() + ((p.getDays() >= 2) ? " Days" : " Day"));
-
-        // CUTTING STRINGS BASED ON DATE
-        if (p.getYears() == 0 && p.getMonths() == 0 && p.getDays() == 0) {
-            return "TODAY (HAPPY BIRTHDAY!)";
-        } else if (p.getYears() == 0 && p.getMonths() == 0) {
-            return DayOfMonth + ".";
-        } else if (p.getYears() == 0) {
-            return Month + ", " + DayOfMonth + ".";
-        }
-
-        return p.getYears() + ((p.getYears() > 1) ? " Years," : " Year, ") + p.getMonths() + ((p.getMonths() > 1) ? " Months," : " Month,") + p.getDays() + ((p.getDays() > 1) ? " Days Remaining" : "Day Remaining");
-        // NOTE: Lowky this is pretty hard to read but using ternaries are just so satisfying.
-    }
-    private String getBirthday() {
-        return UserBirthday.getMonth() + " " + UserBirthday.getDayOfMonth() + ", " + UserBirthday.getYear();
-    }
 
     // [FILES/DATA]
     private String getCurrentFileNameOnly() {
@@ -112,7 +75,7 @@ public class AgeMileStoneTracker {
 
             //... c. Create the file and return true.
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SaveFile))) { // NOTE: WE WILL BE USING `.AMST_Data` for the file name of our datas
-                CurrentAMST_Data = new AgeMileStoneTrackerData(Username, Password, getAge(), getBirthday(), getNextBirthday(), String.valueOf(getTotalDaysAlive()));
+                CurrentAMST_Data = new AgeMileStoneTrackerData(Username, Password, UserBirthday);
                 oos.writeObject(CurrentAMST_Data); // grab the file and put the object in that file
                 CurrentFile = SaveFile;
                 CurrentAMST_Data.logIn(Password); // this auto logIn's the current selected object as it is created
@@ -271,7 +234,7 @@ public class AgeMileStoneTracker {
         System.out.println("║               AGE MILESTONE TRACKER [Main Menu]                 ║");
         System.out.println("╠═════════════════════════════════════════════════════════════════╣");
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: " + Username, 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: " + getAge(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: " + getAge(), 67)); // NOTE: YOU CURRENTLY LEFT HERE AT 9/2/2026 (YOU DECIDED TO CHANGE THE SCOPE OF THE VARIABLE TO ONLY HAVE THE DATA INSIDE OF THE FILE INSTEAD OF THE FILE MANAGER)
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: " + getCurrentFileNameOnly(), 67));
         System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢");
         System.out.println("║ 1. Create File                                                  ║");
@@ -437,4 +400,4 @@ public class AgeMileStoneTracker {
 //
 //
 
-// TODO: YOU ARE CURRENTLY ADDING THE FEATURES FOR DATA MANAGEMENT SINCE YOU HAVE FINISIH WITH FILE MANAGEMENT
+// TODO: YOU ARE CURRENTLY ADDING THE FEATURES FOR DATA MANAGEMENT SINCE YOU HAVE FINISH WITH FILE MANAGEMENT

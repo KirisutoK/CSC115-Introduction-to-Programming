@@ -1,9 +1,10 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: August 29, 2026. at  1:21 PM
+// Last Modified: September 02, 2026. at  3:37 PM
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 public class AgeMileStoneTrackerData implements Serializable {
@@ -17,38 +18,24 @@ public class AgeMileStoneTrackerData implements Serializable {
     private boolean passwordPassed = false;
 
     // [Basic Data]
+    private LocalDate Birthday;
     private String Username;
     private int Age;
-    private String Birthday;
-    private String NextBirthday;
-    private String TotalDaysAlive;
 
     // [Milestones Data]
     private HashMap<Integer, String> AgeBasedMilestone = new HashMap<>(); // Age, Message
     private boolean[] DayBasedMileStone = new boolean[44562]; // Maximum limit a human can live
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
-    AgeMileStoneTrackerData(String Username, String Password, int Age, String Birthday, String NextBirthday, String TotalDaysAlive) {
+    AgeMileStoneTrackerData(String Username, String Password, LocalDate Birthday) {
         this.Username = Username;
         this.Password = Password;
-        this.Age = Age;
         this.Birthday = Birthday;
-        this.NextBirthday = NextBirthday;
-        this.TotalDaysAlive = TotalDaysAlive;
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
 
     // [Basic Getters]
-    public String getTotalDaysAlive() {
-        return (passwordPassed) ? TotalDaysAlive: "[ERROR] User is not logged in!";
-    }
-    public String getNextBirthday() {
-        return (passwordPassed) ? NextBirthday: "[ERROR] User is not logged in!";
-    }
-    public String getBirthday() {
-        return (passwordPassed) ? Birthday: "[ERROR] User is not logged in!";
-    }
     public int getAge() {
         if (!passwordPassed) System.out.println("[ERROR] User is not logged in!");
         return (passwordPassed) ? Age: 0;

@@ -1,14 +1,13 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: September 02, 2026. at  3:42 PM
+// Last Modified: September 03, 2026. at  5:22 PM
 
 import Misc.ReuseableMethods;
 
 import java.io.*;
 import java.nio.file.NoSuchFileException;
 import java.time.*;
-import java.time.temporal.ChronoUnit;
 
 public class AgeMileStoneTracker {
     //=======VARIABLES=======//
@@ -34,15 +33,6 @@ public class AgeMileStoneTracker {
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
-
-    // [FILES/DATA]
-    private String getCurrentFileNameOnly() {
-        if (CurrentFile == null) {
-            return "NULL";
-        }
-
-        return ReuseableMethods.fileNameOnly(CurrentFile, 10);
-    }
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
     public boolean createFile(String FileName) {
@@ -122,7 +112,7 @@ public class AgeMileStoneTracker {
 
                         return false; // false means that it did not successfully load
                     }
-                } 
+                }
 
                 if (f.getName().equals(ChosenFile.getName())) {
                     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ChosenFile))) {
@@ -139,7 +129,7 @@ public class AgeMileStoneTracker {
                                 return false; // false means that it did not successfully load
                             }
                         }
-                        
+
                         CurrentAMST_Data = Temp;
                         CurrentFile = ChosenFile;
 
@@ -226,14 +216,19 @@ public class AgeMileStoneTracker {
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
+    // [MENUS]
     public boolean AMST_Menu() {
         // [DISPLAY]
         System.out.println("╔═════════════════════════════════════════════════════════════════╗");
         System.out.println("║               AGE MILESTONE TRACKER [Main Menu]                 ║");
         System.out.println("╠═════════════════════════════════════════════════════════════════╣");
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: " + Username, 67));
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: " + getAge(), 67)); // NOTE: YOU CURRENTLY LEFT HERE AT 9/2/2026 (YOU DECIDED TO CHANGE THE SCOPE OF THE VARIABLE TO ONLY HAVE THE DATA INSIDE OF THE FILE INSTEAD OF THE FILE MANAGER)
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: " + getCurrentFileNameOnly(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: " + ReuseableMethods.getAge(UserBirthday), 67));
+        if (CurrentFile == null) {
+            System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: NULL", 67));
+        } else {
+            System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: "+ReuseableMethods.fileNameOnly(CurrentFile, 10), 67));
+        }
         System.out.println("╟──[ACTIONS]──────────────────────────────────────────────────────╢");
         System.out.println("║ 1. Create File                                                  ║");
         System.out.println("║ 2. Load File                                                    ║");
@@ -328,7 +323,7 @@ public class AgeMileStoneTracker {
         switch (Answer) {
 
             case 1:
-
+                CurrentAMST_Data.viewData(CurrentFile);
                 // PRINTS OUT ALL THE MILESTONES (CHRONOLOGICALLY SORTED)
                 break;
             case 2:
@@ -343,6 +338,7 @@ public class AgeMileStoneTracker {
         return true; // `true` means that this method will keep running
     }
 
+    // [FILES]
     public void deleteFileConfirmation() {
         // DISPLAY
         System.out.println("╔═══════════════════════════════════════════════════════════════════╗");
@@ -386,6 +382,7 @@ public class AgeMileStoneTracker {
                 break;
         }
     }
+
     //===========REUSABLE METHODS===========\\ NOTE: THIS ARE THE SPECIFIC METHODS THAT ARE REPEATEDLY USED ALL OVER THE PROGRAM
 
 

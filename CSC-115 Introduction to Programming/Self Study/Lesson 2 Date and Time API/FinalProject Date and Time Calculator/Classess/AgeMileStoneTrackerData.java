@@ -1,11 +1,15 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: September 02, 2026. at  3:45 PM
+// Last Modified: September 03, 2026. at  5:30 PM
 
+import Misc.ReuseableMethods;
+
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 public class AgeMileStoneTrackerData implements Serializable {
@@ -18,9 +22,9 @@ public class AgeMileStoneTrackerData implements Serializable {
     private boolean passwordPassed = false;
 
     // [Basic Data]
-    private LocalDate Birthday;
     private String Username;
     private int Age;
+    private LocalDate Birthday;
     private LocalDate Today;
 
     // [Milestones Data]
@@ -33,7 +37,7 @@ public class AgeMileStoneTrackerData implements Serializable {
         this.Password = Password;
         this.Birthday = Birthday;
         this.Today = LocalDate.now();
-        this.Age = Period.between(Birthday, Today); //! why the heck is this an error?
+        this.Age = ReuseableMethods.getAge(Birthday);
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
@@ -45,6 +49,18 @@ public class AgeMileStoneTrackerData implements Serializable {
     }
     public String getUsername() {
         return (passwordPassed) ? Username: "[ERROR] User is not logged in!";
+    }
+    public String getNextBirthday() {
+        LocalDate nextBirthday = LocalDate.of(Today.getYear(), Birthday.getMonth(), Birthday.getDayOfMonth());
+
+        if (nextBirthday.isBefore(Today)) {
+            nextBirthday.plusYears(1);
+        }
+
+        return nextBirthday.getMonth()+" "+nextBirthday.getDayOfMonth()+" "+nextBirthday.getYear();
+    }
+    public long getTotalDaysAlive() {
+        return ChronoUnit.DAYS.between(Birthday, Today);
     }
 
     // [Milestone Getters]
@@ -73,9 +89,23 @@ public class AgeMileStoneTrackerData implements Serializable {
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
-    public void viewMileStones() {
+    public void viewData(File CurrentFile) { //! <========================================================= YOU LEFT AT THIS METHOD!!!!!!!!!!!!!!!!
+        System.out.println("╔═════════════════════════════════════════════════════════════════╗");
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ File Name: "+CurrentFile.getName(), 67));
+        System.out.println("╟─────────────────────────────────────────────────────────────────╢");
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+Username, 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: "+Age, 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Next Birthday: "+getNextBirthday(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ Total Days Alive: "+getTotalDaysAlive(), 67));
+        System.out.println("╠═════════════════════════════════════════════════════════════════╣");
+        System.out.println("║                       AGE MILESTONES                            ║");
+        System.out.println("╟─────────────────────────────────────────────────────────────────╢");
+        System.out.println();
+        System.out.println();
 
-    } //... WIP
+        // TODO: YOU NEED TO FIND A WAY HOW TO DISPLAY THE AGE MILESTONES AND DAY MILESTONES
+
+    }
 
     
     // ================================================== OTHER CLASSES ================================================== \\

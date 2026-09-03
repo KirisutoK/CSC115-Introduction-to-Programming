@@ -1,8 +1,5 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: September 01, 2026. at  9:53 PM
-
-import Classess.AgeMileStoneTracker;
-import com.sun.tools.javac.Main;
+// Last Modified: September 03, 2026. at  4:56 PM
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +8,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -87,6 +85,9 @@ public class ReuseableMethods {
     }
     public static String fileNameOnly(File file, int TypeWidth) {
         return file.getName().substring(0, file.getName().length() - TypeWidth);
+    }
+    public static String reverseSubstring(String s, int hideAmount) {
+        return s.substring(0, s.length() - hideAmount);
     }
     public static boolean Confirmation(String process) {
         // DISPLAY
@@ -173,6 +174,9 @@ public class ReuseableMethods {
     // [BIRTHDAYS]
     public static String toStringBirthday(LocalDate Birthday) {
         return Birthday.getMonth()+" "+ Birthday.getDayOfMonth()+", "+ Birthday.getYear();
+    }
+    public static int getAge(LocalDate Birthday) {
+        return Period.between(Birthday, LocalDate.now()).getYears();
     }
 
     // [METADATA]

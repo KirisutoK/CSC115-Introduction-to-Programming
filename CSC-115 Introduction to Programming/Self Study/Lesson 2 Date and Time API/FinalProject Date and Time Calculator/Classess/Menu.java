@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:09 AM
-// Last Modified: September 01, 2026. at  9:48 PM
+// Last Modified: September 04, 2026. at 12:45 PM
 
 import java.time.LocalDate;
 
@@ -22,13 +22,17 @@ public class Menu {
     private static WorkHoursTracker WHT;
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
-    public Menu(String Username) {
-        this.Username = Username;
+    public Menu() {
+        // I made it empty so that I am able to create the object without having to always have a parameter,
+        // this way I can use the method setBirthday() and setUsername() dynamically.
     }
 
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
     public void setBirthday(LocalDate UserBirthday) {
         this.UserBirthday = UserBirthday;
+    }
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS

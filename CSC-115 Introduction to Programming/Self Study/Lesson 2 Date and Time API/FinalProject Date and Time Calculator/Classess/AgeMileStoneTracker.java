@@ -1,13 +1,14 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: September 03, 2026. at  5:22 PM
+// Last Modified: September 04, 2026. at 12:57 PM
 
 import Misc.ReuseableMethods;
 
 import java.io.*;
 import java.nio.file.NoSuchFileException;
 import java.time.*;
+import java.util.InputMismatchException;
 
 public class AgeMileStoneTracker {
     //=======VARIABLES=======//
@@ -242,6 +243,7 @@ public class AgeMileStoneTracker {
         int Answer = ReuseableMethods.getAnswer(1, 5);
 
         // [PROCESSING OUTPUTS]
+        boolean isRunningFileMenu; // this is just a place holder (I am trying to avoid using many instance of variables of boolean) since variables are shared throughout switch cases.
         switch (Answer) {
             case 1:
                 boolean ValidName = false;
@@ -251,18 +253,31 @@ public class AgeMileStoneTracker {
                     ValidName = createFile(FileName);
                 }
 
-                AMST_FileMenu();
+                // THIS IS JUST SO THAT THE FILEMENU WILL KEEP SHOWING UNTIL IT RETURNS FALSEs
+                isRunningFileMenu = true;
+                while (isRunningFileMenu) {
+                    isRunningFileMenu = AMST_FileMenu();
+                }
+
                 break;
             case 2:
                 if (!loadFile()) { // if load file returns false (did not load successfully, go back to the AMST_Menu
                     break;
                 }
 
-                AMST_FileMenu();
+                // THIS IS JUST SO THAT THE FILEMENU WILL KEEP SHOWING UNTIL IT RETURNS FALSEs
+                isRunningFileMenu = true;
+                while (isRunningFileMenu) {
+                    isRunningFileMenu = AMST_FileMenu();
+                }
+
                 break;
             case 3:
                 if (CurrentAMST_Data != null && CurrentFile != null) { // Note: no need to check if it's logged-in since it needs to be log in when initializing it into the `current` variable
-                    AMST_FileMenu();
+                    isRunningFileMenu = true;
+                    while (isRunningFileMenu) {
+                        isRunningFileMenu = AMST_FileMenu();
+                    }
                 } else {
                     System.out.println("[ERROR] User currently has not created or loaded a file.");
                     System.out.println();
@@ -294,7 +309,7 @@ public class AgeMileStoneTracker {
             System.out.println("╔═════════════════════════════════════════════════════════════════╗");
             System.out.println("║                AGE MILESTONE TRACKER [FILE MENU]                ║");
             System.out.println("╠═════════════════════════════════════════════════════════════════╣");
-            System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: " + CurrentAMST_Data.getUsername(), 67));
+            System.out.println(ReuseableMethods.lineAutoSpacing("║ Author: " + CurrentAMST_Data.getUsername(), 67));
             System.out.println(ReuseableMethods.lineAutoSpacing("║ Current File: " + ReuseableMethods.fileNameOnly(CurrentFile, 10), 67));
             System.out.println(ReuseableMethods.lineAutoSpacing("║ File Size: " + CurrentFile.length(), 67));
             System.out.println(ReuseableMethods.lineAutoSpacing("║ Date Created: " + DateCreation, 67));
@@ -313,7 +328,7 @@ public class AgeMileStoneTracker {
             System.out.println("[ERROR] Current File has been either deleted or moved.");
             System.out.println();
 
-            return false;
+            return false; // false means that this menu will stop running (called in the parent menu or in the AMST_Menu())
         }
 
         // [PROCESSING INPUTS]
@@ -324,16 +339,40 @@ public class AgeMileStoneTracker {
 
             case 1:
                 CurrentAMST_Data.viewData(CurrentFile);
-                // PRINTS OUT ALL THE MILESTONES (CHRONOLOGICALLY SORTED)
+
+
                 break;
             case 2:
+                boolean ValidInput = false;
+                while (!ValidInput) {
+                    try {
+                        //... a. Processing Input
+                        System.out.print("Please enter a day: ");
+                        int day = ReuseableMethods.input.nextInt();
+                        ReuseableMethods.input.nextLine(); // this refreshes buffer
+                        System.out.print("Please enter a message for the day: ");
+                        String message = ReuseableMethods.input.nextLine();
+                        System.out.println();
 
+                        CurrentAMST_Data.addDayBasedMilestone(day, message);
+
+                        //... b. Processing Output (Serialization)
+                        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CurrentFile)); // enabling serialization to a file (Output)
+                        oos.writeObject(CurrentAMST_Data); // serialize the object into the file
+
+                        ValidInput = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("[ERROR: InputMismatchException] day must not be a letter, it must be a number or integer.");
+                    } catch (IOException e) {
+                        System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
+                    }
+                }
                 break;
             case 3:
 
                 break;
             case 4:
-                return false; // `false` means that this method will now stop running
+                return false; // `false` means that this method will now stop running (there is a variable at AMST_Menu)
         }
         return true; // `true` means that this method will keep running
     }

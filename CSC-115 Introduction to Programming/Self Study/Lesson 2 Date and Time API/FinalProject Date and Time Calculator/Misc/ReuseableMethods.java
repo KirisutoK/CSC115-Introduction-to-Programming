@@ -1,5 +1,5 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: September 03, 2026. at  4:56 PM
+// Last Modified: September 04, 2026. at 12:40 PM
 
 import java.io.File;
 import java.io.IOException;
@@ -85,9 +85,6 @@ public class ReuseableMethods {
     }
     public static String fileNameOnly(File file, int TypeWidth) {
         return file.getName().substring(0, file.getName().length() - TypeWidth);
-    }
-    public static String reverseSubstring(String s, int hideAmount) {
-        return s.substring(0, s.length() - hideAmount);
     }
     public static boolean Confirmation(String process) {
         // DISPLAY

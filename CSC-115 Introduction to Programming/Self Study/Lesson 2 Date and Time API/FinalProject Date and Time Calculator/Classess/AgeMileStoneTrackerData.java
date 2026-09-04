@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: September 03, 2026. at  5:30 PM
+// Last Modified: September 04, 2026. at  1:37 PM
 
 import Misc.ReuseableMethods;
 
@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.HashMap;
 
 public class AgeMileStoneTrackerData implements Serializable {
@@ -28,8 +29,8 @@ public class AgeMileStoneTrackerData implements Serializable {
     private LocalDate Today;
 
     // [Milestones Data]
-    private HashMap<Integer, String> AgeBasedMilestone = new HashMap<>(); // Age, Message
-    private boolean[] DayBasedMileStone = new boolean[44562]; // Maximum limit a human can live
+    private HashMap<Integer, String> AgeBasedMilestone; // Age, Message
+    private HashMap<Integer, String> DayBasedMilestone; // Day, Message
 
     //=======CONSTRUCTOR=======// NOTE: IN ORDER TO USE THIS FILES WE NEED A CONSTRUCTOR TO CREATE INSTANCES FROM OTHER FILES
     AgeMileStoneTrackerData(String Username, String Password, LocalDate Birthday) {
@@ -38,6 +39,8 @@ public class AgeMileStoneTrackerData implements Serializable {
         this.Birthday = Birthday;
         this.Today = LocalDate.now();
         this.Age = ReuseableMethods.getAge(Birthday);
+        this.AgeBasedMilestone = new HashMap<>();
+        this.DayBasedMilestone = new HashMap<>();
     }
 
     //==========GETTERS==========\\ NOTE: TO ACCESS THE PRIVATE VARIABLES AND USE IT TO OTHER FILES
@@ -63,14 +66,6 @@ public class AgeMileStoneTrackerData implements Serializable {
         return ChronoUnit.DAYS.between(Birthday, Today);
     }
 
-    // [Milestone Getters]
-    public boolean[] getDayBasedMileStone() {
-        return DayBasedMileStone;
-    }
-    public HashMap<Integer, String> getAgeBasedMilestone() {
-        return AgeBasedMilestone;
-    }
-
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
 
     // [SECURITY]
@@ -88,23 +83,54 @@ public class AgeMileStoneTrackerData implements Serializable {
         passwordPassed = false;
     }
 
+    // [MILESTONES]
+    public void addDayBasedMilestone(int day, String message) {
+        DayBasedMilestone.put(day, message);
+        System.out.println("(Day: "+day+") {Message: "+message+"} has been successfully added!");
+    }
+
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
-    public void viewData(File CurrentFile) { //! <========================================================= YOU LEFT AT THIS METHOD!!!!!!!!!!!!!!!!
+    public void viewData(File CurrentFile) { //! <========================================================= YOU LEFT AT THIS METHOD!!!!!!!!!!!!!!!! (NEED TO WORK ON HOW TO SORT OUT THE DAYS IN ORDER AND AGE TOO)
         System.out.println("╔═════════════════════════════════════════════════════════════════╗");
-        System.out.println(ReuseableMethods.lineAutoSpacing("║ File Name: "+CurrentFile.getName(), 67));
+        System.out.println(ReuseableMethods.lineAutoSpacing("║ File Name: "+ReuseableMethods.fileNameOnly(CurrentFile, 10)+((AgeBasedMilestone.isEmpty()&&DayBasedMilestone.isEmpty())? " (EMPTY)":""), 67));
         System.out.println("╟─────────────────────────────────────────────────────────────────╢");
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Username: "+Username, 67));
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Age: "+Age, 67));
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Next Birthday: "+getNextBirthday(), 67));
         System.out.println(ReuseableMethods.lineAutoSpacing("║ Total Days Alive: "+getTotalDaysAlive(), 67));
+        if (!DayBasedMilestone.isEmpty()) {
+            System.out.println("╠═════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                         DAY MILESTONES                          ║");
+            System.out.println("╟─────────────────────────────────────────────────────────────────╢");
+            for (int d: DayBasedMilestone.keySet()) {
+                System.out.println(ReuseableMethods.lineAutoSpacing("║ (Day: "+d+") {Message: "+DayBasedMilestone.get(d)+"} ", 67));
+            }
+            System.out.println("║                                                                 ║");
+        }
+        if (!AgeBasedMilestone.isEmpty()) {
+            System.out.println("╠═════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                         AGE MILESTONES                          ║");
+            System.out.println("╟─────────────────────────────────────────────────────────────────╢");
+            for (int a: AgeBasedMilestone.keySet()) {
+                System.out.println(ReuseableMethods.lineAutoSpacing("║ (Age: "+a+") {Message: "+DayBasedMilestone.get(a)+"} ", 67));
+            }
+            System.out.println("║                                                                 ║");
+        }
         System.out.println("╠═════════════════════════════════════════════════════════════════╣");
-        System.out.println("║                       AGE MILESTONES                            ║");
-        System.out.println("╟─────────────────────────────────────────────────────────────────╢");
-        System.out.println();
+        System.out.println("║[NOTE] Input \"e\" to exit.                                        ║");
+        System.out.println("╚═════════════════════════════════════════════════════════════════╝");
         System.out.println();
 
-        // TODO: YOU NEED TO FIND A WAY HOW TO DISPLAY THE AGE MILESTONES AND DAY MILESTONES
+        // It will not run the other methods unless "e" is inputted
+        while (true) {
+            System.out.print("Answer: ");
+            String Answer = ReuseableMethods.input.nextLine();
+            System.out.println();
 
+            if (Answer.equals("e")) {
+                return;
+            }
+        }
     }
 
     

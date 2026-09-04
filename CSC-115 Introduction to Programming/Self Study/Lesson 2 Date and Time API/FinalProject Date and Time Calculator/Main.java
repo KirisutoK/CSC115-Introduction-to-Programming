@@ -1,5 +1,5 @@
 // Creation Date: August 21, 2026. at 12:02 AM
-// Last Modified: September 01, 2026. at  9:45 PM
+// Last Modified: September 04, 2026. at 12:45 PM
 
 import Classess.Menu;
 import Misc.ReuseableMethods;
@@ -11,7 +11,7 @@ public class Main {
     // =========================== CLASS VARIABLES =========================== \\
 
     // [OBJECTS]
-    private static Menu menu;
+    private static Menu menu = new Menu();
 
     // [USER CONDITIONS]
     private static boolean LockUsername = false;
@@ -44,7 +44,7 @@ public class Main {
     // =========================== METHODS =========================== \\
     public static void enterUsername() {
         System.out.print("Enter Username: ");
-        menu = new Menu(ReuseableMethods.input.nextLine()); // Assign username
+        menu.setUsername(ReuseableMethods.input.nextLine());
         System.out.println();
     }
     public static void enterBirthday() {

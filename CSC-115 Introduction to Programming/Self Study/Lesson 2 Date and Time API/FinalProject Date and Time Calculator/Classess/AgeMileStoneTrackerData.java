@@ -1,16 +1,14 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: September 04, 2026. at  1:37 PM
+// Last Modified: September 05, 2026. at 11:27 AM
 
 import Misc.ReuseableMethods;
 
 import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.HashMap;
 
 public class AgeMileStoneTrackerData implements Serializable {
@@ -66,6 +64,13 @@ public class AgeMileStoneTrackerData implements Serializable {
         return ChronoUnit.DAYS.between(Birthday, Today);
     }
 
+    public boolean DayMilestoneIsEmpty() {
+        return DayBasedMilestone.isEmpty();
+    }
+    public boolean AgeMilestoneIsEmpty() {
+        return AgeBasedMilestone.isEmpty();
+    }
+
     //==========SETTERS==========\\ NOTE: CHANGES THE VARIABLES ON THIS FILE
 
     // [SECURITY]
@@ -86,7 +91,24 @@ public class AgeMileStoneTrackerData implements Serializable {
     // [MILESTONES]
     public void addDayBasedMilestone(int day, String message) {
         DayBasedMilestone.put(day, message);
-        System.out.println("(Day: "+day+") {Message: "+message+"} has been successfully added!");
+
+        if (DayBasedMilestone.containsKey(day)) {
+            System.out.println("(Day: "+day+") {Message: "+message+"} has been successfully overwritten!");
+        } else {
+            System.out.println("(Day: "+day+") {Message: "+message+"} has been successfully added!");
+        }
+    }
+    public boolean removeDayBasedMilestone(int day) {
+
+        if (DayBasedMilestone.containsKey(day)) {
+            DayBasedMilestone.remove(day);
+            System.out.println("day "+day+" has been successfully been removed!");
+            System.out.println();
+            return true; // true means that it has successfully been deleted
+        }
+
+        System.out.println("day "+day+" does not exist!");
+        return false; // false means that it did get successfully deleted
     }
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
@@ -138,12 +160,3 @@ public class AgeMileStoneTrackerData implements Serializable {
 }
 
 // TODO: WE NEED TO ENCRYPT THIS! in the object file, it shows the password.
-
-// TODO: Actually thinking of a way on how to modify this data through the data handler
-// [MODIFIERS]
-//public void addAgeMilestone() {
-//}
-//public void removeAgeMilestone() {
-//}
-//public void editAgeMileStone() {
-//}

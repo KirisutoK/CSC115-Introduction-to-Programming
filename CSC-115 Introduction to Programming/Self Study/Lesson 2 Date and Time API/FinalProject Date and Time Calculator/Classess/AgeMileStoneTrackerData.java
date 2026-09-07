@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: September 07, 2026. at  1:03 AM
+// Last Modified: September 07, 2026. at  1:29 PM
 
 import Misc.ReuseableMethods;
 
@@ -141,10 +141,10 @@ public class AgeMileStoneTrackerData implements Serializable {
     }
     public boolean removeAgeBasedMilestone(int age) {
 
-        if (DayBasedMilestone.containsKey(age)) {
-            DayBasedMilestone.remove(age);
+        if (AgeBasedMilestone.containsKey(age)) {
             System.out.println("age "+age+" has been successfully been removed!");
             System.out.println();
+            AgeBasedMilestone.remove(age);
             return true; // true means that it has successfully been deleted
         }
 

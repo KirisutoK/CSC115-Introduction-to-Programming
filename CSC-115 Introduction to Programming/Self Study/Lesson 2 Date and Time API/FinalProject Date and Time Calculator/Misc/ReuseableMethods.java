@@ -1,8 +1,12 @@
 package Misc;// Creation Date: August 21, 2026. at 10:50 PM
-// Last Modified: September 04, 2026. at 12:40 PM
+// Last Modified: September 07, 2026. at  1:57 PM
+
+import Classess.AgeMileStoneTrackerData;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -20,7 +24,7 @@ public class ReuseableMethods {
         // LESSON LEARNED: I learned that you can use an object anywhere in the project if it is a static public
 
     //===========METHODS===========\\ NOTE: THIS ARE THE SPECIFIC PROCESS IN ORDER TO MEET THE DESIRED RESULTS
-    public static int getAnswer(int start, int end) {
+    public static int getAnswer(int start, int end) {  // Note: i am planning to add a throw in this reuseable method so that we can reuse "e" to exit.
         boolean ValidAnswer = false; //... Placeholders
         int Answer = 0; //... Placeholders
         while (!ValidAnswer) {
@@ -165,6 +169,13 @@ public class ReuseableMethods {
             return String.format("%.2f KB", FileSize / 1024.0);
         } else {
             return String.format("%.2f MB", FileSize / (1024.0 * 1024.0));
+        }
+    }
+    public static void serializeFile(AgeMileStoneTrackerData AMST_Data, File SaveFile) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SaveFile))) { // enabling serialization to a file (Output)
+            oos.writeObject(AMST_Data); // serialize the object into the file
+        } catch (IOException e) {
+            System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
         }
     }
 

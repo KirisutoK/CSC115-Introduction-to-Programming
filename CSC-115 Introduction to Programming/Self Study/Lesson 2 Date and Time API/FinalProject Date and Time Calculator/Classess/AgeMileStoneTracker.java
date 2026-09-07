@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 21, 2026. at 12:04 AM
-// Last Modified: September 05, 2026. at 11:33 AM
+// Last Modified: September 07, 2026. at  1:03 AM
 
 import Misc.ReuseableMethods;
 
@@ -318,7 +318,9 @@ public class AgeMileStoneTracker {
             System.out.println("║ 1. View MileStones                                              ║");
             System.out.println("║ 2. Add Day MileStones                                           ║");
             System.out.println("║ 3. Remove Day Milestones                                        ║");
-            System.out.println("║ 4. Go Back                                                      ║");
+            System.out.println("║ 4. Add Age MileStones                                           ║");
+            System.out.println("║ 5. Remove Age Milestones                                        ║");
+            System.out.println("║ 6. Go Back                                                      ║");
             System.out.println("╚═════════════════════════════════════════════════════════════════╝");
             System.out.println();
         } catch (NoSuchFileException e) {
@@ -332,7 +334,7 @@ public class AgeMileStoneTracker {
         }
 
         // [PROCESSING INPUTS]
-        int Answer = ReuseableMethods.getAnswer(1, 4);
+        int Answer = ReuseableMethods.getAnswer(1, 6);
 
         // [PROCESSING OUTPUTS]
         boolean ValidInput; // This is just a placeholder for every switch cases to share (The variable are shared when created at a specific case)
@@ -340,8 +342,6 @@ public class AgeMileStoneTracker {
 
             case 1:
                 CurrentAMST_Data.viewData(CurrentFile);
-
-
                 break;
             case 2:
                 ValidInput = false;
@@ -355,13 +355,12 @@ public class AgeMileStoneTracker {
                         String message = ReuseableMethods.input.nextLine();
                         System.out.println();
 
-                        CurrentAMST_Data.addDayBasedMilestone(day, message);
+                        ValidInput = CurrentAMST_Data.addDayBasedMilestone(day, message); // returns a boolean and processes data at the same time
 
                         //... b. Processing Output (Serialization)
                         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CurrentFile)); // enabling serialization to a file (Output)
                         oos.writeObject(CurrentAMST_Data); // serialize the object into the file
 
-                        ValidInput = true;
                     } catch (InputMismatchException e) {
                         System.out.println("[ERROR: InputMismatchException] day must not be a letter, it must be a number or integer.");
                     } catch (IOException e) {
@@ -398,9 +397,64 @@ public class AgeMileStoneTracker {
                         System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
                     }
                 }
-
                 break;
             case 4:
+                ValidInput = false;
+                while (!ValidInput) {
+                    try {
+                        //... a. Processing Input
+                        System.out.print("Please enter an age: ");
+                        int age = ReuseableMethods.input.nextInt();
+                        ReuseableMethods.input.nextLine(); // this refreshes buffer
+                        System.out.print("Please enter a message for the day: ");
+                        String message = ReuseableMethods.input.nextLine();
+                        System.out.println();
+
+                        ValidInput = CurrentAMST_Data.addAgeBasedMilestone(age, message);
+
+                        //... b. Processing Output (Serialization)
+                        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CurrentFile)); // enabling serialization to a file (Output)
+                        oos.writeObject(CurrentAMST_Data); // serialize the object into the file
+
+                        ValidInput = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("[ERROR: InputMismatchException] day must not be a letter, it must be a number or integer.");
+                    } catch (IOException e) {
+                        System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
+                    }
+                }
+                break;
+            case 5:
+                // [SECURITY]
+                if (CurrentAMST_Data.AgeMilestoneIsEmpty()) {
+                    System.out.println("There are currently no Age Milestones saved on this!"); // Note: might need to improve bit with this message
+                    break;
+                }
+
+                // [PROCESS]
+                ValidInput = false;
+                while (!ValidInput) {
+                    try {
+                        //... a. Processing Input
+                        System.out.print("Please enter a age: ");
+                        int age = ReuseableMethods.input.nextInt();
+                        ReuseableMethods.input.nextLine(); // this refreshes buffer
+                        System.out.println();
+
+                        ValidInput = CurrentAMST_Data.removeAgeBasedMilestone(age);
+
+                        //... b. Processing Output (Serialization)
+                        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CurrentFile)); // enabling serialization to a file (Output)
+                        oos.writeObject(CurrentAMST_Data); // serialize the object into the file
+
+                    } catch (InputMismatchException e) {
+                        System.out.println("[ERROR: InputMismatchException] day must not be a letter, it must be a number or integer.");
+                    } catch (IOException e) {
+                        System.out.println("[ERROR: " + e.getClass().getSimpleName() + "] " + e.getMessage());
+                    }
+                }
+                break;
+            case 6:
                 return false; // `false` means that this method will now stop running (there is a variable at AMST_Menu)
         }
         return true; // `true` means that this method will keep running

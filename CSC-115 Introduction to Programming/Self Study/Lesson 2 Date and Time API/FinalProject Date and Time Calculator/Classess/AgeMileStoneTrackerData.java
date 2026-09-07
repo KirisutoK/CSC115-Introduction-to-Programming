@@ -1,7 +1,7 @@
 package Classess;
 
 // Creation Date: August 26, 2026. at 11:59 PM
-// Last Modified: September 06, 2026. at 10:10 PM
+// Last Modified: September 07, 2026. at  1:03 AM
 
 import Misc.ReuseableMethods;
 
@@ -89,14 +89,24 @@ public class AgeMileStoneTrackerData implements Serializable {
     }
 
     // [MILESTONES]
-    public void addDayBasedMilestone(int day, String message) {
-        DayBasedMilestone.put(day, message);
+    public boolean addDayBasedMilestone(int day, String message) {
+        // [SECURITY]
+        if (day < 0 || day > 45000) {
+            System.out.println("[ERROR] Day can not be less than 0 or greater than 45000 days");
+            return false;
+        }
 
+        // [PRINT]
         if (DayBasedMilestone.containsKey(day)) {
             System.out.println("(Day: "+day+") {Message: "+message+"} has been successfully overwritten!");
         } else {
             System.out.println("(Day: "+day+") {Message: "+message+"} has been successfully added!");
         }
+
+        // [PROCESS]
+        DayBasedMilestone.put(day, message);
+
+        return true;
     }
     public boolean removeDayBasedMilestone(int day) {
 
@@ -108,6 +118,37 @@ public class AgeMileStoneTrackerData implements Serializable {
         }
 
         System.out.println("day "+day+" does not exist!");
+        return false; // false means that it did get successfully deleted
+    }
+    public boolean addAgeBasedMilestone(int age, String message) {
+        // [SECURITY]
+        if (age < 0 || age > 130) {
+            System.out.println("[ERROR] Age can not be less than 0 or greater than 130");
+            return false;
+        }
+
+        // [PRINT]
+        if (DayBasedMilestone.containsKey(age)) {
+            System.out.println("(Age: "+age+") {Message: "+message+"} has been successfully overwritten!");
+        } else {
+            System.out.println("(Age: "+age+") {Message: "+message+"} has been successfully added!");
+        }
+
+        // [PROCESS]
+        AgeBasedMilestone.put(age, message);
+
+        return true;
+    }
+    public boolean removeAgeBasedMilestone(int age) {
+
+        if (DayBasedMilestone.containsKey(age)) {
+            DayBasedMilestone.remove(age);
+            System.out.println("age "+age+" has been successfully been removed!");
+            System.out.println();
+            return true; // true means that it has successfully been deleted
+        }
+
+        System.out.println("age "+age+" does not exist!");
         return false; // false means that it did get successfully deleted
     }
 
@@ -160,4 +201,3 @@ public class AgeMileStoneTrackerData implements Serializable {
 }
 
 // TODO: WE NEED TO ENCRYPT THIS! in the object file, it shows the password.
-// TODO: Remove this todo or line
